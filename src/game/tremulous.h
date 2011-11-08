@@ -105,11 +105,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_BOUNCEBALL_DMG       ADM(160) //110 default. Not to be increased higher than 200 as it can kill reactor easily. //180 //decreased as it is now explosive like gpp.
 
 //I've added these to g_missile.c and bg_misc.c already for you.
-#define LEVEL3_BOUNCEBALL_AMMO      1
+#define LEVEL3_BOUNCEBALL_AMMO      3
 #define LEVEL3_BOUNCEBALL_REPEAT    600 //default 1000 //deal with long range turrets
-#define LEVEL3_BOUNCEBALL_SPEED     500.0f //default 1000 //1200 for longer range
+#define LEVEL3_BOUNCEBALL_SPEED     1000.0f //default 1000 //1200 for longer range
 #define LEVEL3_BOUNCEBALL_SPLASH_DMG  110 //Explosion.
-#define LEVEL3_BOUNCEBALL_SPLASH_RADIUS 592 //Splash radius. Helps with sniping. //Rememeber that reload time is 10 seconds. You don't want it overpowered.
+#define LEVEL3_BOUNCEBALL_SPLASH_RADIUS 92 //Splash radius. Helps with sniping. //Rememeber that reload time is 10 seconds. You don't want it overpowered.
 
 #define LEVEL4_CLAW_DMG             ADM(112)
 #define LEVEL4_CLAW_RANGE           128.0f

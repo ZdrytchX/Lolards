@@ -485,7 +485,7 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int da
     bolt->nextthink = level.time + 100000;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -2.0f;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 2.0f;
-  VectorScale( dir, (LCANNON_SPEED * 5), bolt->s.pos.trDelta ); //tiny ball of DEATH! Also extremely fast.
+  VectorScale( dir, (LCANNON_SPEED * 8), bolt->s.pos.trDelta ); //tiny ball of DEATH! Also extremely fast.
 	}
   else //to make sure it doesn't go bonkers, and makes it stand out so the glitch can be reported if happens:
 	{
@@ -494,7 +494,7 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int da
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 2.0f;
   VectorScale( dir, 0, bolt->s.pos.trDelta ); //prove there's an error: make it stationary
 	}
-#define LCANNON_SPEED_CHANGE   ((1 - ((localDamage - LCANNON_TOTAL_CHARGE) / 200)) * LCANNON_SPEED), bolt->s.pos.trDelta )
+#define LCANNON_SPEED_CHANGE   ((1 - ((localDamage - LCANNON_TOTAL_CHARGE) / 200)) * LCANNON_SPEED), bolt->s.pos.trDelta ) //maybe used later
 
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
@@ -765,7 +765,7 @@ gentity_t *fire_slowBlob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_SLOWBLOB;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
-  bolt->s.eFlags = EF_BOUNCE;
+  bolt->s.eFlags = EF_BOUNCE_HALF;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -5.0f;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 5.0f;
 
@@ -853,7 +853,7 @@ gentity_t *fire_bounceBall( gentity_t *self, vec3_t start, vec3_t dir )
   VectorScale( dir, LEVEL3_BOUNCEBALL_SPEED, bolt->s.pos.trDelta );
   SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
   VectorCopy( start, bolt->r.currentOrigin );
-  bolt->s.eFlags |= EF_BOUNCE_HALF;
+//  bolt->s.eFlags |= EF_BOUNCE_HALF; //only use if the barb is actually a bomb
   /*bolt->s.eFlags |= EF_BOUNCE; / =D*/
 
   return bolt;
