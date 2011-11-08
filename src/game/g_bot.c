@@ -267,6 +267,9 @@ void G_BotThink( gentity_t *self) {
     //infinite funds cvar
     if(g_bot_infinite_funds.integer == 1)
         G_AddCreditToClient(self->client, HUMAN_MAX_CREDITS, qtrue);
+
+    //hacky ping fix
+    self->client->ps.ping = rand() % 100 + 290;
     
     G_BotModusManager(self);
     switch(self->botMind->currentModus) {
@@ -626,14 +629,16 @@ void G_BotEvolve ( gentity_t *self, usercmd_t *botCmdBuffer )
 {
     // very not-clean code, but hey, it works and I'm lazy 
     int res;
+    if(!G_BotEvolveToClass(self, "human_bsuit", botCmdBuffer))
     if(!G_BotEvolveToClass(self, "level4", botCmdBuffer))
         if(!G_BotEvolveToClass(self, "level3upg", botCmdBuffer)) {
-            res = (random()>0.5) ? G_BotEvolveToClass(self, "level3", botCmdBuffer) : G_BotEvolveToClass(self, "level2upg", botCmdBuffer);
+            res = (random()>0.3) ? G_BotEvolveToClass(self, "level3", botCmdBuffer) : G_BotEvolveToClass(self, "level2upg", botCmdBuffer);
             if(!res) {
-                res = (random()>0.5) ? G_BotEvolveToClass(self, "level2", botCmdBuffer) : G_BotEvolveToClass(self, "level1upg", botCmdBuffer);
+                res = (random()>0.7) ? G_BotEvolveToClass(self, "level2", botCmdBuffer) : G_BotEvolveToClass(self, "level1upg", botCmdBuffer);
                 if(!res)
                     if(!G_BotEvolveToClass(self, "level1", botCmdBuffer))
-                        G_BotEvolveToClass(self, "level0", botCmdBuffer);
+                       if (!G_BotEvolveToClass(self, "level0", botCmdBuffer))
+                       		G_BotEvolveToClass(self, "builderupg", botCmdBuffer);
             }
         }
 }
@@ -690,6 +695,8 @@ void G_BotReactToEnemy(gentity_t *self, usercmd_t *botCmdBuffer) {
         case PCL_ALIEN_LEVEL3:
         case PCL_ALIEN_LEVEL3_UPG:
             self->botMind->followingRoute = qfalse;
+            //dodge
+            G_BotDodge(self,botCmdBuffer);
             /*
             getTargetPos(self->botMind->goal,&targetPos);
             //pounce to the target
@@ -778,7 +785,7 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             break;
         case WP_ABUILD2:
             range = ABUILDER_CLAW_RANGE;
-            secondaryRange = 300; //An arbitrary value for the blob launcher, has nothing to do with actual range
+            secondaryRange = 350; //An arbitrary value for the blob launcher, has nothing to do with actual range
             break;
         case WP_ALEVEL0:
             range = LEVEL0_BITE_RANGE;
@@ -789,7 +796,7 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             secondaryRange = 0;
             break;
         case WP_ALEVEL1_UPG:
-            range = LEVEL1_CLAW_RANGE;
+            range = LEVEL1_CLAW_RANGE * 3;
             secondaryRange = LEVEL1_PCLOUD_RANGE;
             break;
         case WP_ALEVEL2:
@@ -810,7 +817,7 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             break;
         case WP_ALEVEL4:
             range = LEVEL4_CLAW_RANGE;
-            secondaryRange = 0; //Using 0 since tyrant rush is basically just movement, not a ranged attack
+            secondaryRange = 0; //Using 0 since tyrant charge is already defined above
             break;
         case WP_HBUILD:
             range = 100; //heal range
@@ -821,7 +828,11 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             secondaryRange = 0;
             break;
         case WP_FLAMER:
-            range = FLAMER_SPEED;
+            range = FLAMER_SPEED * 1.6; //takes some speed from the user right?
+            secondaryRange = 0;
+            break;
+        case WP_LAS_GUN:
+            range = (100 * 8192)/RIFLE_SPREAD; //Use rifle's range
             secondaryRange = 0;
             break;
         case WP_SHOTGUN:
@@ -879,7 +890,7 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
     if( self->client->ps.stats[STAT_PTEAM] == PTE_ALIENS ) {
         switch(self->client->ps.stats[STAT_PCLASS]) {
             case PCL_ALIEN_BUILDER0:
-                botCmdBuffer->buttons |= BUTTON_GESTURE; //poor  grangie
+                botCmdBuffer->buttons |= BUTTON_GESTURE; //poor  grangie; taunt like you mean it!
                 break;
             case PCL_ALIEN_BUILDER0_UPG:
                 if(distance < Square(ABUILDER_CLAW_RANGE))
@@ -888,6 +899,8 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
                     botCmdBuffer->buttons |= BUTTON_USE_HOLDABLE;
                 break;
             case PCL_ALIEN_LEVEL0:
+                if((distance < Square(50)) && (distance > Square(350)) && (self->client->time1000 % 300 == 0))
+                    botCmdBuffer->upmove = 20; //jump when getting close
                 break; //nothing, auto hit =D
             case PCL_ALIEN_LEVEL1:
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
@@ -898,9 +911,17 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
                 else
                     botCmdBuffer->buttons |= BUTTON_ATTACK2; //gas
                 break;
+            case PCL_HUMAN_BSUIT:
+                if(distance > Square(250) && (distance < Square(600)) && (self->client->time1000 % 300 == 0))
+                    botCmdBuffer->upmove = 20; //jump when getting close
+                if(distance <= Square(LEVEL1_CLAW_RANGE*2))
+                    botCmdBuffer->buttons |= BUTTON_ATTACK;
+                else
+                    botCmdBuffer->buttons |= BUTTON_ATTACK2; //gas
+                break;
             case PCL_ALIEN_LEVEL2:
                 if(self->client->time1000 % 300 == 0)
-                    botCmdBuffer->upmove = 20; //jump
+                    botCmdBuffer->upmove = 20; //jump when getting close
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
                 break;
             case PCL_ALIEN_LEVEL2_UPG:
@@ -1127,8 +1148,8 @@ void G_BotSpectatorThink( gentity_t *self ) {
 
             G_PushSpawnQueue( &level.humanSpawnQueue, clientNum );
         } else if( teamnum == PTE_ALIENS) {
-            self->client->pers.classSelection = PCL_ALIEN_LEVEL0;
-            self->client->ps.stats[STAT_PCLASS] = PCL_ALIEN_LEVEL0;
+            self->client->pers.classSelection = PCL_ALIEN_BUILDER0_UPG;//PCL_ALIEN_LEVEL0
+            self->client->ps.stats[STAT_PCLASS] = PCL_ALIEN_BUILDER0_UPG; //PCL_ALIEN_LEVEL0
             G_PushSpawnQueue( &level.alienSpawnQueue, clientNum );
         }
     }
@@ -1296,8 +1317,8 @@ int botFindClosestEnemy( gentity_t *self, qboolean includeTeam ) {
             //if we can see the entity OR we are on aliens (who dont care about LOS because they have radar)
             if( (self->client->ps.stats[STAT_PTEAM] == PTE_ALIENS ) || botTargetInRange(self, botTarget, MASK_SHOT) ){
                 
-                //if the entity is a building and we can attack structures and we are not a dretch
-                if(target->s.eType == ET_BUILDABLE && g_bot_attackStruct.integer && self->client->ps.stats[STAT_PCLASS] != PCL_ALIEN_LEVEL0) {
+                //if the entity is a building and we can attack structures and we are not a normal granger
+                if(target->s.eType == ET_BUILDABLE && g_bot_attackStruct.integer && self->client->ps.stats[STAT_PCLASS] != PCL_ALIEN_BUILDER0) {
                     
                     //if the building is not on our team (unless we can attack teamates)
                     if( target->biteam != self->client->ps.stats[STAT_PTEAM] || includeTeam ) {
@@ -1372,7 +1393,7 @@ void botSlowAim( gentity_t *self, vec3_t target, float slow, vec3_t *rVec) {
         
         //make the aim slow by not going the full difference
         //between the current aim Vector and the new one
-        slowness = slow*(25/1000.0);
+        slowness = slow*(15/1000.0);
         if(slowness > 1.0) slowness = 1.0;
         
         VectorLerp( slowness, forward, aimVec, skilledVec);
@@ -1446,11 +1467,11 @@ void doLastNodeAction(gentity_t *self, usercmd_t *botCmdBuffer) {
         break;
         case BOT_POUNCE:if(self->client->ps.stats[STAT_PCLASS] == PCL_ALIEN_LEVEL3 && 
             self->client->ps.stats[ STAT_MISC ] < LEVEL3_POUNCE_SPEED) {
-            botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 10 - self->client->ps.delta_angles[PITCH];
+            botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 6 - self->client->ps.delta_angles[PITCH];
             botCmdBuffer->buttons |= BUTTON_ATTACK2;
             }else if(self->client->ps.stats[STAT_PCLASS] == PCL_ALIEN_LEVEL3_UPG && 
                 self->client->ps.stats[ STAT_MISC ] < LEVEL3_POUNCE_UPG_SPEED) {
-            botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 10 - self->client->ps.delta_angles[PITCH];
+            botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 6 - self->client->ps.delta_angles[PITCH];
             botCmdBuffer->buttons |= BUTTON_ATTACK2;
                 }
                 break;
@@ -1545,7 +1566,7 @@ void findNewNode( gentity_t *self, usercmd_t *botCmdBuffer) {
         botCmdBuffer->upmove = -1;
         botCmdBuffer->rightmove = 0;
         botCmdBuffer->buttons = 0;
-        botCmdBuffer->buttons |= BUTTON_GESTURE;
+        botCmdBuffer->buttons = BUTTON_GESTURE; //|=
     }
 }
 
@@ -1603,10 +1624,10 @@ void setSkill(gentity_t *self, int skill) {
     self->botMind->botSkill.level = skill;
     //different aim for different teams
     if(self->botMind->botTeam == PTE_HUMANS) {
-        self->botMind->botSkill.aimSlowness = (float) skill / 80;
-        self->botMind->botSkill.aimShake = (int) (10 - skill);
+        self->botMind->botSkill.aimSlowness = (float) skill / 50;
+        self->botMind->botSkill.aimShake = (int) (30 - (skill * 3) );
     } else {
-        self->botMind->botSkill.aimSlowness = (float) skill / 40;
+        self->botMind->botSkill.aimSlowness = (float) skill / 30;
         self->botMind->botSkill.aimShake = (int) (10 - skill);
     }
 }

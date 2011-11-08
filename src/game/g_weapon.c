@@ -804,6 +804,10 @@ void cancelBuildFire( gentity_t *ent )
   }
   else if( ent->client->ps.weapon == WP_ABUILD2 )
     meleeAttack( ent, ABUILDER_CLAW_RANGE, ABUILDER_CLAW_WIDTH,
+                 ABUILDER_CLAW_DMG, MOD_ABUILDER_CLAW ); //melee attack for alien builder2
+
+  else if( ent->client->ps.weapon == WP_ABUILD )
+    meleeAttack( ent, ABUILDER_CLAW_RANGE, ABUILDER_CLAW_WIDTH,
                  ABUILDER_CLAW_DMG, MOD_ABUILDER_CLAW ); //melee attack for alien builder
 }
 

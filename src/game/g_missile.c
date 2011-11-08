@@ -148,10 +148,25 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
     }
   }
+  else if( !strcmp( ent->classname, "lcannon" ) )
+  {
+    if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
+    {
+      other->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
+    }
+  }
+  else if( !strcmp( ent->classname, "flame" ) )
+  {
+    if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
+    {
+      other->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
+    }
+  }
   else if( !strcmp( ent->classname, "slowblob" ) )
   {
     if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
     {
+      other->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
       other->client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED;
       other->client->lastSlowTime = level.time;
       AngleVectors( other->client->ps.viewangles, dir, NULL, NULL );
@@ -179,8 +194,11 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       ent->nextthink = level.time + FRAMETIME;
 
       //only damage humans
+      if( attacker->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
       if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
         returnAfterDamage = qtrue;
+      else  if( attacker->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
+	        returnAfterDamage = qtrue;
       else
         return;
     }
@@ -476,6 +494,7 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int da
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 2.0f;
   VectorScale( dir, 0, bolt->s.pos.trDelta ); //prove there's an error: make it stationary
 	}
+#define LCANNON_SPEED_CHANGE   ((1 - ((localDamage - LCANNON_TOTAL_CHARGE) / 200)) * LCANNON_SPEED), bolt->s.pos.trDelta )
 
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;

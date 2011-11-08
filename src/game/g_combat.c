@@ -1626,6 +1626,30 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
         attacker->client->pers.statscounters.repairspoisons++;
         level.alienStatsCounters.repairspoisons++;
       }
+//pass the radiation/burn on through firing lcannon, flamer or anything not listed here:
+//but remember, if this works, change the cg_event.c for poison kill.
+	if ( attacker->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
+	mod != MOD_LCANNON_SPLASH && //has to be direct hit
+	mod != MOD_BLASTER &&
+	mod != MOD_MACHINEGUN &&
+	mod != MOD_CHAINGUN &&
+	mod != MOD_SHOTGUN &&
+	mod != MOD_PRIFLE &&
+	mod != MOD_MDRIVER &&
+	mod != MOD_LASGUN &&
+	mod != MOD_GRENADE &&
+	mod != MOD_SLOWBLOB &&
+	mod != MOD_MGTURRET &&
+          targ->client->poisonImmunityTime < level.time )
+	{
+        targ->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
+        targ->client->lastPoisonTime = level.time;
+        targ->client->lastPoisonClient = attacker;
+        attacker->client->pers.statscounters.repairspoisons++;
+        level.humanStatsCounters.repairspoisons++;
+	}
+//    if ( attacker->client && attacker->client->ps.stats[ STAT_WEAP ] = WP_LCANNON; ) //not defined, but this is a reminder on what i was gonna do
+// I was gonna make lcannon 'bleed' aliens with its 'dangerous radiation'
     }
   }
 
@@ -1723,6 +1747,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
         targ->client->tkcredits[ attacker->client->ps.clientNum ] += takeNoOverkill;
     }
 
+#define VAMP (( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + 50) * take / 600 + 1); // supports health gain that is less than 1 value and the '+50' means porportionate to health + 50. Its also to help dretches and small ones gain health.
+
     if( targ->health <= 0 )
     {
         ( targ->health = -999 ); //this should* fix human incability revival glitch
@@ -1750,9 +1776,10 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 {
 	attacker->health = attacker->health + ( take / 4 );
 }
+
 	else
 {
-          attacker->health = attacker->health + (( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + 50) * take / 600); //gain according to the player's health ratio so a dretch doesn't become invincable.//Also, they gain porportional according to their max health (+ 50).
+          attacker->health = attacker->health + VAMP; //gain according to the player's health ratio so a dretch doesn't become invincable.//Also, they gain porportional according to their max health (+ 50).
           if (attacker->health > attacker->client->ps.stats[ STAT_MAX_HEALTH ] * 1.5) 
           {
                   attacker->health = attacker->client->ps.stats[ STAT_MAX_HEALTH ] * 1.5;
@@ -1760,7 +1787,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
          // end Vampire
           //to make sure they STAY DEAD >={D) (no glitchy revives):
           if ( attacker->health < 0 )
-              { attacker->health = -99999; } //still possible, if he nades the same spot 999 times... but that will be unlikely because targets would've died and no more hp would be dealt.
+              { attacker->health = -999; } //still possible, if he nades the same spot 999 times... but that will be unlikely because targets would've died and no more hp would be dealt.
          //Apprently you still see ur HUDs though... i can't fix this
          //Also, these apply to those who heal once every second, in this case its only aliens. This becomes a problem as humans become invincable still. This is fixed in g_active.c
 }

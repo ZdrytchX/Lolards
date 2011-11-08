@@ -47,7 +47,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_BLOB_RADIUS        75     //explosion radius
 #define ABUILDER_BLOB_REPEAT        500
 #define ABUILDER_BLOB_SPEED         800.0f
-#define ABUILDER_BLOB_SPEED_MOD     0.2f
+#define ABUILDER_BLOB_SPEED_MOD     0.3f
 #define ABUILDER_BLOB_TIME          5000 //5000 how long a guy gets slowed down
 
 #define LEVEL0_BITE_DMG             ADM(36)
@@ -109,7 +109,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_BOUNCEBALL_REPEAT    600 //default 1000 //deal with long range turrets
 #define LEVEL3_BOUNCEBALL_SPEED     500.0f //default 1000 //1200 for longer range
 #define LEVEL3_BOUNCEBALL_SPLASH_DMG  110 //Explosion.
-#define LEVEL3_BOUNCEBALL_SPLASH_RADIUS 592 //Splash radius.
+#define LEVEL3_BOUNCEBALL_SPLASH_RADIUS 592 //Splash radius. Helps with sniping. //Rememeber that reload time is 10 seconds. You don't want it overpowered.
 
 #define LEVEL4_CLAW_DMG             ADM(112)
 #define LEVEL4_CLAW_RANGE           128.0f
@@ -171,13 +171,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //head on fighting 1.1 advbasi! Note that human killing one of these will get a lot more credits than normal
 #define LEVEL1_UPG_SPEED            1.2f
 #define LEVEL1_UPG_VALUE            AVM(475) //275
-#define LEVEL1_UPG_HEALTH           AHM(160)
+#define LEVEL1_UPG_HEALTH           AHM(125)
 #define LEVEL1_UPG_REGEN            4
 #define LEVEL1_UPG_COST             2
 
 #define LEVEL2_SPEED                1.2f
 #define LEVEL2_VALUE                AVM(320)
-#define LEVEL2_HEALTH               AHM(120)
+#define LEVEL2_HEALTH               AHM(100)
 #define LEVEL2_REGEN                3
 #define LEVEL2_COST                 1
 
@@ -385,7 +385,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define GRENADE_REPEAT              0 //Default 0. Surely doesn't stop nade spams. (because you're discarding the weapon/upgrade as you use it, duh!)
 #define GRENADE_K_SCALE             2.0f
 #define GRENADE_DAMAGE              HDM(380) //210 //strong enough to kill egg or anything weaker.
-#define GRENADE_RANGE               332.0f //192 //mininuke
+#define GRENADE_RANGE               332.0f //192 //mininuke == 500
 #define GRENADE_SPEED               780.0f //Throwing speed. Default 400
 
 //reverse pump shotgun "semi-semi-auto"
@@ -426,9 +426,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CHAINGUN_SPREAD             500 //700
 #define CHAINGUN_DMG                HDM(7) //6
 
-//Prifle =D
+//Prifle - slow spam, doing max 112 dmg/s
 
-#define PRIFLE_PRICE                520
+#define PRIFLE_PRICE                520 //cost much? Its like a really strong lasgun in my opinion.
 #define PRIFLE_CLIPS                58
 #define PRIFLE_MAXCLIPS             5
 #define PRIFLE_REPEAT               125

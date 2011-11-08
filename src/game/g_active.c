@@ -841,23 +841,27 @@ void ClientTimerActions( gentity_t *ent, int msec )
 
       VectorAdd( client->ps.origin, range, maxs );
       VectorSubtract( client->ps.origin, range, mins );
-
+/* This is the alien regen.
+ * I swapped the Booster and tyrant regen priority
+ * so you can use a booster as a tyrant.
+ * Not garanteed to work.
+ */
       num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
       for( i = 0; i < num; i++ )
       {
         boostEntity = &g_entities[ entityList[ i ] ];
 
-        if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
-            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
-        {
-          modifier = LEVEL4_REGEN_MOD;
-          break;
-        }
-        else if( boostEntity->s.eType == ET_BUILDABLE &&
+        if( boostEntity->s.eType == ET_BUILDABLE &&
             boostEntity->s.modelindex == BA_A_BOOSTER &&
             boostEntity->spawned && boostEntity->health > 0 )
         {
           modifier = BOOSTER_REGEN_MOD;
+          break;
+        }
+        else if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
+            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
+        {
+          modifier = LEVEL4_REGEN_MOD;
           break;
         }
       }
@@ -873,7 +877,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
         ent->health = client->ps.stats[ STAT_MAX_HEALTH ] * 1.5;
     }
     
-    
+    //these are just for stats when doing /(!)mystats or /(!)allstats
     if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && ent->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
     {
       ent->client->pers.statscounters.timealive++;
@@ -910,7 +914,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
 		ent->health -= (client->ps.stats[ STAT_MAX_HEALTH ] / 25);
 		}
 	
-		if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] * 1.5 ) //apprently the other one didn't work; copy+paste here - I'VE DONE THIS SOO MANY FKIN TIMES!!! ONLY THIS ONE WORKS
+		if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] * 1.5 ) //apprently the other one didn't work; copy+paste here - I'VE DONE THIS SOO MANY FKIN TIMES!!! ONLY THIS ONE WORKS [for now]
 		ent->health = client->ps.stats[ STAT_MAX_HEALTH ] * 1.5; //and also not reliable
 
       ent->client->pers.statscounters.timealive++;
@@ -963,6 +967,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
  
       }
     }
+//This following is an idea i had on giving these two energy weapon ammo over time.
 /*if( client->ps.weapon == WP_LAS_GUN )
 if ( BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) ||  BG_InventoryContainsUpgrade( UP_BATTPACK, pm->ps->stats ) )
     {
@@ -1005,7 +1010,7 @@ if ( BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) ||  BG_Inventor
    	 {
 		if ( ent->health < client->ps.stats[STAT_MAX_HEALTH])
 		{
-		ent->health += 1; //once every 10 seconds. Lovely.
+		ent->health += 1; //once every 10 seconds. Lovely. I want it to be 2 seconds though, but i'll have to re-declare it.
 		}
 	 }
   }
