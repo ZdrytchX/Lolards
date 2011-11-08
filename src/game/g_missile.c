@@ -152,21 +152,20 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
   {
     if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
     {
-      other->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
+      other->client->ps.stats[ STAT_STATE ] == SS_POISONED;
     }
   }
   else if( !strcmp( ent->classname, "flame" ) )
   {
     if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
     {
-      other->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
+      other->client->ps.stats[ STAT_STATE ] == SS_POISONED;
     }
   }
   else if( !strcmp( ent->classname, "slowblob" ) )
   {
     if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
     {
-      other->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
       other->client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED;
       other->client->lastSlowTime = level.time;
       AngleVectors( other->client->ps.viewangles, dir, NULL, NULL );
@@ -197,6 +196,7 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       if( attacker->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
       if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
         returnAfterDamage = qtrue;
+//troll hive weapon should work on aliens
       else  if( attacker->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
 	        returnAfterDamage = qtrue;
       else
@@ -344,8 +344,8 @@ gentity_t *fire_flamer( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_FLAMER_SPLASH;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
-  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -15.0f;
-  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 15.0f;
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -12.5f;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 12.5f;
 
   bolt->s.pos.trType = TR_LINEAR;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
