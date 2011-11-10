@@ -96,7 +96,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_CLAW_U_K_SCALE       1.0f
 #define LEVEL3_POUNCE_DMG           ADM(180) //default 100, but i increased it to relate to gpp values of killing armoured.
 #define LEVEL3_POUNCE_RANGE         48.0f //default 72. Remember 0 is at the centre, it won't hit anything. Want 36, but can't hit because it still isn't long enough :( Gpp's value is probably 48, cause thats what it says in TremX's source code.
-#define LEVEL3_POUNCE_WIDTH         16.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the walls first.
+#define LEVEL3_POUNCE_WIDTH         22.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 22 for a more 'realistic' pounce so adv goons can get humans without aiming down
 #define LEVEL3_POUNCE_SPEED         700 //pounce speed usually 700
 #define LEVEL3_POUNCE_UPG_SPEED     800 //pounce speed for adv goon usually 800
 #define LEVEL3_POUNCE_SPEED_MOD     0.75f //speed when charging pounce default 0.75
@@ -145,7 +145,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
 
 #define ABUILDER_SPEED              0.8f
-#define ABUILDER_VALUE              AVM(200)
+#define ABUILDER_VALUE              AVM(150)
 #define ABUILDER_HEALTH             AHM(60)
 #define ABUILDER_REGEN              2
 #define ABUILDER_COST               0
@@ -275,6 +275,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ACIDTUBE_K_SCALE            0.1f//1f
 
 #define HIVE_BP                     14
+#define HIVE_LIFETIME               15000
 #define HIVE_BT                     20000
 #define HIVE_HEALTH                 ABHM(252) //default 125, same as acidtube. //252 = rifle's damage per clip
 #define HIVE_REGEN                  18
@@ -467,7 +468,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_K_SCALE             3.27f//1f
 #define LCANNON_CHARGEREPEAT        500 //800
 #define LCANNON_RELOAD              5000
-#define LCANNON_DAMAGE              HDM(395) //265
+#define LCANNON_DAMAGE              HDM(300) //265 //395
 #define LCANNON_RADIUS              180 //splash radius. Default 150, wanted 180, but too overpowered
 #define LCANNON_SECONDARY_DAMAGE    HDM(132) //default 27, prefered 30, but gets overpowered if rapid //now direct hit
 #define LCANNON_SECONDARY_RADIUS    35 //75

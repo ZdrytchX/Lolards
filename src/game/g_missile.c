@@ -148,20 +148,6 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
     }
   }
-  else if( !strcmp( ent->classname, "lcannon" ) )
-  {
-    if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
-    {
-      other->client->ps.stats[ STAT_STATE ] == SS_POISONED;
-    }
-  }
-  else if( !strcmp( ent->classname, "flame" ) )
-  {
-    if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
-    {
-      other->client->ps.stats[ STAT_STATE ] == SS_POISONED;
-    }
-  }
   else if( !strcmp( ent->classname, "slowblob" ) )
   {
     if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
@@ -171,6 +157,17 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       AngleVectors( other->client->ps.viewangles, dir, NULL, NULL );
       other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
     }
+  }
+  else if( !strcmp( ent->classname, "lcannon" ) )
+  {
+    if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //radioactive to aliens only
+    {
+      other->client->ps.stats[ STAT_STATE ] == SS_POISONED;
+    }
+  }
+  else if( !strcmp( ent->classname, "flame" ) )
+  {
+      other->client->ps.stats[ STAT_STATE ] == SS_POISONED; //humans can burn!
   }
   else if( !strcmp( ent->classname, "hive" ) )
   {
@@ -614,7 +611,7 @@ void AHive_ReturnToHive( gentity_t *self )
     self->s.pos.trTime = level.time;
 
     self->think = G_ExplodeMissile;
-    self->nextthink = level.time + 15000;
+    self->nextthink = level.time + HIVE_LIFETIME;
   }
 }
 
@@ -844,8 +841,8 @@ gentity_t *fire_bounceBall( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_LEVEL3_BOUNCEBALL;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
-  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -5.0f;
-  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 5.0f;
+//  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -5.0f;
+//  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 5.0f;
 
   bolt->s.pos.trType = TR_GRAVITY;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame

@@ -968,6 +968,9 @@ void ClientTimerActions( gentity_t *ent, int msec )
       }
     }
 //This following is an idea i had on giving these two energy weapon ammo over time.
+if( client->ps.weapon == WP_LUCIFER_CANNON ) {
+            if(client->ps.ammo[WP_LUCIFER_CANNON] < 190){
+		client->ps.ammo[WP_LUCIFER_CANNON] += 10; }
 /*if( client->ps.weapon == WP_LAS_GUN )
 if ( BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) ||  BG_InventoryContainsUpgrade( UP_BATTPACK, pm->ps->stats ) )
     {

@@ -118,13 +118,13 @@ static void CG_Obituary( entityState_t *ent )
       message = "felt ticklish after being zapped";
       break;
     case MOD_ATUBE:
-      message = "shouldn't have gone in the alien base and took a acid bath";
+      message = "shouldn't have gone in the alien base";
       break;
     case MOD_OVERMIND:
       message = "shouldn't convince the ^4Overmind^7 for intercourse.";
       break;
     case MOD_REACTOR:
-      message = "didn't know what a electricity ^3generator ^7was";
+      message = "didn't know what a electricity generator was";
       break;
     case MOD_SLOWBLOB:
       message = "was spat on by a baby ^2granger";
@@ -146,18 +146,18 @@ static void CG_Obituary( entityState_t *ent )
         if( gender == GENDER_FEMALE )
           message = "thought this was 1.2 tremulous.";
         else if( gender == GENDER_NEUTER )
-          message = "tried and failed to make barbeque";
+          message = "toasted itself";
         else
-          message = "tried to get the achievement: ^1OMGWTFBBQ!";
+          message = "tried to make barbeque";
         break;
 
       case MOD_LCANNON_SPLASH:
         if( gender == GENDER_FEMALE )
           message = "learned not to luci spam";
         else if( gender == GENDER_NEUTER )
-          message = "tried a luci jump";
+          message = "blew itself up";
         else
-          message = "was irradicated by his own power";
+          message = "tried a luci jump";
         break;
 
       case MOD_GRENADE:
@@ -171,7 +171,7 @@ static void CG_Obituary( entityState_t *ent )
 
       default:
         if( gender == GENDER_FEMALE )
-          message = "raped herself";
+          message = "suicided";
         else if( gender == GENDER_NEUTER )
           message = "^1died.";
         else
@@ -271,7 +271,7 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL2_ZAP:
-        message = "had its life drained slowly by";
+        message = "was shocked by";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL2 ) );
         message2 = className;
@@ -289,7 +289,7 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL3_BOUNCEBALL:
-        message = "almost caught the barb from";
+        message = "caught the barb of";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL3 ) );
         message2 = className;
@@ -301,7 +301,7 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL4_CHARGE:
-        message = "was touched by";
+        message = "was flattened by";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL4 ) );
         message2 = className;

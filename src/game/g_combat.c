@@ -386,6 +386,7 @@ char *modNames[ ] =
   "MOD_SLOWBLOB",
   "MOD_POISON",
   "MOD_SWARM",
+  "MOD_TRAPPER",
 
   "MOD_HSPAWN",
   "MOD_TESLAGEN",
@@ -431,6 +432,10 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 
     if( attacker->client )
     {
+      //make bot say his line
+      if(attacker->r.svFlags & SVF_BOT && !( self->r.svFlags & SVF_BOT) && rand() % 9 <= 3 && attacker->client->ps.stats[STAT_PTEAM] != self->client->ps.stats[STAT_PTEAM] && !self->client->pers.muted )
+G_Say(attacker,NULL, SAY_ALL, "^4H^5umans ^3are ^1obsolete^3, we shall ^1rule ^7Tremulous");
+
       killerName = attacker->client->pers.netname;
       tk = ( attacker != self && attacker->client->ps.stats[ STAT_PTEAM ] 
         == self->client->ps.stats[ STAT_PTEAM ] );
@@ -533,6 +538,10 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     if( attacker == self || OnSameTeam( self, attacker ) )
     {
       AddScore( attacker, -1 );
+
+      //make bot say his line
+      if(attacker->r.svFlags & SVF_BOT && !(self->r.svFlags & SVF_BOT) && !(self->client->pers.muted))
+G_Say(attacker,NULL, SAY_TEAM, "Sorry!/Je suis desole!");
 
       // Retribution: transfer value of player from attacker to victim
       if( g_retribution.integer) {
@@ -1617,7 +1626,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     {
       if( targ->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
           !( targ->client->ps.stats[ STAT_STATE ] & SS_POISONED ) &&
-          mod != MOD_LEVEL2_ZAP &&
+          mod != MOD_LEVEL2_ZAP && //can't poison through zap
           targ->client->poisonImmunityTime < level.time )
       {
         targ->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
@@ -1628,6 +1637,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       }
 //pass the radiation/burn on through firing lcannon, flamer or anything not listed here:
 //but remember, if this works, change the cg_event.c for poison kill.
+//Does not work.
+/*
 	if ( attacker->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
 	mod != MOD_LCANNON_SPLASH && //has to be direct hit
 	mod != MOD_BLASTER &&
@@ -1648,6 +1659,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
         attacker->client->pers.statscounters.repairspoisons++;
         level.humanStatsCounters.repairspoisons++;
 	}
+*/
 //    if ( attacker->client && attacker->client->ps.stats[ STAT_WEAP ] = WP_LCANNON; ) //not defined, but this is a reminder on what i was gonna do
 // I was gonna make lcannon 'bleed' aliens with its 'dangerous radiation'
     }
@@ -1673,7 +1685,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 
   if( take )
   {
-    //Increment some stats counters
+    //Increment some stats counters for mystats
     if( attacker && attacker->client )
     {
       if( targ->biteam == attacker->client->pers.teamSelection || OnSameTeam( targ, attacker ) ) 
@@ -1773,9 +1785,10 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	else
 	{
 		if ((targ->s.eType == ET_BUILDABLE ) )
-{
-	attacker->health = attacker->health + ( take / 4 );
-}
+	return; //take too strong and humans don't die when invading alien base.
+/*{
+	attacker->health = attacker->health + ( take / 4 ); //no matter what buildable's health is
+}*/
 
 	else
 {

@@ -551,7 +551,7 @@ static void Svcmd_AdmitDefeat_f( void )
 
   if( trap_Argc( ) != 2 )
   {
-    G_Printf("admitdefeat: must provide a team\n");
+    G_Printf("admitdefeat: must have a team with you\n");
     return;
   }
   trap_Argv( 1, teamNum, sizeof( teamNum ) );
@@ -567,7 +567,7 @@ static void Svcmd_AdmitDefeat_f( void )
   {
     level.surrenderTeam = PTE_HUMANS;
     G_BaseSelfDestruct( PTE_HUMANS );
-    G_TeamCommand( PTE_HUMANS, "cp \"Life Support Terminated\" 1");
+    G_TeamCommand( PTE_HUMANS, "cp \"Life Support System Terminated\" 1");
     trap_SendServerCommand( -1, "print \"Human team has admitted defeat\n\"" );
   }
   else
