@@ -3226,11 +3226,11 @@ weaponAttributes_t bg_weapons[ ] =
     qfalse,               //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     CHAINGUN_REPEAT,      //int       repeatRate1;
-    0,                    //int       repeatRate2;
+    CHAINGUN_REPEAT * 1.5,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     5000,                    //int       reloadTime;
     CHAINGUN_K_SCALE,     //float     knockbackScale;
-    qfalse,               //qboolean  hasAltMode;
+    qtrue,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
@@ -3694,8 +3694,8 @@ weaponAttributes_t bg_weapons[ ] =
     qtrue,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     LEVEL4_CLAW_REPEAT,   //int       repeatRate1;
-    0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
+    100,                    //int       repeatRate2;
+    5000,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     LEVEL4_CLAW_K_SCALE,  //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
@@ -3709,7 +3709,7 @@ weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_LOCKBLOB_LAUNCHER, //int       weaponNum;
-    3000,                    //int       price;
+    2000,                    //int       price;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  nakedStages
     SLOT_WEAPON,          //int       slots;
@@ -3735,7 +3735,7 @@ weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_HIVE,              //int       weaponNum;
-    2000,                    //int       price;
+    1000,                    //int       price;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  nakedStages
     SLOT_WEAPON,          //int       slots;

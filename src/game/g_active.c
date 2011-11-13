@@ -660,10 +660,10 @@ void ClientTimerActions( gentity_t *ent, int msec )
 
         if( ucmd->forwardmove > 0 )
         {
-          //trigger charge sound...is quite annoying
-          //if( client->ps.stats[ STAT_MISC ] <= 0 )
-          //  G_AddEvent( ent, EV_LEV4_CHARGE_PREPARE, 0 );
-
+/*          //trigger charge sound...is quite annoying
+          if( client->ps.stats[ STAT_MISC ] <= 0 )
+            G_AddEvent( ent, EV_LEV4_CHARGE_PREPARE, 0 );
+*/
           client->ps.stats[ STAT_MISC ] += (int)( 100 * (float)LEVEL4_CHARGE_CHARGE_RATIO );
 
           if( client->ps.stats[ STAT_MISC ] > LEVEL4_CHARGE_TIME )
@@ -691,7 +691,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
             client->ps.stats[ STAT_MISC ] = client->ps.stats[ STAT_MISC ] / 2;
 
           //can't charge backwards
-          if( ucmd->forwardmove < 0 )
+          if( ucmd->forwardmove < 0 ) //if you stop pressing forward, it will stop
             client->ps.stats[ STAT_MISC ] = 0;
         }
         else
@@ -720,9 +720,9 @@ void ClientTimerActions( gentity_t *ent, int msec )
       if( client->ps.stats[ STAT_MISC ] > LCANNON_TOTAL_CHARGE )
         client->ps.stats[ STAT_MISC ] = LCANNON_TOTAL_CHARGE;
 
-      if( client->ps.stats[ STAT_MISC ] > ( ammo * LCANNON_TOTAL_CHARGE ) / 30 )
-        client->ps.stats[ STAT_MISC ] = ammo * LCANNON_TOTAL_CHARGE / 30;
-    }
+      if( client->ps.stats[ STAT_MISC ] > ( ammo * LCANNON_TOTAL_CHARGE ) / 70 )
+        client->ps.stats[ STAT_MISC ] = ammo * LCANNON_TOTAL_CHARGE / 70;
+    } //weaken max charge when low battery
 
     switch( client->ps.weapon )
     {
@@ -742,6 +742,8 @@ void ClientTimerActions( gentity_t *ent, int msec )
           else
             client->ps.stats[ STAT_BUILDABLE ] &= ~SB_VALID_TOGGLEBIT;
         }
+//	else () //plan on healing humans too
+//look in g_weapons.c for what i did for more info
 
       case WP_BLASTER:
         //update build timer
@@ -968,9 +970,11 @@ void ClientTimerActions( gentity_t *ent, int msec )
       }
     }
 //This following is an idea i had on giving these two energy weapon ammo over time.
+/*
 if( client->ps.weapon == WP_LUCIFER_CANNON ) {
             if(client->ps.ammo[WP_LUCIFER_CANNON] < 190){
 		client->ps.ammo[WP_LUCIFER_CANNON] += 10; }
+*/
 /*if( client->ps.weapon == WP_LAS_GUN )
 if ( BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) ||  BG_InventoryContainsUpgrade( UP_BATTPACK, pm->ps->stats ) )
     {

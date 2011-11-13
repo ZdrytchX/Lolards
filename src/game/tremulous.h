@@ -43,11 +43,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_CLAW_K_SCALE       1.0f
 #define ABUILDER_BASE_DELAY         12000 //17000
 #define ABUILDER_ADV_DELAY          8000 //12000
-#define ABUILDER_BLOB_DMG           ADM(6) //4
+
+#define ABUILDER_BLOB_DMG           ADM(6)//4
 #define ABUILDER_BLOB_RADIUS        75     //explosion radius
 #define ABUILDER_BLOB_REPEAT        500
-#define ABUILDER_BLOB_SPEED         800.0f
-#define ABUILDER_BLOB_SPEED_MOD     0.3f
+#define ABUILDER_BLOB_SPEED         800.0f //800
+#define ABUILDER_BLOB_SPEED_MOD     0.6f
 #define ABUILDER_BLOB_TIME          5000 //5000 how long a guy gets slowed down
 
 #define LEVEL0_BITE_DMG             ADM(36)
@@ -96,7 +97,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_CLAW_U_K_SCALE       1.0f
 #define LEVEL3_POUNCE_DMG           ADM(180) //default 100, but i increased it to relate to gpp values of killing armoured.
 #define LEVEL3_POUNCE_RANGE         48.0f //default 72. Remember 0 is at the centre, it won't hit anything. Want 36, but can't hit because it still isn't long enough :( Gpp's value is probably 48, cause thats what it says in TremX's source code.
-#define LEVEL3_POUNCE_WIDTH         22.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 22 for a more 'realistic' pounce so adv goons can get humans without aiming down
+#define LEVEL3_POUNCE_WIDTH         32.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 32 for a more 'realistic' pounce so adv goons can get humans without aiming down. Works almost perfectly at this setting. It is basically the width of the goon/2.
 #define LEVEL3_POUNCE_SPEED         700 //pounce speed usually 700
 #define LEVEL3_POUNCE_UPG_SPEED     800 //pounce speed for adv goon usually 800
 #define LEVEL3_POUNCE_SPEED_MOD     0.75f //speed when charging pounce default 0.75

@@ -427,8 +427,11 @@ void massDriverFire( gentity_t *ent )
 
   if( traceEnt->takedamage )
   {
-    G_Damage( traceEnt, ent, ent, forward, tr.endpos,
-      MDRIVER_DMG, 0, MOD_MDRIVER );
+    G_Damage( 0, ent, ent, forward, tr.endpos,
+      MDRIVER_DMG, 0, MOD_MDRIVER ); //'0' makes it go through stuff
+//original:
+//    G_Damage( traceEnt, ent, ent, forward, tr.endpos,
+//      MDRIVER_DMG, 0, MOD_MDRIVER );
   }
 }
 
@@ -754,10 +757,19 @@ cancelBuildFire
 */
 void cancelBuildFire( gentity_t *ent )
 {
+
+
   vec3_t      forward, end;
   trace_t     tr;
   gentity_t   *traceEnt;
+  vec3_t    mins, maxs;
   int         bHealth;
+  int	      damage = 20;
+//  int         hHealth;
+
+  G_UnlaggedOn( ent, muzzle, LEVEL0_BITE_RANGE );
+  trap_Trace( &tr, muzzle, mins, maxs, end, ent->s.number, MASK_SHOT );
+  G_UnlaggedOff( );
 
   if( ent->client->ps.stats[ STAT_BUILDABLE ] != BA_NONE )
   {
@@ -769,7 +781,7 @@ void cancelBuildFire( gentity_t *ent )
   if( ent->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
   {
     AngleVectors( ent->client->ps.viewangles, forward, NULL, NULL );
-    VectorMA( ent->client->ps.origin, 100, forward, end );
+    VectorMA( ent->client->ps.origin, 1000, forward, end );
 
     trap_Trace( &tr, ent->client->ps.origin, NULL, NULL, end, ent->s.number, MASK_PLAYERSOLID );
     traceEnt = &g_entities[ tr.entityNum ];
@@ -801,6 +813,52 @@ void cancelBuildFire( gentity_t *ent )
       else
         G_AddEvent( ent, EV_BUILD_REPAIR, 0 );
     }
+
+//never mind about this part onwards: doesn't work.
+//I just keep it here.
+
+    else if ( tr.fraction < 1.0 &&
+        ( traceEnt->s.eType != ET_BUILDABLE ) &&
+        (traceEnt->biteam == ent->client->ps.stats[ STAT_PTEAM ] ) &&
+        ( ( ent->client->ps.weapon >= WP_HBUILD2 ) &&
+          ( ent->client->ps.weapon <= WP_HBUILD ) )) //same stats except not a buildable
+	{
+
+      if( ent->client->ps.stats[ STAT_MISC ] > 0 )
+      {
+        G_AddEvent( ent, EV_BUILD_DELAY, ent->client->ps.clientNum );
+        return;
+      }
+      traceEnt->health += HBUILD_HEALRATE;
+      ent->client->pers.statscounters.repairspoisons++;
+      level.humanStatsCounters.repairspoisons++;
+/*
+       hHealth = ( ent->health > client->ps.stats[ STAT_HEALTH ]); //client not declared etc.... just an example of what i want
+ *      for max health, but it isn't needed as vampire mode's 150%maxhealth is on.
+*/
+/* Play sounds for 'maxhealth reached' and stuff like that
+      if( traceEnt->health == maxHealth )
+        G_AddEvent( ent, EV_BUILD_REPAIRED, 0 );
+      else
+        G_AddEvent( ent, EV_BUILD_REPAIR, 0 );
+*/
+	}
+	else if ((traceEnt->biteam != ent->client->ps.stats[ STAT_PTEAM ] ) &&
+        ( ( ent->client->ps.weapon >= WP_HBUILD2 ) &&
+          ( ent->client->ps.weapon <= WP_HBUILD ) )) //same stats except not on human team)
+	{
+      if( ent->client->ps.stats[ STAT_MISC ] > 0 )
+      {
+        G_AddEvent( ent, EV_BUILD_DELAY, ent->client->ps.clientNum );
+        return;
+//Following is 'unreachable' according to the compiler
+//      traceEnt->health -= 20; //do sum dmg!
+	//damage 
+//same for this part - but i just keep it in case server crashes due to a ckit killing.
+  G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, DAMAGE_NO_KNOCKBACK, MOD_TRIGGER_HURT );
+
+      }
+	}
   }
   else if( ent->client->ps.weapon == WP_ABUILD2 )
     meleeAttack( ent, ABUILDER_CLAW_RANGE, ABUILDER_CLAW_WIDTH,
@@ -1436,7 +1494,7 @@ void bounceBallFire( gentity_t *ent )
 
   m = fire_bounceBall( ent, muzzle, forward );
 
-  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics by adding ur inertia
+  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics by adding ur inertia - gets annoying
 }
 
 
@@ -1472,7 +1530,7 @@ void ChargeAttack( gentity_t *ent, gentity_t *victim )
   {
     tent = G_TempEntity( victim->s.origin, EV_MISSILE_HIT );
     tent->s.otherEntityNum = victim->s.number;
-    tent->s.eventParm = DirToByte( normal );
+    tent->s.eventParm = DirToByte( normal ); //normal
     tent->s.weapon = ent->s.weapon;
     tent->s.generic1 = ent->s.generic1; //weaponMode
   }
@@ -1480,9 +1538,13 @@ void ChargeAttack( gentity_t *ent, gentity_t *victim )
   if( !victim->takedamage )
     return;
 
-  damage = (int)( ( (float)ent->client->ps.stats[ STAT_MISC ] / (float)LEVEL4_CHARGE_TIME ) * LEVEL4_CHARGE_DMG );
+//  damage = (int)( ( (float)ent->client->ps.stats[ STAT_MISC ] / (float)LEVEL4_CHARGE_TIME ) * LEVEL4_CHARGE_DMG );
+  damage = LEVEL4_CHARGE_DMG * ent->client->ps.stats[ STAT_MISC ] /
+           LEVEL4_CHARGE_TIME;
 
   G_Damage( victim, ent, ent, forward, victim->s.origin, damage, 0|DAMAGE_NO_LOCDAMAGE, MOD_LEVEL4_CHARGE );
+
+ ent->client->ps.weaponTime += 100; // rehit player time
 }
 
 //======================================================================
@@ -1534,6 +1596,18 @@ void FireWeapon3( gentity_t *ent )
       slowBlobFire( ent );
       break;
 
+/*    case WP_ALEVEL4:
+      lockBlobLauncherFire( ent ); //thats right bitch, i'll trap you!
+//N/B: Trap as in trap, not males dressing up as women.
+      break;
+
+    case WP_HBUILD2:
+      bulletFire( ent, 300, 1, MOD_TRIGGER_HURT );
+      bulletFire( ent, 300, 1, MOD_TRIGGER_HURT );
+      bulletFire( ent, 300, 1, MOD_TRIGGER_HURT );
+      break;
+*/	
+
     default:
       break;
   }
@@ -1570,6 +1644,28 @@ void FireWeapon2( gentity_t *ent )
 
     case WP_LUCIFER_CANNON:
       LCChargeFire( ent, qtrue );
+      break;
+
+//standard weapons w/o secondary just use melee
+    case WP_BLASTER:
+      meleeAttack( ent, 50, 20, 27, MOD_BLASTER );
+      break;
+    case WP_SHOTGUN:
+      meleeAttack( ent, 50, 20, 27, MOD_BLASTER );
+      break;
+    case WP_FLAMER:
+      meleeAttack( ent, 50, 20, 27, MOD_BLASTER );
+      break;
+    case WP_PULSE_RIFLE:
+      meleeAttack( ent, 50, 20, 27, MOD_BLASTER );
+      break;
+
+    case WP_CHAINGUN:
+      bulletFire( ent, RIFLE_SPREAD, CHAINGUN_DMG, MOD_CHAINGUN );
+      break;
+
+    case WP_LOCKBLOB_LAUNCHER:
+      throwGrenade( ent );
       break;
 
     case WP_ABUILD:

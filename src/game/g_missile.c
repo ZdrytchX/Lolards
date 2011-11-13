@@ -147,6 +147,13 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       AngleVectors( other->client->ps.viewangles, dir, NULL, NULL );
       other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
     }
+    if( self->client && other->client && self->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
+    {
+      other->client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED; //too overpowered againts aliens otherwise
+      other->client->lastLockTime = level.time;
+      AngleVectors( other->client->ps.viewangles, dir, NULL, NULL );
+      other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
+    }
   }
   else if( !strcmp( ent->classname, "slowblob" ) )
   {
@@ -158,6 +165,7 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
     }
   }
+/* //This following is a whole load of bullcrap. It doesn't work. Worth a try though.
   else if( !strcmp( ent->classname, "lcannon" ) )
   {
     if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //radioactive to aliens only
@@ -169,6 +177,7 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
   {
       other->client->ps.stats[ STAT_STATE ] == SS_POISONED; //humans can burn!
   }
+*/
   else if( !strcmp( ent->classname, "hive" ) )
   {
     if( other->s.eType == ET_BUILDABLE && other->s.modelindex == BA_A_HIVE )
@@ -191,8 +200,9 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
 
       //only damage humans
       if( attacker->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
-      if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
-        returnAfterDamage = qtrue;
+	{
+      if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS ){
+        returnAfterDamage = qtrue; } }
 //troll hive weapon should work on aliens
       else  if( attacker->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
 	        returnAfterDamage = qtrue;
@@ -514,7 +524,7 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int da
   SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
 
   VectorCopy( start, bolt->r.currentOrigin );
-#define LCANNON_SPRITE_SCALE localDamage //useless shit here, but i declared it here for possible future use in cgame because localdamage can't be recalled that easily... i havn't learned how to call a line from a file so yeah
+#define LCANNON_SPRITE_SCALE localDamage //useless shit here, but i declared it here for possible future use in cgame because localdamage can't be recalled that easily... i havn't learned how to call a specific line from a file so yeah
 
   return bolt;
 }
@@ -678,7 +688,7 @@ gentity_t *fire_hive( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = HIVE_DMG;
-  bolt->splashDamage = 90;
+  bolt->splashDamage = 30; //not to high - it kills trappers
   bolt->splashRadius = 60;
   bolt->methodOfDeath = MOD_SWARM;
   bolt->clipmask = MASK_SHOT;
@@ -720,7 +730,7 @@ gentity_t *fire_lockblob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->damage = LOCKBLOB_DMG;
   bolt->splashDamage = TRAPPER_SPLASHDAMAGE;
   bolt->splashRadius = TRAPPER_SPLASHRADIUS;
-  bolt->methodOfDeath = MOD_TRIGGER_HURT; //doesn't do damage so will never kill
+  bolt->methodOfDeath = MOD_TRIGGER_HURT; //changed as it kills
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
 
@@ -841,6 +851,7 @@ gentity_t *fire_bounceBall( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_LEVEL3_BOUNCEBALL;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+//The following boundry box is for acid bomb. Its annoying to snipe with.
 //  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -5.0f;
 //  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 5.0f;
 

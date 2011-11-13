@@ -494,7 +494,7 @@ void G_BotGoto(gentity_t *self, botTarget_t target, usercmd_t *botCmdBuffer) {
     //stay away from enemy as human
         getTargetPos(target, &tmpVec);
         if(self->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS && 
-        DistanceSquared(self->s.pos.trBase,tmpVec) < Square(400) && botTargetInAttackRange(self, target) && self->s.weapon != WP_PAIN_SAW
+        DistanceSquared(self->s.pos.trBase,tmpVec) < Square(350) && botTargetInAttackRange(self, target) && self->s.weapon != WP_PAIN_SAW
         && getTargetTeam(target) == PTE_ALIENS)
         {
             botCmdBuffer->forwardmove = -100;
@@ -629,7 +629,9 @@ void G_BotEvolve ( gentity_t *self, usercmd_t *botCmdBuffer )
 {
     // very not-clean code, but hey, it works and I'm lazy 
     int res;
-    if(!G_BotEvolveToClass(self, "human_bsuit", botCmdBuffer))
+//    if(!G_BotEvolveToClass(self, "human_bsuit", botCmdBuffer))
+//^^fuck them suits - they just waste their evos. We need proper human players. I'm sorry.
+
     if(!G_BotEvolveToClass(self, "level4", botCmdBuffer))
         if(!G_BotEvolveToClass(self, "level3upg", botCmdBuffer)) {
             res = (random()>0.7) ? G_BotEvolveToClass(self, "level3", botCmdBuffer) : G_BotEvolveToClass(self, "level2upg", botCmdBuffer);
@@ -679,6 +681,7 @@ void G_BotReactToEnemy(gentity_t *self, usercmd_t *botCmdBuffer) {
     AngleVectors(self->client->ps.viewangles, forward, right, up);
     CalcMuzzlePoint(self, forward, right, up, muzzle);
     switch(self->client->ps.stats[STAT_PCLASS]) {
+        case PCL_ALIEN_BUILDER0_UPG:
         case PCL_ALIEN_LEVEL0:
         case PCL_ALIEN_LEVEL1:
         case PCL_ALIEN_LEVEL1_UPG:
@@ -695,8 +698,16 @@ void G_BotReactToEnemy(gentity_t *self, usercmd_t *botCmdBuffer) {
         case PCL_ALIEN_LEVEL3:
         case PCL_ALIEN_LEVEL3_UPG:
             self->botMind->followingRoute = qfalse;
-            //dodge
-            G_BotDodge(self,botCmdBuffer);
+            //dodge: stop dodging within a 150-400 range for a good pounce
+	    //also helps get around corners when stuck
+            if(DistanceSquared( muzzle, targetPos ) > 400)
+		{
+			G_BotDodge(self,botCmdBuffer);
+		}
+            else if(DistanceSquared( muzzle, targetPos ) < 150)
+		{
+			G_BotDodge(self,botCmdBuffer);
+		}
             /*
             getTargetPos(self->botMind->goal,&targetPos);
             //pounce to the target
@@ -716,7 +727,14 @@ void G_BotReactToEnemy(gentity_t *self, usercmd_t *botCmdBuffer) {
         case PCL_HUMAN:
         case PCL_HUMAN_BSUIT:
             if(self->s.weapon == WP_PAIN_SAW) //we ALWAYS want psaw users to fire, otherwise they only fire intermittently
+	{
                 botFireWeapon(self, botCmdBuffer);
+		//dodge while going head-on from a far distance
+            if(DistanceSquared( muzzle, targetPos ) > 100)
+		{
+			G_BotDodge(self,botCmdBuffer);
+		}
+	}
             break;
         default: break;
     }
@@ -727,7 +745,7 @@ void G_BotReactToEnemy(gentity_t *self, usercmd_t *botCmdBuffer) {
  * Makes the bot dodge :P
  */
 void G_BotDodge(gentity_t *self, usercmd_t *botCmdBuffer) {
-    if(self->client->time1000 >= 500)
+    if(self->client->time1000 >= 800) //>= 500
         botCmdBuffer->rightmove = 127;
     else
         botCmdBuffer->rightmove = -127;
@@ -844,8 +862,14 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             secondaryRange = 0;
             break;
         case WP_CHAINGUN:
-            range = (100 * 8192)/CHAINGUN_SPREAD; //100 is the maximum radius we want the spread to be
-            secondaryRange = 0;
+            range = 600
+//            range = (100 * 8192)/CHAINGUN_SPREAD; //100 is the maximum radius we want the spread to be
+            secondaryRange = (100 * 8192)/RIFLE_SPREAD; //secondary uses rifle sread so yeah
+	    break;
+
+        case WP_LUCIFER_CANNON:
+            secondaryRange = 150 //suprise?!? :D - shoots primary as it loses its charge then shoots a secondary straight after- a combo attack
+            range = (100 * 8192)/CHAINGUN_SPREAD; //not too far
             break;
         default:
             range = 4098 * 4; //large range for guns because guns have large ranges :)
@@ -969,9 +993,9 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
             
         } else if( self->client->ps.weapon == WP_LUCIFER_CANNON ) {
-            if(self->client->ps.ammo[WP_LUCIFER_CANNON] < 10){
-		botCmdBuffer->buttons |= BUTTON_ATTACK2; } //use secondary
-            else if( self->client->time10000 % 2700 ) {
+            /*if(self->client->ps.ammo[WP_LUCIFER_CANNON] < 10){
+		botCmdBuffer->buttons |= BUTTON_ATTACK2; } //use secondary when low on ammo
+            else */if( self->client->time10000 % 2700 ) {
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
                 self->botMind->isFireing = qtrue;
             }
@@ -1149,8 +1173,8 @@ void G_BotSpectatorThink( gentity_t *self ) {
 
             G_PushSpawnQueue( &level.humanSpawnQueue, clientNum );
         } else if( teamnum == PTE_ALIENS) {
-            self->client->pers.classSelection = PCL_ALIEN_BUILDER0_UPG;//PCL_ALIEN_LEVEL0
-            self->client->ps.stats[STAT_PCLASS] = PCL_ALIEN_BUILDER0_UPG; //PCL_ALIEN_LEVEL0
+            self->client->pers.classSelection = PCL_ALIEN_LEVEL0;//PCL_ALIEN_LEVEL0
+            self->client->ps.stats[STAT_PCLASS] = PCL_ALIEN_LEVEL0; //PCL_ALIEN_LEVEL0 then PCL_ALIEN_BUILDER0_UPG for grangie
             G_PushSpawnQueue( &level.alienSpawnQueue, clientNum );
         }
     }
@@ -1628,7 +1652,7 @@ void setSkill(gentity_t *self, int skill) {
         self->botMind->botSkill.aimSlowness = (float) skill / 50;
         self->botMind->botSkill.aimShake = (int) (30 - (skill * 3) );
     } else {
-        self->botMind->botSkill.aimSlowness = (float) skill / 30;
+        self->botMind->botSkill.aimSlowness = (float) skill / 10;
         self->botMind->botSkill.aimShake = (int) (10 - skill);
     }
 }
