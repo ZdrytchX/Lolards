@@ -585,7 +585,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //no spinup required!
 //IMPORTANT: You should change MGTURRET_FIRE_SPEED to 1 if you want the turret to be 'normal'.
 //It slows down the turning speed of the turret when it fires.
-#define MGTURRET_FIRE_SPEED         0.2
+#define MGTURRET_FIRE_SPEED         0.5
+// IF it is directly aiming at it, the following speed multiplier will be used instead.
+//It gives a more realistic feel.
+#define MGTURRET_FIRE_DIRECT_SPEED  0.2
 
 #define MGTURRET_BP                 8
 #define MGTURRET_BT                 10000
@@ -613,7 +616,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //*2 = Fast rise = 16
 //*0 = no rise
 #define MGTURRET_ACCURACY_PITCH         0.8
-
 #define TESLAGEN_BP                 10
 #define TESLAGEN_BT                 15000
 #define TESLAGEN_HEALTH             HBHM(280) //210

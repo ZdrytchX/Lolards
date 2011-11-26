@@ -629,7 +629,7 @@ void G_BotEvolve ( gentity_t *self, usercmd_t *botCmdBuffer )
 {
     // very not-clean code, but hey, it works and I'm lazy 
     int res;
-    if(!G_BotEvolveToClass(self, "human_bsuit", botCmdBuffer))
+//    if(!G_BotEvolveToClass(self, "human_bsuit", botCmdBuffer))
 //^^fuck them suits - they just waste their evos. We need proper human players. I'm sorry.
 //Ehem. Remember to re-disable this after LAN-use because it is useless againts humans. Well almost.
     if(!G_BotEvolveToClass(self, "level4", botCmdBuffer))

@@ -2063,6 +2063,12 @@ qboolean HMGTurret_TrackEnemy( gentity_t *self )
       abs( angleToTarget[ PITCH ] - self->s.angles2[ PITCH ] ) <= (accuracyTolerance * MGTURRET_ACCURACY_SPREAD) )
 	angularSpeed = angularSpeed * MGTURRET_FIRE_SPEED;
 
+//Slow down further if right on the target.
+
+  if( abs( angleToTarget[ YAW ] - self->s.angles2[ YAW ] ) <= (accuracyTolerance) &&
+      abs( angleToTarget[ PITCH ] - self->s.angles2[ PITCH ] ) <= (accuracyTolerance) )
+	angularSpeed = angularSpeed * MGTURRET_FIRE_DIRECT_SPEED;
+
   //if not pointing at our target then move accordingly
   if( angularDiff[ PITCH ] < (-accuracyTolerance) )
     self->s.angles2[ PITCH ] += angularSpeed * MGTURRET_ACCURACY_PITCH;
