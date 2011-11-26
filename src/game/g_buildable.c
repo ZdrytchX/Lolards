@@ -1305,7 +1305,8 @@ void AHovel_Use( gentity_t *self, gentity_t *other, gentity_t *activator )
       //this hovel is in use
       G_TriggerMenu( activator->client->ps.clientNum, MN_A_HOVEL_OCCUPIED );
     }
-    else if( ( ( activator->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_BUILDER0 ) ||
+    else if( ( ( activator->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL0 ) ||
+               ( activator->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_BUILDER0 ) ||
                ( activator->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_BUILDER0_UPG ) ) &&
              activator->health > 0 && self->health > 0 )
     {
@@ -1494,11 +1495,14 @@ void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
 
   if( !client )
     return;
-
+//The following MAY stop aliens from being boosted
+/*
   if( client && client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
+    client->ps.stats[ STAT_STATE ] |= SS_POISONED;
+    client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED;	
     return;
-
-  //only allow boostage once every 30 seconds
+*/
+  //only allow boostage once every 3 seconds
   if( client->lastBoostedTime + BOOSTER_INTERVAL > level.time )
     return;
 
@@ -1597,8 +1601,9 @@ qboolean ATrapper_CheckTarget( gentity_t *self, gentity_t *target, int range )
     return qfalse;
   if( target->health <= 0 ) // is the target still alive?
     return qfalse;
-  if( target->client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ) // locked?
-    return qfalse;
+//want the trapper to kill right?
+//  if( target->client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ) // locked?
+//    return qfalse;
 
   VectorSubtract( target->r.currentOrigin, self->r.currentOrigin, distance );
   if( VectorLength( distance ) > range ) // is the target within range?
@@ -2053,11 +2058,16 @@ qboolean HMGTurret_TrackEnemy( gentity_t *self )
   angularDiff[ PITCH ] = AngleSubtract( self->s.angles2[ PITCH ], angleToTarget[ PITCH ] );
   angularDiff[ YAW ] = AngleSubtract( self->s.angles2[ YAW ], angleToTarget[ YAW ] );
 
+//following is so if it is shooting, it will slow down.
+  if( abs( angleToTarget[ YAW ] - self->s.angles2[ YAW ] ) <= (accuracyTolerance * MGTURRET_ACCURACY_SPREAD) &&
+      abs( angleToTarget[ PITCH ] - self->s.angles2[ PITCH ] ) <= (accuracyTolerance * MGTURRET_ACCURACY_SPREAD) )
+	angularSpeed = angularSpeed * MGTURRET_FIRE_SPEED;
+
   //if not pointing at our target then move accordingly
   if( angularDiff[ PITCH ] < (-accuracyTolerance) )
-    self->s.angles2[ PITCH ] += angularSpeed;
+    self->s.angles2[ PITCH ] += angularSpeed * MGTURRET_ACCURACY_PITCH;
   else if( angularDiff[ PITCH ] > accuracyTolerance )
-    self->s.angles2[ PITCH ] -= angularSpeed;
+    self->s.angles2[ PITCH ] -= angularSpeed * MGTURRET_ACCURACY_PITCH;
   else
     self->s.angles2[ PITCH ] = angleToTarget[ PITCH ];
 
@@ -2082,8 +2092,8 @@ qboolean HMGTurret_TrackEnemy( gentity_t *self )
   vectoangles( dirToTarget, self->turretAim );
 
   //if pointing at our target return true
-  if( abs( angleToTarget[ YAW ] - self->s.angles2[ YAW ] ) <= accuracyTolerance &&
-      abs( angleToTarget[ PITCH ] - self->s.angles2[ PITCH ] ) <= accuracyTolerance )
+  if( abs( angleToTarget[ YAW ] - self->s.angles2[ YAW ] ) <= (accuracyTolerance * MGTURRET_ACCURACY_SPREAD) &&
+      abs( angleToTarget[ PITCH ] - self->s.angles2[ PITCH ] ) <= (accuracyTolerance * MGTURRET_ACCURACY_SPREAD) )
     return qtrue;
 
   return qfalse;
@@ -2673,6 +2683,9 @@ void G_BuildableThink( gentity_t *ent, int msec )
     else if( ent->biteam == BIT_ALIENS && ent->health > 0 && ent->health < bHealth &&
         bRegen && ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
       ent->health += bRegen;
+    else if( ent->biteam == BIT_HUMANS && ent->health > 0 && ent->health < bHealth &&
+        bRegen && ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
+      ent->health += bRegen;
 
     if( ent->health > bHealth )
       ent->health = bHealth;
@@ -3081,9 +3094,9 @@ itemBuildError_t G_CanBuild( gentity_t *ent, buildable_t buildable, int distance
         reason = IBE_REPEATER;
     }
 
-    //this buildable requires a DCC
-    if( BG_FindDCCTestForBuildable( buildable ) && !G_IsDCCBuilt( ) )
-      reason = IBE_NODCC;
+    //this buildable requires a DCC //removed: allow teslagens!
+//    if( BG_FindDCCTestForBuildable( buildable ) && !G_IsDCCBuilt( ) )
+//      reason = IBE_NODCC;
 
     //check that there is a parent reactor when building a repeater
     if( buildable == BA_H_REPEATER )

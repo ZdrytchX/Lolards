@@ -143,21 +143,23 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
     if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
     {
       other->client->ps.stats[ STAT_STATE ] |= SS_BLOBLOCKED;
-      other->client->lastLockTime = level.time;
+      other->client->lastLockTime = level.time + LOCKBLOB_LIFETIME;
       AngleVectors( other->client->ps.viewangles, dir, NULL, NULL );
       other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
     }
-    if( self->client && other->client && self->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
+    if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
     {
-      other->client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED; //too overpowered againts aliens otherwise
-      other->client->lastLockTime = level.time;
+      other->client->ps.stats[ STAT_STATE ] |= SS_BLOBLOCKED; //too overpowered againts aliens otherwise so use SS_SLOWLOCKED
+      other->client->lastLockTime = level.time + (LOCKBLOB_LIFETIME*((500 - other->client->ps.stats[ STAT_MAX_HEALTH ])/300));;
+        //actually, nah, ill keep it like this:
+	//6000*((500 - 480)/300) //was /600 but changed because dretches simply die in one hit and will be ignored.
       AngleVectors( other->client->ps.viewangles, dir, NULL, NULL );
       other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
     }
   }
   else if( !strcmp( ent->classname, "slowblob" ) )
   {
-    if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
+    if( other->client )//&& other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS
     {
       other->client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED;
       other->client->lastSlowTime = level.time;
@@ -199,13 +201,8 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       ent->nextthink = level.time + FRAMETIME;
 
       //only damage humans
-      if( attacker->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
-	{
       if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS ){
-        returnAfterDamage = qtrue; } }
-//troll hive weapon should work on aliens
-      else  if( attacker->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
-	        returnAfterDamage = qtrue;
+        returnAfterDamage = qtrue; }
       else
         return;
     }
@@ -475,15 +472,15 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int da
   if( damage == LCANNON_TOTAL_CHARGE )
 	{
     bolt->nextthink = level.time + 1; //launches and blows self up. Only difference bwteeen default and + 1 is one milisecond life time. Don't worry about changing these other values in this section if you don't change this.
-  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -8.0f;
-  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 8.0f;
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -5.0f;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 5.0f;
   VectorScale( dir, LCANNON_SPEED, bolt->s.pos.trDelta );
 	}
   else if ( damage < LCANNON_TOTAL_CHARGE )
 	{
     bolt->nextthink = level.time + 100000;
-  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -8.0f;
-  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 8.0f;
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -6.0f;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 6.0f;
   VectorScale( dir, ((1 - ((localDamage - LCANNON_TOTAL_CHARGE) / 200)) * LCANNON_SPEED), bolt->s.pos.trDelta ); //YEAH BITCH! MORE POWER - SLOWER BULLETS! uhh...
 //A better explaination: Minimum charge from solo - speed ~ 800 and max = 330
 	}
@@ -719,7 +716,7 @@ gentity_t *fire_lockblob( gentity_t *self, vec3_t start, vec3_t dir )
 
   bolt = G_Spawn( );
   bolt->classname = "lockblob";
-  bolt->nextthink = level.time + 18000;
+  bolt->nextthink = level.time + 5000;
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
   bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
@@ -733,7 +730,20 @@ gentity_t *fire_lockblob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->methodOfDeath = MOD_TRIGGER_HURT; //changed as it kills
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
-
+/*
+//  bolt->s.eFlags = EF_BOUNCE_HALF; //this means no more lockblob jumping :(
+//client-only lockblob launcher - applies to tyrants and human lockblob
+if ( self->client && self->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
+	{
+  bolt->s.pos.trType = TR_GRAVITY;
+  bolt->s.eFlags = EF_BOUNCE_HALF;
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -5.0f;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 5.0f;
+	}
+else if ( !( self->client ) )	{
+  bolt->s.pos.trType = TR_LINEAR;
+	}
+*/
   bolt->s.pos.trType = TR_LINEAR;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
@@ -772,7 +782,7 @@ gentity_t *fire_slowBlob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_SLOWBLOB;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
-  bolt->s.eFlags = EF_BOUNCE_HALF;
+  bolt->s.eFlags = EF_BOUNCE_HALF | EF_NO_BOUNCE_SOUND;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -5.0f;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 5.0f;
 

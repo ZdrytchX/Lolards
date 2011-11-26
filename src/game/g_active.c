@@ -969,6 +969,22 @@ void ClientTimerActions( gentity_t *ent, int msec )
  
       }
     }
+    if( client->ps.weapon == WP_ALEVEL4 )
+    {
+      int ammo, maxAmmo;
+
+      BG_FindAmmoForWeapon( WP_ALEVEL4, &maxAmmo, NULL );
+      BG_UnpackAmmoArray( WP_ALEVEL4, client->ps.ammo, client->ps.powerups, &ammo, NULL );
+
+      if( ammo < maxAmmo )
+      {
+        ammo++;
+        BG_PackAmmoArray( WP_ALEVEL4, client->ps.ammo, client->ps.powerups, ammo, 0 );
+ 
+      }
+	if (ammo > maxAmmo )
+	ammo = maxAmmo;
+    }
 //This following is an idea i had on giving these two energy weapon ammo over time.
 /*
 if( client->ps.weapon == WP_LUCIFER_CANNON ) {

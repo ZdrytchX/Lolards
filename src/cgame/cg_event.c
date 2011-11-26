@@ -97,7 +97,7 @@ static void CG_Obituary( entityState_t *ent )
       message = "thought ^2acid^7 tasted good";
       break;
     case MOD_LAVA:
-      message = "melted under ^1molten rock";
+      message = "melted under some mysterious ^1red ^7liquid ";
       break;
     case MOD_TARGET_LASER:
       message = "shouldn't have touched that ^1laser";
@@ -115,7 +115,7 @@ static void CG_Obituary( entityState_t *ent )
       message = "was shot down by a chainret";
       break;
     case MOD_TESLAGEN:
-      message = "felt ticklish after being zapped";
+      message = "had a deadly electrical massage";
       break;
     case MOD_ATUBE:
       message = "shouldn't have gone in the alien base";
@@ -218,7 +218,7 @@ static void CG_Obituary( entityState_t *ent )
         message = "was mowed down by";
         break;
       case MOD_SHOTGUN:
-        message = "was torn apart by the pellets of";
+        message = "was blasted apart by the pellets of";
         break;
       case MOD_PRIFLE:
         message = "ate plasma from";
@@ -230,7 +230,7 @@ static void CG_Obituary( entityState_t *ent )
         message = "was laser spammed by";
         break;
       case MOD_FLAMER:
-        message = "was barbequed by";
+        message = "was tanned dangerously by";
         message2 = "'s grill";
         break;
       case MOD_FLAMER_SPLASH:
@@ -246,8 +246,8 @@ static void CG_Obituary( entityState_t *ent )
         message2 = "'s exploding sun";
         break;
       case MOD_GRENADE:
-        message = "should've ran from";
-        message2 = "'s grenade";
+        message = "didn't see";
+        message2 = "drop a mininuke";
         break;
 
       case MOD_ABUILDER_CLAW:
@@ -260,9 +260,10 @@ static void CG_Obituary( entityState_t *ent )
         break;
       case MOD_LEVEL1_CLAW:
         message = "was assasinated by";
-        Com_sprintf( className, 64, "'s %s",
-            BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL1 ) );
-        message2 = className;
+//Canceled as basi-suit shares the same death message
+//        Com_sprintf( className, 64, "'s %s",
+//            BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL1 ) );
+//        message2 = className;
         break;
       case MOD_LEVEL2_CLAW:
         message = "had his body parts robbed by";
@@ -271,13 +272,13 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL2_ZAP:
-        message = "was shocked by";
+        message = "'s life was drained by a shock treatment from";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL2 ) );
         message2 = className;
         break;
       case MOD_LEVEL3_CLAW:
-        message = "was decapitated by";
+        message = "was decapicated by";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL3 ) );
         message2 = className;
@@ -295,13 +296,13 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL4_CLAW:
-        message = "should've yelled '^1TAAAAAANK!^7' when he saw";
+        message = "was injected by the arm of";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL4 ) );
         message2 = className;
         break;
       case MOD_LEVEL4_CHARGE:
-        message = "was flattened by";
+        message = "should've yelled '^1TAAAANK!^7' when he saw";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL4 ) );
         message2 = className;

@@ -345,7 +345,7 @@ buildableAttributes_t bg_buildableList[ ] =
     HSPAWN_BP,             //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     HSPAWN_HEALTH,         //int       health;
-    0,                     //int       regenRate;
+    3,                     //int       regenRate;
     HSPAWN_SPLASHDAMAGE,   //int       splashDamage;
     HSPAWN_SPLASHRADIUS,   //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -382,7 +382,7 @@ buildableAttributes_t bg_buildableList[ ] =
     MEDISTAT_BP,           //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     MEDISTAT_HEALTH,       //int       health;
-    0,                     //int       regenRate;
+    1,                     //int       regenRate;
     MEDISTAT_SPLASHDAMAGE, //int       splashDamage;
     MEDISTAT_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -421,7 +421,7 @@ buildableAttributes_t bg_buildableList[ ] =
     MGTURRET_BP,           //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     MGTURRET_HEALTH,       //int       health;
-    0,                     //int       regenRate;
+    2,                     //int       regenRate;
     MGTURRET_SPLASHDAMAGE, //int       splashDamage;
     MGTURRET_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -458,7 +458,7 @@ buildableAttributes_t bg_buildableList[ ] =
     TESLAGEN_BP,           //int       buildPoints;
     ( 1 << S3 ),           //int       stages
     TESLAGEN_HEALTH,       //int       health;
-    0,                     //int       regenRate;
+    3,                     //int       regenRate;
     TESLAGEN_SPLASHDAMAGE, //int       splashDamage;
     TESLAGEN_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -495,7 +495,7 @@ buildableAttributes_t bg_buildableList[ ] =
     DC_BP,                 //int       buildPoints;
     ( 1 << S2 )|( 1 << S3 ), //int       stages
     DC_HEALTH,             //int       health;
-    0,                     //int       regenRate;
+    5,                     //int       regenRate;
     DC_SPLASHDAMAGE,       //int       splashDamage;
     DC_SPLASHRADIUS,       //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -532,7 +532,7 @@ buildableAttributes_t bg_buildableList[ ] =
     ARMOURY_BP,            //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     ARMOURY_HEALTH,        //int       health;
-    0,                     //int       regenRate;
+    5,                     //int       regenRate;
     ARMOURY_SPLASHDAMAGE,  //int       splashDamage;
     ARMOURY_SPLASHRADIUS,  //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -569,7 +569,7 @@ buildableAttributes_t bg_buildableList[ ] =
     REACTOR_BP,            //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     REACTOR_HEALTH,        //int       health;
-    0,                     //int       regenRate;
+    7,                     //int       regenRate;
     REACTOR_SPLASHDAMAGE,  //int       splashDamage;
     REACTOR_SPLASHRADIUS,  //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -606,7 +606,7 @@ buildableAttributes_t bg_buildableList[ ] =
     REPEATER_BP,           //int       buildPoints;
     ( 1 << S2 )|( 1 << S3 ), //int  stages
     REPEATER_HEALTH,       //int       health;
-    0,                     //int       regenRate;
+    2,                     //int       regenRate;
     REPEATER_SPLASHDAMAGE, //int       splashDamage;
     REPEATER_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -3122,11 +3122,11 @@ weaponAttributes_t bg_weapons[ ] =
     qtrue,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     BLASTER_REPEAT,       //int       repeatRate1;
-    0,                    //int       repeatRate2;
+    500,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     BLASTER_K_SCALE,      //float     knockbackScale;
-    qfalse,               //qboolean  hasAltMode;
+    qtrue,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
@@ -3174,16 +3174,16 @@ weaponAttributes_t bg_weapons[ ] =
     qfalse,               //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     SHOTGUN_REPEAT,       //int       repeatRate1;
-    0,                    //int       repeatRate2;
+    SHOTGUN_BLAST_REPEAT,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     SHOTGUN_RELOAD,       //int       reloadTime;
     SHOTGUN_K_SCALE,        //float     knockbackScale;
-    qfalse,               //qboolean  hasAltMode;
+    qtrue,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  purchasable;
-    qtrue,                //qboolean  longRangefindbd;
+    qtrue,                //qboolean  longRange;
     0,                    //int       buildDelay;
     WUT_HUMANS            //WUTeam_t  team;
   },
@@ -3226,7 +3226,7 @@ weaponAttributes_t bg_weapons[ ] =
     qfalse,               //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     CHAINGUN_REPEAT,      //int       repeatRate1;
-    CHAINGUN_REPEAT * 1.5,                    //int       repeatRate2;
+    CHAINGUN_REPEAT2,     //int       repeatRate2;
     0,                    //int       repeatRate3;
     5000,                    //int       reloadTime;
     CHAINGUN_K_SCALE,     //float     knockbackScale;
@@ -3278,11 +3278,11 @@ weaponAttributes_t bg_weapons[ ] =
     qfalse,               //int       infiniteAmmo;
     qtrue,                //int       usesEnergy;
     PRIFLE_REPEAT,        //int       repeatRate1;
-    0,                    //int       repeatRate2;
+    PRIFLE_REPEAT,           //int       repeatRate2;
     0,                    //int       repeatRate3;
     PRIFLE_RELOAD,        //int       reloadTime;
     PRIFLE_K_SCALE,       //float     knockbackScale;
-    qfalse,               //qboolean  hasAltMode;
+    qtrue,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
@@ -3689,17 +3689,17 @@ weaponAttributes_t bg_weapons[ ] =
     SLOT_WEAPON,          //int       slots;
     "level4",             //char      *weaponName;
     "Charge",             //char      *weaponHumanName;
-    0,                    //int       maxAmmo;
+    2,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     LEVEL4_CLAW_REPEAT,   //int       repeatRate1;
     100,                    //int       repeatRate2;
-    5000,                    //int       repeatRate3;
+    2500,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     LEVEL4_CLAW_K_SCALE,  //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
+    qtrue,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  purchasable;
@@ -3719,13 +3719,13 @@ weaponAttributes_t bg_weapons[ ] =
     9,                    //int       maxClips;
     qfalse,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
-    500,                  //int       repeatRate1;
+    1500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
-    500,                  //int       repeatRate3;
+    2000,                  //int       repeatRate3;
     2000,                    //int       reloadTime;
     LOCKBLOB_K_SCALE,     //float     knockbackScale;
-    qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
+    qtrue,               //qboolean  hasAltMode;
+    qtrue,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,               //qboolean  purchasable;
@@ -3772,11 +3772,11 @@ weaponAttributes_t bg_weapons[ ] =
     qfalse,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     50,                    //int       repeatRate1;
-    0,                    //int       repeatRate2;
+    1500,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     8000,                    //int       reloadTime;
     MGTURRET_K_SCALE,     //float     knockbackScale;
-    qfalse,               //qboolean  hasAltMode;
+    qtrue,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;

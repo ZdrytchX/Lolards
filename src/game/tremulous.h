@@ -109,7 +109,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_BOUNCEBALL_AMMO      3
 #define LEVEL3_BOUNCEBALL_REPEAT    600 //default 1000 //deal with long range turrets
 #define LEVEL3_BOUNCEBALL_SPEED     1000.0f //default 1000 //1200 for longer range
-#define LEVEL3_BOUNCEBALL_SPLASH_DMG  110 //Explosion.
+#define LEVEL3_BOUNCEBALL_SPLASH_DMG  110 //Explosion dmg.
 #define LEVEL3_BOUNCEBALL_SPLASH_RADIUS 92 //Splash radius. Helps with sniping. //Rememeber that reload time is 10 seconds. You don't want it overpowered.
 
 #define LEVEL4_CLAW_DMG             ADM(112)
@@ -126,6 +126,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_CHARGE_CHARGE_RATIO  (LEVEL4_CHARGE_TIME/LEVEL4_CHARGE_CHARGE_TIME)
 #define LEVEL4_CHARGE_REPEAT        1000
 #define LEVEL4_CHARGE_DMG           ADM(209) //100 (to help with armoured)
+
+//Note: tyrant spit bomb is a trapper bomb, so it shares the facts of a trapper.
+//Change trapper facts if you want to change the damage.
 
 
 
@@ -146,13 +149,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
 
 #define ABUILDER_SPEED              0.8f
-#define ABUILDER_VALUE              AVM(150)
+#define ABUILDER_VALUE              AVM(170)
 #define ABUILDER_HEALTH             AHM(60)
 #define ABUILDER_REGEN              2
 #define ABUILDER_COST               0
 
 #define ABUILDER_UPG_SPEED          1.0f
-#define ABUILDER_UPG_VALUE          AVM(225)
+#define ABUILDER_UPG_VALUE          AVM(220)
 #define ABUILDER_UPG_HEALTH         AHM(90)
 #define ABUILDER_UPG_REGEN          3
 #define ABUILDER_UPG_COST           0
@@ -164,7 +167,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_COST                 0
 
 #define LEVEL1_SPEED                1.2f
-#define LEVEL1_VALUE                AVM(180)
+#define LEVEL1_VALUE                AVM(280)
 #define LEVEL1_HEALTH               AHM(80)
 #define LEVEL1_REGEN                2
 #define LEVEL1_COST                 1
@@ -201,7 +204,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_UPG_COST             2
 
 #define LEVEL4_SPEED                1.1f //1.2f
-#define LEVEL4_VALUE                AVM(800)
+#define LEVEL4_VALUE                AVM(880)
 #define LEVEL4_HEALTH               AHM(480)
 #define LEVEL4_REGEN                (0.025f * LEVEL4_HEALTH)
 #define LEVEL4_COST                 3
@@ -260,7 +263,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BOOSTER_SPLASHDAMAGE        50
 #define BOOSTER_SPLASHRADIUS        50
 #define BOOSTER_CREEPSIZE           120 //also the size of the area it heals players
-#define BOOSTER_INTERVAL            30000 //time in msec between uses (per player) 
+#define BOOSTER_INTERVAL            30000 //time in msec between uses (per player) //30000
 #define BOOSTER_REGEN_MOD           3.0f //regen multipliyer, default is 2
 #define BOOST_TIME                  60000 //poison reload/poison last in alien Default is 30000, gpp should be 20000
 
@@ -301,7 +304,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TRAPPER_REPEAT              1000  //Wrong. Unused. Real value is 500.
 #define TRAPPER_K_SCALE             1.0f //explosion. Keep positive for trapper/lockblob jumping.
 #define LOCKBLOB_SPEED              1250.0f //default 650
-#define LOCKBLOB_LOCKTIME           6000 //default 6000 //8000
+#define LOCKBLOB_LOCKTIME           0 //default 6000 //8000
+//the REAL lifetime of lock because aliens now get locked as well
+//refer to g_missile.c's blob code
+#define LOCKBLOB_LIFETIME           6000
 #define LOCKBLOB_DOT                0.85f // max angle = acos( LOCKBLOB_DOT )
 #define LOCKBLOB_K_SCALE            -1.0f //1.0f
 #define LOCKBLOB_DMG                97
@@ -360,12 +366,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HDM(d)                      ((int)((float)d*HUMAN_WDMG_MODIFIER))
 
 #define BLASTER_REPEAT              380 //500
-#define BLASTER_K_SCALE             5.0f
+#define BLASTER_K_SCALE             5.0f //knockback now noticable
 #define BLASTER_SPREAD              200 //doesn't work, soon to be fixed
 #define BLASTER_SPEED               1400 //1400 //2400
-#define BLASTER_DMG                 HDM(8) //9 //10+ to help againts dretches //18 if 18limited ammo with a slow repeat //36 - strong with ammo but ammo gets used up fast
+#define BLASTER_DMG                 HDM(8) //9 //10+ to help againts dretches //18 if 18limited ammo with a slow repeat //36 - strong with ammo but ammo gets used up fast //8 because faster shoot
 #define BLASTER_CLIPSIZE            6
 #define BLASTER_MAXCLIPS            9
+#define BLASTER_MELEE               16
+#define BLASTER_MELEE_RANGE         80
 
 #define RIFLE_CLIPSIZE              42 //30 //36 //42
 #define RIFLE_MAXCLIPS              9 //6
@@ -397,9 +405,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_MAXCLIPS            7 //default 3
 #define SHOTGUN_REPEAT              700 //1000
 #define SHOTGUN_K_SCALE             2.0f
-#define SHOTGUN_RELOAD              3980 //spray of defeat - 6000 //clip based - 2000
-#define SHOTGUN_SPREAD              1320 //900 //1200 spray of defeat
+#define SHOTGUN_RELOAD              5000 //spray of defeat - 6000 //clip based - 3000
+#define SHOTGUN_SPREAD              1320 //900 //1320 spray of defeat
 #define SHOTGUN_DMG                 HDM(6) //spray of defeat - 6 //long range combat shot 6
+#define SHOTGUN_BLAST               87 //damage for secondary.
+#define SHOTGUN_BLAST_RANGE         350
+#define SHOTGUN_BLAST_REPEAT        2000
 
 #define LASGUN_PRICE                150
 #define LASGUN_AMMO                 370
@@ -408,14 +419,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LASGUN_K_SCALE              2.0f
 #define LASGUN_RELOAD               3000
 #define LASGUN_SPREAD               100 //works now =P (ripped from mgun)
-#define LASGUN_DAMAGE               HDM(11) //9
+#define LASGUN_DAMAGE               HDM(12) //9
 
 //Mass Driver now a Sniper Rifle with a large cooldown
-#define MDRIVER_PRICE               350
+#define MDRIVER_PRICE               380
 #define MDRIVER_CLIPSIZE            5
 #define MDRIVER_MAXCLIPS            7
 #define MDRIVER_DMG                 HDM(72) //(random( ) * 38 + 100)
-#define MDRIVER_REPEAT              1320 //2000 - wearer must remember to put ammo in his blaster to deal with dretches safely
+#define MDRIVER_RADIUS              100    
+#define MDRIVER_REPEAT              1320 //2000 - wearer must remember to put ammo in his blaster to deal with dretches safely unless blaster is unlimited ammo
 #define MDRIVER_K_SCALE             3.0f
 #define MDRIVER_RELOAD              4000
 
@@ -423,14 +435,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CHAINGUN_PRICE              400
 #define CHAINGUN_BULLETS            300
 #define CHAINGUN_MAXCLIPS           2
-#define CHAINGUN_REPEAT             70
+#define CHAINGUN_REPEAT             90 //without speedy barrel function
+#define CHAINGUN_REPEAT2             70 //with speedy barrel function
 #define CHAINGUN_K_SCALE            1.0f
 #define CHAINGUN_SPREAD             500 //700
 #define CHAINGUN_DMG                HDM(7) //6
 
 //Prifle - slow spam, doing max 112 dmg/s
 
-#define PRIFLE_PRICE                520 //cost much? Its like a really strong lasgun in my opinion.
+#define PRIFLE_PRICE                580 //cost much? Its like a really strong lasgun in my opinion.
 #define PRIFLE_CLIPS                58
 #define PRIFLE_MAXCLIPS             5
 #define PRIFLE_REPEAT               125
@@ -438,7 +451,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PRIFLE_RELOAD               2000
 #define PRIFLE_DMG                  HDM(14)
 #define PRIFLE_SPEED                3000 //1000
-//#define PRIFLE_SPREAD               300 //cancelled
+//#define PRIFLE_SPREAD               300 //cancelled - usage deleted
 
 //pulse rifle from movie 'alien'
 /*#define PRIFLE_PRICE                480
@@ -452,11 +465,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 //Flamer has a realistic shot by halving the repeat rate (2x speed) and halving the dmg
-#define FLAMER_PRICE                480
+#define FLAMER_PRICE                520
 #define FLAMER_GAS                  380 //150
 #define FLAMER_REPEAT               100 //200
 #define FLAMER_K_SCALE              1.0f //1f
-#define FLAMER_DMG                  HDM(13) //20
+#define FLAMER_DMG                  HDM(11) //20
 #define FLAMER_RADIUS               80 //splash radius //50
 #define FLAMER_LIFETIME             800.0f
 #define FLAMER_SPEED                360.0f //300
@@ -469,7 +482,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_K_SCALE             3.27f//1f
 #define LCANNON_CHARGEREPEAT        500 //800
 #define LCANNON_RELOAD              5000
-#define LCANNON_DAMAGE              HDM(300) //265 //395
+#define LCANNON_DAMAGE              HDM(372) //265 //395
 #define LCANNON_RADIUS              180 //splash radius. Default 150, wanted 180, but too overpowered
 #define LCANNON_SECONDARY_DAMAGE    HDM(132) //default 27, prefered 30, but gets overpowered if rapid //now direct hit
 #define LCANNON_SECONDARY_RADIUS    35 //75
@@ -567,24 +580,39 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MEDISTAT_SPLASHDAMAGE       50
 #define MEDISTAT_SPLASHRADIUS       100
 
+
+//NOTE: MASSIVE CHANGE TO THE MACHINE GUN TURRET!
 //no spinup required!
+//IMPORTANT: You should change MGTURRET_FIRE_SPEED to 1 if you want the turret to be 'normal'.
+//It slows down the turning speed of the turret when it fires.
+#define MGTURRET_FIRE_SPEED         0.2
+
 #define MGTURRET_BP                 8
 #define MGTURRET_BT                 10000
 #define MGTURRET_HEALTH             HBHM(210) //default 190. //increased to cope with tyrant's charge and pounce
 #define MGTURRET_SPLASHDAMAGE       60 //50
 #define MGTURRET_SPLASHRADIUS       100
-#define MGTURRET_ANGULARSPEED       3  //degrees/think 8 ~= 200deg/sec //7
-#define MGTURRET_ACCURACYTOLERANCE  MGTURRET_ANGULARSPEED / 0.5f //1.5 angular difference for turret to fire
+#define MGTURRET_ANGULARSPEED       5  //degrees/think 8 ~= 200deg/sec //3 //now 5 because of added MGTURRET_FIRE_SPEED
+#define MGTURRET_ACCURACYTOLERANCE  MGTURRET_ANGULARSPEED / 1.5f //1.5 angular difference for turret to fire
 #define MGTURRET_VERTICALCAP        30  // +/- maximum pitch //45
 #define MGTURRET_REPEAT             79 //100
 #define MGTURRET_K_SCALE            1.0f
 #define MGTURRET_RANGE              580.0f //default 300, same goes for atube
 #define MGTURRET_SPREAD             1200 //200
 #define MGTURRET_DMG                HDM(6) //4
-#define MGTURRET_DCC_ANGULARSPEED       7
-#define MGTURRET_DCC_ACCURACYTOLERANCE  MGTURRET_DCC_ANGULARSPEED / 0.5f //1.5f
-#define MGTURRET_GRAB_ANGULARSPEED      1
+#define MGTURRET_DCC_ANGULARSPEED       13
+#define MGTURRET_DCC_ACCURACYTOLERANCE  MGTURRET_DCC_ANGULARSPEED / 1.5f //1.5f
+#define MGTURRET_GRAB_ANGULARSPEED      3
 #define MGTURRET_GRAB_ACCURACYTOLERANCE MGTURRET_GRAB_ANGULARSPEED / 1.5f
+//sort of a 'proper' version of accuracy tolerance as the pervious one screws up the turret if you raise it.
+//This 'range/spread' is a multiplier for the accuracy tolerance before it fires.
+#define MGTURRET_ACCURACY_SPREAD        8
+//this is a mutliplier for the ratio of how fast the pitch goes compare to normal. "Normal" is the same value as for yaw. Yaw will stay as MGTURRET_ANGULARSPEED or whatever if it is grabbed. For example, normal turning speed is 8 without grab or dcc, therefore:
+//*1 = normal = 8
+//*0.5 = half = 4
+//*2 = Fast rise = 16
+//*0 = no rise
+#define MGTURRET_ACCURACY_PITCH         0.8
 
 #define TESLAGEN_BP                 10
 #define TESLAGEN_BT                 15000

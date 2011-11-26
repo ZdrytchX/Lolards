@@ -629,9 +629,9 @@ void G_BotEvolve ( gentity_t *self, usercmd_t *botCmdBuffer )
 {
     // very not-clean code, but hey, it works and I'm lazy 
     int res;
-//    if(!G_BotEvolveToClass(self, "human_bsuit", botCmdBuffer))
+    if(!G_BotEvolveToClass(self, "human_bsuit", botCmdBuffer))
 //^^fuck them suits - they just waste their evos. We need proper human players. I'm sorry.
-
+//Ehem. Remember to re-disable this after LAN-use because it is useless againts humans. Well almost.
     if(!G_BotEvolveToClass(self, "level4", botCmdBuffer))
         if(!G_BotEvolveToClass(self, "level3upg", botCmdBuffer)) {
             res = (random()>0.7) ? G_BotEvolveToClass(self, "level3", botCmdBuffer) : G_BotEvolveToClass(self, "level2upg", botCmdBuffer);
@@ -862,13 +862,13 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             secondaryRange = 0;
             break;
         case WP_CHAINGUN:
-            range = 600
+            range = 600;
 //            range = (100 * 8192)/CHAINGUN_SPREAD; //100 is the maximum radius we want the spread to be
             secondaryRange = (100 * 8192)/RIFLE_SPREAD; //secondary uses rifle sread so yeah
 	    break;
 
         case WP_LUCIFER_CANNON:
-            secondaryRange = 150 //suprise?!? :D - shoots primary as it loses its charge then shoots a secondary straight after- a combo attack
+            secondaryRange = 150; //suprise?!? :D - shoots primary as it loses its charge then shoots a secondary straight after- a combo attack
             range = (100 * 8192)/CHAINGUN_SPREAD; //not too far
             break;
         default:

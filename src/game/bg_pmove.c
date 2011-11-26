@@ -2928,7 +2928,6 @@ static void PM_Weapon( void )
    case WP_MACHINEGUN:
       attack1 = pm->cmd.buttons & BUTTON_ATTACK;
       // attack2 is handled on the client for zooming (cg_view.c)
-
       if( !attack1 )
       {
         pm->ps->weaponTime = 0;
@@ -3092,6 +3091,34 @@ static void PM_Weapon( void )
       if( ammo < 0 )
         ammo = 0;
     }
+    else if( pm->ps->weapon == WP_LOCKBLOB_LAUNCHER && !attack3 && attack2 && !attack1 )
+	{
+	if (clips >= 1)
+		{
+	clips -= 1;
+		}
+	else
+		{
+        pm->ps->weaponTime = 0;
+        pm->ps->generic1 = WPM_NOTFIRING;
+		}
+	}
+    else if( pm->ps->weapon == WP_MGTURRET && !attack3 && attack2 && !attack1 ) {
+	if (ammo >= 100) {
+	ammo -= 100;
+	}
+	else {
+        pm->ps->weaponTime = 0;
+        pm->ps->generic1 = WPM_NOTFIRING; } }
+    else if( pm->ps->weapon == WP_SHOTGUN && !attack3 && attack2 && !attack1 ) {
+//	if (ammo == 10) {
+	if (clips >= 1 ) {
+	clips--;
+	}
+//	}
+	else {
+        pm->ps->weaponTime = 0;
+        pm->ps->generic1 = WPM_NOTFIRING; } }
     else
       ammo--;
 
@@ -3100,6 +3127,11 @@ static void PM_Weapon( void )
   else if( pm->ps->weapon == WP_ALEVEL3_UPG && attack3 )
   {
     //special case for slowblob
+    ammo--;
+    BG_PackAmmoArray( pm->ps->weapon, pm->ps->ammo, pm->ps->powerups, ammo, clips );
+  }
+  else if( pm->ps->weapon == WP_ALEVEL4 && attack3 )
+  {
     ammo--;
     BG_PackAmmoArray( pm->ps->weapon, pm->ps->ammo, pm->ps->powerups, ammo, clips );
   }

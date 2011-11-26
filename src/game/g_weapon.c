@@ -108,6 +108,8 @@ void G_GiveClientMaxAmmo( gentity_t *ent, qboolean buyingEnergyAmmo )
         if( BG_InventoryContainsUpgrade( UP_BATTPACK, ent->client->ps.stats ) )
           maxAmmo = (int)( (float)maxAmmo * BATTPACK_MODIFIER );
       }
+      else if ( BG_InventoryContainsUpgrade( UP_BATTPACK, ent->client->ps.stats ) )
+	maxClips = (int)( (float)maxAmmo * BATTPACK_MODIFIER );
 
       BG_PackAmmoArray( i, ent->client->ps.ammo, ent->client->ps.powerups,
                         maxAmmo, maxClips );
@@ -386,6 +388,7 @@ MASS DRIVER
 
 ======================================================================
 */
+//sorry about this mess, i fucked up the code. Here's a backup from lakitu7's.
 
 void massDriverFire( gentity_t *ent )
 {
@@ -427,13 +430,100 @@ void massDriverFire( gentity_t *ent )
 
   if( traceEnt->takedamage )
   {
-    G_Damage( 0, ent, ent, forward, tr.endpos,
-      MDRIVER_DMG, 0, MOD_MDRIVER ); //'0' makes it go through stuff
+    G_Damage( traceEnt, ent, ent, forward, tr.endpos,
+      MDRIVER_DMG, 0, MOD_MDRIVER );
+  }
+}
+
+/*void massDriverFire( gentity_t *ent, int count )
+{
+  trace_t   tr;
+  vec3_t    end;
+  gentity_t *tent;
+  gentity_t *traceEnt;
+//  int       unlinked; //going through effect
+//  int       hits;
+//ripped from railgun code
+
+  VectorMA( muzzle, 8192 * 16, forward, end );
+
+  G_UnlaggedOn( ent, muzzle, 8192 * 16 );
+  trap_Trace( &tr, muzzle, NULL, NULL, end, ent->s.number, MASK_SHOT );
+  G_UnlaggedOff( );
+
+  if( tr.surfaceFlags & SURF_NOIMPACT )
+    
+  traceEnt = &g_entities[ tr.entityNum ];
+
+  // snap the endpos to integers, but nudged towards the line
+  SnapVectorTowards( tr.endpos, muzzle );
+
+
+//trace only againts solids so it will go through people
+unlinked = 0;
+hits = 0;
+do	{
+	trap_Trace (&trace, muzzle, NULL, NULL, end, ent->s.number, MASK_SHOT );
+	if ( trace.entityNum >= ENTITYNUM_MAX_NORMAL )
+		{
+		break;
+		}
+		if ( traceEnt->takedamage )
+		{
+			if( LogAccuracyHit( traceEnt, ent ) )
+			{
+				hits++;
+			}
+			G_Damage (traceEnt, ent, ent, forward, trace.endpos, damage, 0, MOD_MDRIVER);
+		}
+		if ( trace.contents & CONTENTS_SOLID ) {
+			break;		// we hit something solid enough to stop the beam
+	}
+
+  // send impact
+//go through people
+
+do	{
+	trap_Trace (&tr, muzzle, NULL, NULL, end, ent->s.number, MASK_SHOT );
+	if ( tr.entityNum >= ENTITYNUM_MAX_NORMAL ) {
+		break;
+		}
+//stop at walls
+	if ( tr.contents & CONTENTS_SOLID ) {
+		break;
+		}	// we hit something solid enough to stop the beam
+	}
+	
+  if( traceEnt->takedamage && traceEnt->client )
+  {
+    tent = G_TempEntity( tr.endpos, EV_MISSILE_HIT );
+//    tent = G_TempEntity( tr.endpos, EV_MISSILE_HIT );
+
+//    tent->s.otherEntityNum = traceEnt->s.number;
+    tent->s.otherEntityNum = traceEnt->s.number;
+//    tent->s.eventParm = DirToByte( tr.plane.normal );
+    tent->s.eventParm = DirToByte( tr.plane.normal );
+    tent->s.weapon = ent->s.weapon;
+    tent->s.generic1 = ent->s.generic1; //weaponMode
+  }
+  else
+  {
+    tent = G_TempEntity( tr.endpos, EV_MISSILE_MISS );
+    tent->s.eventParm = DirToByte( tr.plane.normal );
+    tent->s.weapon = ent->s.weapon;
+    tent->s.generic1 = ent->s.generic1; //weaponMode
+  }
+
+  if( traceEnt->takedamage )
+  {
+    G_Damage( traceEnt, ent, ent, forward, tr.endpos,
+      MDRIVER_DMG, 0, MOD_MDRIVER );
 //original:
 //    G_Damage( traceEnt, ent, ent, forward, tr.endpos,
 //      MDRIVER_DMG, 0, MOD_MDRIVER );
   }
 }
+*/
 
 /*
 ======================================================================
@@ -449,7 +539,7 @@ void lockBlobLauncherFire( gentity_t *ent )
 
   m = fire_lockblob( ent, muzzle, forward );
 
-//  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics //although no point, there's a secret where humans can buy this weapon for 3000 funds. People may ask 'why are bots holding invisable guns, shooting blobs/barbs?' I just like to troll them. But remember, this is a secret.
+  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics //although no point, there's a secret where humans can buy this weapon for 3000 funds. People may ask 'why are bots holding invisable guns, shooting blobs/barbs?' I just like to troll them. But remember, this is a secret.
 }
 
 /*
@@ -764,7 +854,7 @@ void cancelBuildFire( gentity_t *ent )
   gentity_t   *traceEnt;
   vec3_t    mins, maxs;
   int         bHealth;
-  int	      damage = 20;
+//  int	      damage = 20;
 //  int         hHealth;
 
   G_UnlaggedOn( ent, muzzle, LEVEL0_BITE_RANGE );
@@ -855,7 +945,7 @@ void cancelBuildFire( gentity_t *ent )
 //      traceEnt->health -= 20; //do sum dmg!
 	//damage 
 //same for this part - but i just keep it in case server crashes due to a ckit killing.
-  G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, DAMAGE_NO_KNOCKBACK, MOD_TRIGGER_HURT );
+//  G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, DAMAGE_NO_KNOCKBACK, MOD_TRIGGER_HURT );
 
       }
 	}
@@ -1474,9 +1564,17 @@ qboolean CheckPounceAttack( gentity_t *ent )
 
   if( !traceEnt->takedamage )
     return qfalse;
-
+/*
+  damage = (int)( ( ((float)ent->client->pmext.pouncePayload
+    / (float)LEVEL3_POUNCE_SPEED ) * LEVEL3_POUNCE_DMG ) *
+      (( (float)ent->client->ps.stats[ STAT_FALLDIST ] - MIN_FALL_DISTANCE ) /
+                         ( MAX_FALL_DISTANCE - MIN_FALL_DISTANCE )));
+*/
+//original
   damage = (int)( ( (float)ent->client->pmext.pouncePayload
-    / (float)LEVEL3_POUNCE_SPEED ) * LEVEL3_POUNCE_DMG );
+    / (float)LEVEL3_POUNCE_SPEED ) * LEVEL3_POUNCE_DMG ); 
+//extra added
+//  client->ps.stats[ STAT_FALLDIST ]
 
   ent->client->pmext.pouncePayload = 0;
 
@@ -1596,18 +1694,18 @@ void FireWeapon3( gentity_t *ent )
       slowBlobFire( ent );
       break;
 
-/*    case WP_ALEVEL4:
+    case WP_ALEVEL4:
       lockBlobLauncherFire( ent ); //thats right bitch, i'll trap you!
 //N/B: Trap as in trap, not males dressing up as women.
       break;
-
+/*
     case WP_HBUILD2:
       bulletFire( ent, 300, 1, MOD_TRIGGER_HURT );
       bulletFire( ent, 300, 1, MOD_TRIGGER_HURT );
       bulletFire( ent, 300, 1, MOD_TRIGGER_HURT );
       break;
-*/	
-
+	
+*/
     default:
       break;
   }
@@ -1647,25 +1745,31 @@ void FireWeapon2( gentity_t *ent )
       break;
 
 //standard weapons w/o secondary just use melee
+//dictionary:
+//meleeAttack( ent, [range], [width], [damage], MOD_[means of death] );
+//note: keep width 20 for humans otherwise it will not hit the target in vents.
     case WP_BLASTER:
-      meleeAttack( ent, 50, 20, 27, MOD_BLASTER );
+      meleeAttack( ent, BLASTER_MELEE_RANGE, 20, BLASTER_MELEE, MOD_BLASTER );
       break;
     case WP_SHOTGUN:
-      meleeAttack( ent, 50, 20, 27, MOD_BLASTER );
-      break;
-    case WP_FLAMER:
-      meleeAttack( ent, 50, 20, 27, MOD_BLASTER );
+      meleeAttack( ent, SHOTGUN_BLAST_RANGE, 20, SHOTGUN_BLAST, MOD_SHOTGUN ); //acts like a forward explosion
       break;
     case WP_PULSE_RIFLE:
-      meleeAttack( ent, 50, 20, 27, MOD_BLASTER );
+      lasGunFire( ent, LASGUN_SPREAD*2 );
       break;
 
     case WP_CHAINGUN:
-      bulletFire( ent, RIFLE_SPREAD, CHAINGUN_DMG, MOD_CHAINGUN );
+      bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG, MOD_CHAINGUN );
       break;
 
     case WP_LOCKBLOB_LAUNCHER:
       throwGrenade( ent );
+      break;
+
+    case WP_MGTURRET:
+      shotgunFire( ent );
+      shotgunFire( ent );
+      shotgunFire( ent );
       break;
 
     case WP_ABUILD:
@@ -1739,6 +1843,7 @@ void FireWeapon( gentity_t *ent )
       break;
     case WP_MASS_DRIVER:
       massDriverFire( ent );
+//      massDriverFire( ent, 0 );
       break;
     case WP_LUCIFER_CANNON:
       LCChargeFire( ent, qfalse );
