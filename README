@@ -42,6 +42,7 @@ From Lolards v0.7 qvm by ZdrytchX [a.k.a. ULTRA Random ViruS , please keep this 
 -Plasma rifle is explosive and bounces off walls
 -faster chaingun
 -More realistic Flame Thrower (faster repeat, weaker)
+-standard Marauder is like a glass cannon (attacks almost same rate as adv, although only has 100 hp)
 -GPP-like Lucifercannon, but has a stronger, slower secondary fire. Use primary fire to deal with dretches.
 -Mass Driver is more like a sniper rifle, but weaker than the first version [where you shoot 138 dmg, 3 second cooldown] to something more over-powerful, 72 dmg with a 1.25 second cooldown. I also increased reload time to 4 seconds.
 
@@ -116,3 +117,17 @@ From Lolards v0.7 qvm by ZdrytchX [a.k.a. ULTRA Random ViruS , please keep this 
 -Water - Deadly, but starts of weaker
 
 /// And shitloads moar! \\\
+
+12/2/12 edit (through windows, uncompiled/tested):
+-Dretch 'scratch' range should be little longer
+-Goon pounce weakened again so it doesn't kill light armour that easily (hopefully it is on the verge of doing 2 hit kill)
+-Hive troll feature removed - there should be a limit
+-fixed some bugs
+-smoking/bleeding visual bug fixed (structures when they overheal themselves) because having 150% hp isnt that useful
+-Shotgun blast stronger, but still should be underpowered
+-Pulse knockback down, it was almost impossible to kill a pulse with anything smaller than a adv marauder
+-Teslagen weaker to almost its original value (~40dmg/s)
+-Alien structure healing rates down
+-Overmind depowered a bit so saws can actually saw the overmind without going to critical hp (that is, 10 hp)
+-other stuff
+/\/\/\N/B: THIS UPDATE WAS NOT TESTED! IT MAY HAVE COMPILING ERRORS

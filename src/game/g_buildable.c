@@ -2029,9 +2029,17 @@ qboolean HMGTurret_TrackEnemy( gentity_t *self )
 
   if( self->lev1Grabbed )
   {
+	//use normal turning speed if there is a dcc
+	if( self->dcced )
+	{
+    accuracyTolerance = MGTURRET_ACCURACYTOLERANCE;
+    angularSpeed = MGTURRET_ANGULARSPEED;
+	}
+	else	{
     //can't turn fast if grabbed
     accuracyTolerance = MGTURRET_GRAB_ACCURACYTOLERANCE;
     angularSpeed = MGTURRET_GRAB_ANGULARSPEED;
+		}
   }
   else if( self->dcced )
   {
@@ -2061,13 +2069,20 @@ qboolean HMGTurret_TrackEnemy( gentity_t *self )
 //following is so if it is shooting, it will slow down.
   if( abs( angleToTarget[ YAW ] - self->s.angles2[ YAW ] ) <= (accuracyTolerance * MGTURRET_ACCURACY_SPREAD) &&
       abs( angleToTarget[ PITCH ] - self->s.angles2[ PITCH ] ) <= (accuracyTolerance * MGTURRET_ACCURACY_SPREAD) )
-	angularSpeed = angularSpeed * MGTURRET_FIRE_SPEED;
+	{
+
 
 //Slow down further if right on the target.
-
-  if( abs( angleToTarget[ YAW ] - self->s.angles2[ YAW ] ) <= (accuracyTolerance) &&
-      abs( angleToTarget[ PITCH ] - self->s.angles2[ PITCH ] ) <= (accuracyTolerance) )
+//The following is so the aimng speed doesn't screwed up or not: either one or the other.
+  if( abs( angleToTarget[ YAW ] - self->s.angles2[ YAW ] ) <= (accuracyTolerance * MGTURRET_DIRECT_ACCURACY_SPREAD ) &&
+      abs( angleToTarget[ PITCH ] - self->s.angles2[ PITCH ] ) <= (accuracyTolerance * MGTURRET_DIRECT_ACCURACY_SPREAD ) )
+		{
 	angularSpeed = angularSpeed * MGTURRET_FIRE_DIRECT_SPEED;
+		}
+	else	{
+	angularSpeed = angularSpeed * MGTURRET_FIRE_SPEED;
+		}
+	}
 
   //if not pointing at our target then move accordingly
   if( angularDiff[ PITCH ] < (-accuracyTolerance) )
@@ -2097,7 +2112,7 @@ qboolean HMGTurret_TrackEnemy( gentity_t *self )
   RotatePointAroundVector( dirToTarget, xNormal, dttAdjusted, -rotAngle );
   vectoangles( dirToTarget, self->turretAim );
 
-  //if pointing at our target return true
+  //if pointing at our target return true [fire]
   if( abs( angleToTarget[ YAW ] - self->s.angles2[ YAW ] ) <= (accuracyTolerance * MGTURRET_ACCURACY_SPREAD) &&
       abs( angleToTarget[ PITCH ] - self->s.angles2[ PITCH ] ) <= (accuracyTolerance * MGTURRET_ACCURACY_SPREAD) )
     return qtrue;
@@ -2301,7 +2316,9 @@ void HTeslaGen_Think( gentity_t *self )
   self->nextthink = level.time + BG_FindNextThinkForBuildable( self->s.modelindex );
 
   //if not powered don't do anything and check again for power next think
-  if( !( self->powered = G_FindPower( self ) ) || !( self->dcced = G_FindDCC( self ) ) )
+//  if( !( self->powered = G_FindPower( self ) ) || !( self->dcced = G_FindDCC( self ) ) )
+//no dcc required
+  if( !( self->powered = G_FindPower( self ) ) )
   {
     self->s.eFlags &= ~EF_FIRING;
     self->nextthink = level.time + POWER_REFRESH_TIME;
@@ -2693,8 +2710,11 @@ void G_BuildableThink( gentity_t *ent, int msec )
         bRegen && ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
       ent->health += bRegen;
 
-    if( ent->health > bHealth )
-      ent->health = bHealth;
+    if( ent->health > bHealth * 1.5 )
+      ent->health = bHealth * 1.5;
+	//don't overvamp the health for long although it should stay for a bit
+	if ( ent->health > bHealth )
+	ent->health = ent->health - 1;
   }
 
   if( ent->lev1Grabbed && ent->lev1GrabTime + LEVEL1_GRAB_TIME < level.time )

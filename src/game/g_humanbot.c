@@ -243,7 +243,7 @@ qboolean botNeedsItem(gentity_t *self) {
     //see if we can afford lightarmor and we dont have any on currently
     if(g_humanStage.integer == S1 || g_humanStage.integer == S2 || g_humanStage.integer == S3) {
         
-        //100 is the highest minimum amount of credits needed to buy something new
+        //70 is the highest minimum amount of credits needed to buy something new
         if((short) self->client->ps.persistant[PERS_CREDIT] > BG_FindPriceForUpgrade(UP_LIGHTARMOUR) && 
         !BG_InventoryContainsUpgrade(UP_LIGHTARMOUR, self->client->ps.stats))
             return qtrue;

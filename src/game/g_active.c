@@ -969,6 +969,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
  
       }
     }
+	/* //following has been cancelled due to no ammo screwups
     if( client->ps.weapon == WP_ALEVEL4 )
     {
       int ammo, maxAmmo;
@@ -985,11 +986,13 @@ void ClientTimerActions( gentity_t *ent, int msec )
 	if (ammo > maxAmmo )
 	ammo = maxAmmo;
     }
+	*/
 //This following is an idea i had on giving these two energy weapon ammo over time.
+//NOTE: DOES NOT WORK. [obviously]
 /*
 if( client->ps.weapon == WP_LUCIFER_CANNON ) {
-            if(client->ps.ammo[WP_LUCIFER_CANNON] < 190){
-		client->ps.ammo[WP_LUCIFER_CANNON] += 10; }
+            if( ammo < 190){
+		ammo += 10; }
 */
 /*if( client->ps.weapon == WP_LAS_GUN )
 if ( BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) ||  BG_InventoryContainsUpgrade( UP_BATTPACK, pm->ps->stats ) )

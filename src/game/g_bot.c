@@ -269,7 +269,7 @@ void G_BotThink( gentity_t *self) {
         G_AddCreditToClient(self->client, HUMAN_MAX_CREDITS, qtrue);
 
     //hacky ping fix
-    self->client->ps.ping = rand() % 100 + 290;
+    self->client->ps.ping = rand() % 100 + 90;
     
     G_BotModusManager(self);
     switch(self->botMind->currentModus) {
@@ -510,6 +510,7 @@ void G_BotGoto(gentity_t *self, botTarget_t target, usercmd_t *botCmdBuffer) {
 void G_BotAttack(gentity_t *self, usercmd_t *botCmdBuffer) {
     
     //switch to blaster
+	//stopped ckit - blaster switching remove the "self->client->ps.weapon == WP_HBUILD"
     if((BG_WeaponIsEmpty(self->client->ps.weapon, self->client->ps.ammo, self->client->ps.powerups)
         || self->client->ps.weapon == WP_HBUILD) && self->client->ps.stats[STAT_PTEAM] == PTE_HUMANS)
         G_ForceWeaponChange( self, WP_BLASTER );
@@ -1649,8 +1650,8 @@ void setSkill(gentity_t *self, int skill) {
     self->botMind->botSkill.level = skill;
     //different aim for different teams
     if(self->botMind->botTeam == PTE_HUMANS) {
-        self->botMind->botSkill.aimSlowness = (float) skill / 50;
-        self->botMind->botSkill.aimShake = (int) (30 - (skill * 3) );
+        self->botMind->botSkill.aimSlowness = (float) skill / 20;
+        self->botMind->botSkill.aimShake = (int) (20 - (skill * 2) );
     } else {
         self->botMind->botSkill.aimSlowness = (float) skill / 10;
         self->botMind->botSkill.aimShake = (int) (10 - skill);

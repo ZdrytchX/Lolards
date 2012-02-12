@@ -124,8 +124,8 @@ int G_BotEvolveToClass( gentity_t *ent, char *classname, usercmd_t *botCmdBuffer
 
                 if( ent->client->pers.evolveHealthFraction < 0.0f )
                     ent->client->pers.evolveHealthFraction = 0.0f;
-                else if( ent->client->pers.evolveHealthFraction > 1.0f )
-                    ent->client->pers.evolveHealthFraction = 1.0f;
+                else if( ent->client->pers.evolveHealthFraction > 1.5f )
+                    ent->client->pers.evolveHealthFraction = 1.5f;
 
                 //remove credit
                 G_AddCreditToClient( ent->client, -(short)numLevels, qtrue );

@@ -1759,7 +1759,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
         targ->client->tkcredits[ attacker->client->ps.clientNum ] += takeNoOverkill;
     }
 
-#define VAMP (( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + 50) * take / 600 + 1); // supports health gain that is less than 1 value and the '+50' means porportionate to health + 50. Its also to help dretches and small ones gain health.
+#define VAMP (( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * take / 600 + 1); // supports health gain that is less than 1 value and the '+50' means porportionate to health + 50. Its also to help dretches and small ones gain health.
 
     if( targ->health <= 0 )
     {
@@ -1781,6 +1781,11 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	if ((attacker->s.eType == ET_BUILDABLE ) )
 		{
 			attacker->health = attacker->health + ( take / 2 ); //don't want a multiplier for max health; becomes too strong and invincable
+//Make sure they don't go over 100% hp due to visual issues
+        		  if (attacker->health > attacker->client->ps.stats[ STAT_MAX_HEALTH ] * 1.0) 
+        		  {
+            		      attacker->health = attacker->client->ps.stats[ STAT_MAX_HEALTH ] * 1.0;
+    		      }
 		}
 	else
 	{
@@ -1803,6 +1808,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
               { attacker->health = -999; } //still possible, if he nades the same spot 999 times... but that will be unlikely because targets would've died and no more hp would be dealt.
          //Apprently you still see ur HUDs though... i can't fix this
          //Also, these apply to those who heal once every second, in this case its only aliens. This becomes a problem as humans become invincable still. This is fixed in g_active.c
+//note: It fixed itself 'somehow'. This code was not needed anymore although it was spammed 3 times throughout the source code including in g_active.c
 }
 	}
   }

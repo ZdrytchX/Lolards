@@ -90,22 +90,22 @@ int G_BotBuyWeapon(gentity_t *ent, int weapon);
 #define BOT_BACKUP_RANGE 300.0f
 
 //How long in milliseconds the bots will chase an enemy if he goes out of their sight (humans) or radar (aliens)
-#define BOT_ENEMY_CHASETIME 5000
+#define BOT_ENEMY_CHASETIME 15000 //5000
 
 //How long in milliseconds the bots will chase a friend if he goes out of their sight (humans) or radar (aliens)
-#define BOT_FRIEND_CHASETIME 5000
+#define BOT_FRIEND_CHASETIME 15000 //5000
 
 //How often in milliseconds, we will search for a new (closer) enemy this needs to be kept <= 10000 for now
-#define BOT_ENEMYSEARCH_INTERVAL 500
+#define BOT_ENEMYSEARCH_INTERVAL 1500 //500
 
 //at what hp do we use medkit?
-#define BOT_USEMEDKIT_HP 50
+#define BOT_USEMEDKIT_HP 40 //50
 
 //when human bots reach this ammo percentage left or less(and no enemy), they will head back to the base to refuel ammo when in range of arm as defined by BOT_ARM_RANGE
-#define BOT_LOW_AMMO 0.50f
+#define BOT_LOW_AMMO 0.30f //0.50f
 
 //when human bots reach this health or below (and no medkit/enemy) they will head back to the base to heal when in range of medi as defined by BOT_MEDI_RANGE
-#define BOT_LOW_HP 100
+#define BOT_LOW_HP 80 //100 - now 80 because of slow autoregen + vamp
 
 //TODO: implement the rest of these, currently they do nothing :)
 

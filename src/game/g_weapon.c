@@ -1694,8 +1694,8 @@ void FireWeapon3( gentity_t *ent )
       slowBlobFire( ent );
       break;
 
-    case WP_ALEVEL4:
-      lockBlobLauncherFire( ent ); //thats right bitch, i'll trap you!
+//    case WP_ALEVEL4:
+//      lockBlobLauncherFire( ent ); //thats right bitch, i'll trap you!
 //N/B: Trap as in trap, not males dressing up as women.
       break;
 /*
@@ -1733,6 +1733,10 @@ void FireWeapon2( gentity_t *ent )
   // fire the specific weapon
   switch( ent->s.weapon )
   {
+
+    case WP_ALEVEL0:
+      meleeAttack( ent, LEVEL0_SCRATCH_RANGE, 2, LEVEL0_SCRATCH_DMG, MOD_LEVEL0_BITE );
+      break;
     case WP_ALEVEL1_UPG:
       poisonCloud( ent );
       break;

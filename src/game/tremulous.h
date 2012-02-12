@@ -40,6 +40,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_CLAW_RANGE         64.0f
 #define ABUILDER_CLAW_WIDTH         4.0f
 #define ABUILDER_CLAW_REPEAT        800
+#define ABUILDER_BASE_CLAW_REPEAT   1000
 #define ABUILDER_CLAW_K_SCALE       1.0f
 #define ABUILDER_BASE_DELAY         12000 //17000
 #define ABUILDER_ADV_DELAY          8000 //12000
@@ -56,6 +57,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_BITE_WIDTH           6.0f
 #define LEVEL0_BITE_REPEAT          333 //500
 #define LEVEL0_BITE_K_SCALE         1.0f
+#define LEVEL0_SCRATCH_DMG          4 //dispite this, it is actually almost overpowered.
+#define LEVEL0_SCRATCH_REPEAT       100 //Main pupous of this attack is to drain health slowly and gain it just like mara zap.
+#define LEVEL0_SCRATCH_RANGE        100
 
 #define LEVEL1_CLAW_DMG             ADM(48)
 #define LEVEL1_CLAW_RANGE           96.0f //96
@@ -75,7 +79,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_CLAW_DMG             ADM(42)
 #define LEVEL2_CLAW_RANGE           128.0f //96
 #define LEVEL2_CLAW_WIDTH           18.0f //12f
-#define LEVEL2_CLAW_REPEAT          500
+#define LEVEL2_CLAW_REPEAT          400
 #define LEVEL2_CLAW_K_SCALE         1.0f//1
 #define LEVEL2_CLAW_U_REPEAT        333 //Okay, i admit, it is overpowered. So i decided to change it back to before. (original Lolards qvm had 250 here and 333 in normal mar)
 #define LEVEL2_CLAW_U_K_SCALE       1.0f//1
@@ -103,7 +107,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_POUNCE_SPEED_MOD     0.75f //speed when charging pounce default 0.75
 #define LEVEL3_POUNCE_CHARGE_TIME   700 //charge time, default 700
 #define LEVEL3_POUNCE_TIME          400 //delay after touching ground?!? default 400
-#define LEVEL3_BOUNCEBALL_DMG       ADM(160) //110 default. Not to be increased higher than 200 as it can kill reactor easily. //180 //decreased as it is now explosive like gpp.
+#define LEVEL3_BOUNCEBALL_DMG       ADM(135) //110 default. Not to be increased higher than 200 as it can kill reactor easily. //180 //decreased as it is now explosive like gpp.
 
 //I've added these to g_missile.c and bg_misc.c already for you.
 #define LEVEL3_BOUNCEBALL_AMMO      3
@@ -112,7 +116,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_BOUNCEBALL_SPLASH_DMG  110 //Explosion dmg.
 #define LEVEL3_BOUNCEBALL_SPLASH_RADIUS 92 //Splash radius. Helps with sniping. //Rememeber that reload time is 10 seconds. You don't want it overpowered.
 
-#define LEVEL4_CLAW_DMG             ADM(112)
+#define LEVEL4_CLAW_DMG             ADM(110)
 #define LEVEL4_CLAW_RANGE           128.0f
 #define LEVEL4_CLAW_WIDTH           20.0f
 #define LEVEL4_CLAW_REPEAT          750 //750
@@ -128,7 +132,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_CHARGE_DMG           ADM(209) //100 (to help with armoured)
 
 //Note: tyrant spit bomb is a trapper bomb, so it shares the facts of a trapper.
-//Change trapper facts if you want to change the damage.
+//Change trapper facts if you want to change the stats of the spit.
 
 
 
@@ -251,7 +255,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BARRICADE_BP                8
 #define BARRICADE_BT                12000
 #define BARRICADE_HEALTH            ABHM(800)//default 200, yes i know thats hell weak. gpp is 300, but i put 600 to deal with luci spammers.
-#define BARRICADE_REGEN             34
+#define BARRICADE_REGEN             32
 #define BARRICADE_SPLASHDAMAGE      150
 #define BARRICADE_SPLASHRADIUS      150
 #define BARRICADE_CREEPSIZE         240
@@ -282,7 +286,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HIVE_LIFETIME               15000
 #define HIVE_BT                     20000
 #define HIVE_HEALTH                 ABHM(252) //default 125, same as acidtube. //252 = rifle's damage per clip
-#define HIVE_REGEN                  18
+#define HIVE_REGEN                  16
 #define HIVE_SPLASHDAMAGE           30 //unknown default
 #define HIVE_SPLASHRADIUS           200
 #define HIVE_CREEPSIZE              120
@@ -290,7 +294,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HIVE_REPEAT                 2500
 #define HIVE_K_SCALE                -1.0f
 #define HIVE_DMG                    97 //60 //120
-#define HIVE_SPEED                  380.0f //280
+#define HIVE_SPEED                  380.0f //280 //deal with jettards
 #define HIVE_DIR_CHANGE_PERIOD      500 //500
 
 #define TRAPPER_BP                  8
@@ -315,12 +319,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define OVERMIND_BP                 0
 #define OVERMIND_BT                 20000
 #define OVERMIND_HEALTH             ABHM(920)
-#define OVERMIND_REGEN              32 //16
+#define OVERMIND_REGEN              24 //16 //32 too high, get in between
 #define OVERMIND_SPLASHDAMAGE       18 //18 //36
 #define OVERMIND_SPLASHRADIUS       300
 #define OVERMIND_CREEPSIZE          120
 #define OVERMIND_ATTACK_RANGE       150.0f //100 /200f
-#define OVERMIND_ATTACK_REPEAT      500
+#define OVERMIND_ATTACK_REPEAT      800
 #define OVERMIND_VALUE              800
 
 #define HOVEL_BP                    0
@@ -372,7 +376,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BLASTER_DMG                 HDM(8) //9 //10+ to help againts dretches //18 if 18limited ammo with a slow repeat //36 - strong with ammo but ammo gets used up fast //8 because faster shoot
 #define BLASTER_CLIPSIZE            6
 #define BLASTER_MAXCLIPS            9
-#define BLASTER_MELEE               16
+#define BLASTER_MELEE               24
 #define BLASTER_MELEE_RANGE         80
 
 #define RIFLE_CLIPSIZE              42 //30 //36 //42
@@ -408,9 +412,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_RELOAD              5000 //spray of defeat - 6000 //clip based - 3000
 #define SHOTGUN_SPREAD              1320 //900 //1320 spray of defeat
 #define SHOTGUN_DMG                 HDM(6) //spray of defeat - 6 //long range combat shot 6
-#define SHOTGUN_BLAST               87 //damage for secondary.
+#define SHOTGUN_BLAST               110 //damage for secondary.
 #define SHOTGUN_BLAST_RANGE         350
-#define SHOTGUN_BLAST_REPEAT        2000
+#define SHOTGUN_BLAST_REPEAT        2500
 
 #define LASGUN_PRICE                150
 #define LASGUN_AMMO                 370
@@ -445,9 +449,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define PRIFLE_PRICE                580 //cost much? Its like a really strong lasgun in my opinion.
 #define PRIFLE_CLIPS                58
-#define PRIFLE_MAXCLIPS             5
+#define PRIFLE_MAXCLIPS             3
 #define PRIFLE_REPEAT               125
-#define PRIFLE_K_SCALE              3.0f
+#define PRIFLE_K_SCALE              1.5f //old '3' was too overpowered if the welder is a bot againts anything smaller than rant
 #define PRIFLE_RELOAD               2000
 #define PRIFLE_DMG                  HDM(14)
 #define PRIFLE_SPEED                3000 //1000
@@ -483,9 +487,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_CHARGEREPEAT        500 //800
 #define LCANNON_RELOAD              5000
 #define LCANNON_DAMAGE              HDM(372) //265 //395
-#define LCANNON_RADIUS              180 //splash radius. Default 150, wanted 180, but too overpowered
+#define LCANNON_RADIUS              120 //splash radius. Default 150, wanted 180, but too overpowered
 #define LCANNON_SECONDARY_DAMAGE    HDM(132) //default 27, prefered 30, but gets overpowered if rapid //now direct hit
-#define LCANNON_SECONDARY_RADIUS    35 //75
+#define LCANNON_SECONDARY_RADIUS    55 //75
 #define LCANNON_SPEED               400 //330 //Noob Tube! //780 //changed back, see g_missile.c for reason.
 /*OR you can just read this: It is porportional to how much you power up.
  *What you put here is the MINIMUM speed, and max speed is roughly... uhh lets say around 2.6x this value.
@@ -497,12 +501,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_MAXCLIPS	    1
 
 #define HBUILD_PRICE                0
-#define HBUILD_REPEAT               800 //1000
+#define HBUILD_REPEAT               1000 //1000
 #define HBUILD_DELAY                17500 //17500
 #define HBUILD_HEALRATE             28 //18
 
 #define HBUILD2_PRICE               0
-#define HBUILD2_REPEAT              500 //1000
+#define HBUILD2_REPEAT              800 //1000
 #define HBUILD2_DELAY               10000 //15000
 
 
@@ -527,8 +531,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define JETPACK_PRICE               120
 #define JETPACK_FLOAT_SPEED         228.0f //up movement speed //128
 #define JETPACK_SINK_SPEED          292.0f //down movement speed //192
-#define JETPACK_DISABLE_TIME        600 //time to disable the jetpack when player damaged
-#define JETPACK_DISABLE_CHANCE      0.3f //?
+#define JETPACK_DISABLE_TIME        1000 //time to disable the jetpack when player damaged //lolards original 600
+#define JETPACK_DISABLE_CHANCE      0.3f //? - doesn't work
 
 #define BSUIT_PRICE                 500
 #define BSUIT_POISON_PROTECTION     5
@@ -610,21 +614,25 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //sort of a 'proper' version of accuracy tolerance as the pervious one screws up the turret if you raise it.
 //This 'range/spread' is a multiplier for the accuracy tolerance before it fires.
 #define MGTURRET_ACCURACY_SPREAD        8
+//The same thing, but the 'smaller' version of it.
+#define MGTURRET_DIRECT_ACCURACY_SPREAD 3
 //this is a mutliplier for the ratio of how fast the pitch goes compare to normal. "Normal" is the same value as for yaw. Yaw will stay as MGTURRET_ANGULARSPEED or whatever if it is grabbed. For example, normal turning speed is 8 without grab or dcc, therefore:
 //*1 = normal = 8
 //*0.5 = half = 4
 //*2 = Fast rise = 16
 //*0 = no rise
 #define MGTURRET_ACCURACY_PITCH         0.8
+
+
 #define TESLAGEN_BP                 10
 #define TESLAGEN_BT                 15000
 #define TESLAGEN_HEALTH             HBHM(280) //210
 #define TESLAGEN_SPLASHDAMAGE       60 //default 50
 #define TESLAGEN_SPLASHRADIUS       100
 #define TESLAGEN_REPEAT             100 //default 250
-#define TESLAGEN_K_SCALE            4.0f //4f
+#define TESLAGEN_K_SCALE            6.0f //4f //higher for lower dmg, be cautious of repeat rates though
 #define TESLAGEN_RANGE              300 //default 250
-#define TESLAGEN_DMG                HDM(7) //default 9
+#define TESLAGEN_DMG                HDM(5) //default 9
 
 #define DC_BP                       8
 #define DC_BT                       10000
@@ -703,6 +711,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define DAMAGE_FRACTION_FOR_KILL    0.5f //how much damage players (versus structures) need to
                                          //do to increment the stage kill counters. Usually 0.5. I had 0.9 but that made humans come up slowly.
+
+//Vampire mode settings
+//See the rest in g_combat.c, line 1762
+#define VAMP_EXTRA                  50
 
 // g_suddenDeathMode settings
 #define SDMODE_BP                   29 // This is why gpp sudden death sucks, you can't build an armoury. Here, you can build a maximum of one armoury,a reactor and medi, dcc and repeater. 

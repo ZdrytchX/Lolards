@@ -2847,9 +2847,20 @@ static void PM_Weapon( void )
   {
     case WP_ALEVEL0:
       //venom is only autohit
+//original:
+/*
       attack1 = attack2 = attack3 = qfalse;
 
       if( !pm->autoWeaponHit[ pm->ps->weapon ] )
+      {
+        pm->ps->weaponTime = 0;
+        pm->ps->weaponstate = WEAPON_READY;
+        return;
+      }
+*/
+      attack1 = attack3 = qfalse;
+      attack2 = pm->cmd.buttons & BUTTON_ATTACK2;
+      if( !pm->autoWeaponHit[ pm->ps->weapon ] && !attack1 && !attack2 && !attack3 )
       {
         pm->ps->weaponTime = 0;
         pm->ps->weaponstate = WEAPON_READY;

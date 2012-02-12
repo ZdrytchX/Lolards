@@ -1615,7 +1615,7 @@ classAttributes_t bg_classList[ ] =
     "advanced",                                     //char    *skinname;
     1.0f,                                           //float   shadowScale;
     "alien_builder_hud",                            //char    *hudname;
-    ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ),                        //int  stages
+    ( 1 << S2 )|( 1 << S3 ),                        //int  stages
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ),                        //int  nakedStages
     { -20, -20, -20 },                              //vec3_t  mins;
     { 20, 20, 20 },                                 //vec3_t  maxs;
@@ -3140,7 +3140,7 @@ weaponAttributes_t bg_weapons[ ] =
     RIFLE_PRICE,          //int       price;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  nakedStages
-    SLOT_ARMS,          //int       slots;
+    0,                    //int       slots;
     "rifle",              //char      *weaponName;
     "Rifle",              //char      *weaponHumanName;
     RIFLE_CLIPSIZE,       //int       maxAmmo;
@@ -3166,7 +3166,7 @@ weaponAttributes_t bg_weapons[ ] =
     SHOTGUN_PRICE,        //int       price;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     ( 1 << S2 )|( 1 << S3 ),             //int  nakedStages
-    0,          //int       slots;
+    SLOT_ARMS,            //int       slots;
     "shotgun",            //char      *weaponName;
     "Shotgun",            //char      *weaponHumanName;
     SHOTGUN_SHELLS,       //int       maxAmmo;
@@ -3460,7 +3460,7 @@ weaponAttributes_t bg_weapons[ ] =
     qtrue,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     ABUILDER_BUILD_REPEAT,//int       repeatRate1;
-    ABUILDER_BUILD_REPEAT,//int       repeatRate2;
+    ABUILDER_BASE_CLAW_REPEAT,//int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     0.0f,                 //float     knockbackScale;
@@ -3512,11 +3512,11 @@ weaponAttributes_t bg_weapons[ ] =
     qtrue,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     LEVEL0_BITE_REPEAT,   //int       repeatRate1;
-    0,                    //int       repeatRate2;
+    100,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     LEVEL0_BITE_K_SCALE,  //float     knockbackScale;
-    qfalse,               //qboolean  hasAltMode;
+    qtrue,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
@@ -3689,17 +3689,17 @@ weaponAttributes_t bg_weapons[ ] =
     SLOT_WEAPON,          //int       slots;
     "level4",             //char      *weaponName;
     "Charge",             //char      *weaponHumanName;
-    2,                    //int       maxAmmo;
+    0,                    //int       maxAmmo; //now stumbles instead
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     LEVEL4_CLAW_REPEAT,   //int       repeatRate1;
     100,                    //int       repeatRate2;
-    2500,                    //int       repeatRate3;
+    15000,                    //int       repeatRate3; //now stumbles instead
     0,                    //int       reloadTime;
     LEVEL4_CLAW_K_SCALE,  //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
-    qtrue,               //qboolean  hasThirdMode;
+    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  purchasable;
@@ -3719,8 +3719,8 @@ weaponAttributes_t bg_weapons[ ] =
     9,                    //int       maxClips;
     qfalse,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
-    1500,                  //int       repeatRate1;
-    500,                  //int       repeatRate2;
+    1000,                  //int       repeatRate1;
+    2500,                  //int       repeatRate2; //nader so keep it low!
     2000,                  //int       repeatRate3;
     2000,                    //int       reloadTime;
     LOCKBLOB_K_SCALE,     //float     knockbackScale;
@@ -3754,7 +3754,7 @@ weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,               //qboolean  purchasable;
+    qfalse,               //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     0,                    //int       buildDelay;
     WUT_HUMANS            //WUTeam_t  team;
@@ -3806,7 +3806,7 @@ weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,               //qboolean  purchasable;
+    qfalse,               //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     0,                    //int       buildDelay;
     WUT_HUMANS            //WUTeam_t  team;
