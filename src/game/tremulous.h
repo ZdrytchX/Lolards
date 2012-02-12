@@ -308,7 +308,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TRAPPER_REPEAT              1000  //Wrong. Unused. Real value is 500.
 #define TRAPPER_K_SCALE             1.0f //explosion. Keep positive for trapper/lockblob jumping.
 #define LOCKBLOB_SPEED              1250.0f //default 650
-#define LOCKBLOB_LOCKTIME           0 //default 6000 //8000
+#define LOCKBLOB_LOCKTIME           20 //default 6000 //8000
 //the REAL lifetime of lock because aliens now get locked as well
 //refer to g_missile.c's blob code
 #define LOCKBLOB_LIFETIME           6000
