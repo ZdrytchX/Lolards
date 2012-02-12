@@ -350,7 +350,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_POISON_DMG            7 //default 5
 #define ALIEN_POISON_DIVIDER        (1.0f/1.32f) //about 1.0/(time`th root of damage)[1.0f/1.32f]
 
-#define ALIEN_SPAWN_REPEAT_TIME     6000 // spawn repeat, default 12000, larger than hspawn
+#define ALIEN_SPAWN_REPEAT_TIME     8000 // spawn repeat, default 12000, larger than hspawn
 
 #define ALIEN_REGEN_DAMAGE_TIME     3000 //msec since damage that regen starts again //2000
 
@@ -680,13 +680,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define STAMINA_SPRINT_TAKE         9 //taking stamina away by sprinting //8
 #define STAMINA_LARMOUR_TAKE        12 //It replaces sprint_take when having larmour. According to g_active.c
 
-#define HUMAN_SPAWN_REPEAT_TIME     6000 //spawn timing,default 8000
+#define HUMAN_SPAWN_REPEAT_TIME     8000 //spawn timing,default 8000
 
 /*
  * Misc
  */
 
-#define MIN_FALL_DISTANCE           30.0f //the fall distance at which fall damage kicks in //20f //18f
+#define MIN_FALL_DISTANCE           30.0f //the fall distance at which fall damage kicks in //20f
 #define MAX_FALL_DISTANCE           720.0f //the fall distance at which maximum damage is dealt //240f //change higher to 360 //changed higher to 720 because more damage is delt at maximum damage
 #define AVG_FALL_DISTANCE           ((MIN_FALL_DISTANCE+MAX_FALL_DISTANCE)/2.0f)
 
@@ -701,11 +701,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 //thresholds usually 20, then 40, bp is 100 both, but usually prefered 150 for aliens.
 #define DEFAULT_ALIEN_BUILDPOINTS   "230"
-#define DEFAULT_ALIEN_STAGE2_THRESH "30"
+#define DEFAULT_ALIEN_STAGE2_THRESH "35"
 #define DEFAULT_ALIEN_STAGE3_THRESH "90"
 #define DEFAULT_ALIEN_MAX_STAGE     "2"
 #define DEFAULT_HUMAN_BUILDPOINTS   "170"
-#define DEFAULT_HUMAN_STAGE2_THRESH "30"
+#define DEFAULT_HUMAN_STAGE2_THRESH "35"
 #define DEFAULT_HUMAN_STAGE3_THRESH "90"
 #define DEFAULT_HUMAN_MAX_STAGE     "2"
 

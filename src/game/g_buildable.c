@@ -2710,8 +2710,8 @@ void G_BuildableThink( gentity_t *ent, int msec )
         bRegen && ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
       ent->health += bRegen;
 
-    if( ent->health > bHealth * 1.5 )
-      ent->health = bHealth * 1.5;
+    if( ent->health > bHealth )
+      ent->health = bHealth ;
 	//don't overvamp the health for long although it should stay for a bit
 	if ( ent->health > bHealth )
 	ent->health = ent->health - 1;
