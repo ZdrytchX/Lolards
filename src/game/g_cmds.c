@@ -2624,7 +2624,7 @@ void Cmd_Class_f( gentity_t *ent )
     {
       if( newClass != PCL_ALIEN_BUILDER0 &&
           newClass != PCL_ALIEN_BUILDER0_UPG &&
-          newClass != PCL_HUMAN_BSUIT &&
+          //newClass != PCL_HUMAN_BSUIT && //haha you thought so didn't you? =P
           newClass != PCL_ALIEN_LEVEL0 )
       {
         trap_SendServerCommand( ent-g_entities,

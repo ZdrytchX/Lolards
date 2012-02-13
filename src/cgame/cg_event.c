@@ -118,7 +118,7 @@ static void CG_Obituary( entityState_t *ent )
       message = "had a deadly electrical massage";
       break;
     case MOD_ATUBE:
-      message = "shouldn't have gone in the alien base";
+      message = "shouldn't have gone in the alien base to shower off his dead skin";
       break;
     case MOD_OVERMIND:
       message = "shouldn't convince the ^4Overmind^7 for intercourse.";
@@ -296,7 +296,7 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL4_CLAW:
-        message = "was injected by the arm of";
+        message = "was split by the arm of";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL4 ) );
         message2 = className;
@@ -309,7 +309,7 @@ static void CG_Obituary( entityState_t *ent )
         break;
 
       case MOD_POISON:
-        message = "had died from";
+        message = "had became unfortunate from";
         message2 = "'s AIDS";
         break;
       case MOD_LEVEL1_PCLOUD:
@@ -337,7 +337,7 @@ static void CG_Obituary( entityState_t *ent )
         attackerName, message2 );
       if( teamKill && attacker == cg.clientNum )
       {
-        CG_CenterPrint( va ( "You " S_COLOR_RED "raped TEAMMATE "
+        CG_CenterPrint( va ( "You broke the law by " S_COLOR_RED "RAPING TEAMMATE "
           S_COLOR_WHITE "%s", targetName ),
           SCREEN_HEIGHT * 0.30, BIGCHAR_WIDTH );
       }

@@ -79,7 +79,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_CLAW_DMG             ADM(42)
 #define LEVEL2_CLAW_RANGE           128.0f //96
 #define LEVEL2_CLAW_WIDTH           18.0f //12f
-#define LEVEL2_CLAW_REPEAT          400
+#define LEVEL2_CLAW_REPEAT          400 //marauder = glass cannon
 #define LEVEL2_CLAW_K_SCALE         1.0f//1
 #define LEVEL2_CLAW_U_REPEAT        333 //Okay, i admit, it is overpowered. So i decided to change it back to before. (original Lolards qvm had 250 here and 333 in normal mar)
 #define LEVEL2_CLAW_U_K_SCALE       1.0f//1
@@ -191,7 +191,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define LEVEL2_UPG_SPEED            1.3f
 #define LEVEL2_UPG_VALUE            AVM(575)
-#define LEVEL2_UPG_HEALTH           AHM(192)
+#define LEVEL2_UPG_HEALTH           AHM(172)
 #define LEVEL2_UPG_REGEN            6
 #define LEVEL2_UPG_COST             3
 
