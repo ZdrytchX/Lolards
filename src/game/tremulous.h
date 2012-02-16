@@ -255,7 +255,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BARRICADE_BP                8
 #define BARRICADE_BT                12000
 #define BARRICADE_HEALTH            ABHM(800)//default 200, yes i know thats hell weak. gpp is 300, but i put 600 to deal with luci spammers.
-#define BARRICADE_REGEN             32
+#define BARRICADE_REGEN             32 //regen is high priority as well
 #define BARRICADE_SPLASHDAMAGE      150
 #define BARRICADE_SPLASHRADIUS      150
 #define BARRICADE_CREEPSIZE         240
@@ -275,22 +275,22 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ACIDTUBE_BT                 8000 //15000
 #define ACIDTUBE_HEALTH             ABHM(137) //default 125
 #define ACIDTUBE_REGEN              9
-#define ACIDTUBE_SPLASHDAMAGE       13 //default 4, i'd rather 13 for balance, but 18 is to deal with those damn bsuits. Don't get confused this with other splash damages, the others apply to exploding...
-#define ACIDTUBE_SPLASHRADIUS       380
+#define ACIDTUBE_SPLASHDAMAGE       10 //default 4, i'd rather 13-16 for balance to deal with those damn bsuits. Don't get confused this with other splash damages, the others apply to exploding...
+#define ACIDTUBE_SPLASHRADIUS       400 //bring higher to near-unite turret range
 #define ACIDTUBE_CREEPSIZE          120
 #define ACIDTUBE_RANGE              380.0f //200
 #define ACIDTUBE_REPEAT             2000
-#define ACIDTUBE_K_SCALE            0.1f//1f
+#define ACIDTUBE_K_SCALE            0.2f//1f
 
 #define HIVE_BP                     14
-#define HIVE_LIFETIME               15000
+#define HIVE_LIFETIME               10000 //lowered so the hive can fire again faster if human runs
 #define HIVE_BT                     20000
-#define HIVE_HEALTH                 ABHM(252) //default 125, same as acidtube. //252 = rifle's damage per clip
+#define HIVE_HEALTH                 ABHM(252) //default 125, same as acidtube. //252 = rifle's exact damage per clip
 #define HIVE_REGEN                  16
-#define HIVE_SPLASHDAMAGE           30 //unknown default
-#define HIVE_SPLASHRADIUS           200
+#define HIVE_SPLASHDAMAGE           30 //unknown default - never was one
+#define HIVE_SPLASHRADIUS           80 //hurt those close
 #define HIVE_CREEPSIZE              120
-#define HIVE_RANGE                  900.0f //300 //600
+#define HIVE_RANGE                  900.0f //300 //600 //Higher! Bring em higher! The only structure to shoot long range!
 #define HIVE_REPEAT                 2500
 #define HIVE_K_SCALE                -1.0f
 #define HIVE_DMG                    97 //60 //120
@@ -307,14 +307,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TRAPPER_RANGE               600 //default 300 or 200
 #define TRAPPER_REPEAT              1000  //Wrong. Unused. Real value is 500.
 #define TRAPPER_K_SCALE             1.0f //explosion. Keep positive for trapper/lockblob jumping.
-#define LOCKBLOB_SPEED              1250.0f //default 650
+#define LOCKBLOB_SPEED              650.0f //default 650 //originally 1250 but trappers can't lock humans
 #define LOCKBLOB_LOCKTIME           20 //default 6000 //8000
 //the REAL lifetime of lock because aliens now get locked as well
 //refer to g_missile.c's blob code
 #define LOCKBLOB_LIFETIME           6000
 #define LOCKBLOB_DOT                0.85f // max angle = acos( LOCKBLOB_DOT )
 #define LOCKBLOB_K_SCALE            -1.0f //1.0f
-#define LOCKBLOB_DMG                97
+#define LOCKBLOB_DMG                97 //headshots instant kill nakeds! :D
 
 #define OVERMIND_BP                 0
 #define OVERMIND_BT                 20000
@@ -405,16 +405,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //reverse pump shotgun "semi-semi-auto"
 #define SHOTGUN_PRICE               250
 #define SHOTGUN_SHELLS              10
-#define SHOTGUN_PELLETS             14 //used to sync server and client side //spray of defeat -18 //long range combat shot - 12
+#define SHOTGUN_PELLETS             14 //used to sync server and client side //long range combat shot - 12
 #define SHOTGUN_MAXCLIPS            7 //default 3
 #define SHOTGUN_REPEAT              700 //1000
 #define SHOTGUN_K_SCALE             2.0f
 #define SHOTGUN_RELOAD              5000 //spray of defeat - 6000 //clip based - 3000
-#define SHOTGUN_SPREAD              1320 //900 //1320 spray of defeat
+#define SHOTGUN_SPREAD              1320 //900 //1320=spray of defeat
 #define SHOTGUN_DMG                 HDM(6) //spray of defeat - 6 //long range combat shot 6
 #define SHOTGUN_BLAST               110 //damage for secondary.
 #define SHOTGUN_BLAST_RANGE         350
-#define SHOTGUN_BLAST_REPEAT        2500
+#define SHOTGUN_BLAST_REPEAT        2000 //keep high, not too high
 
 #define LASGUN_PRICE                150
 #define LASGUN_AMMO                 370
@@ -423,7 +423,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LASGUN_K_SCALE              2.0f
 #define LASGUN_RELOAD               3000
 #define LASGUN_SPREAD               100 //works now =P (ripped from mgun)
-#define LASGUN_DAMAGE               HDM(12) //9
+#define LASGUN_DAMAGE               HDM(11) //9
 
 //Mass Driver now a Sniper Rifle with a large cooldown
 #define MDRIVER_PRICE               380
@@ -448,20 +448,20 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Prifle - slow spam, doing max 112 dmg/s
 
 #define PRIFLE_PRICE                580 //cost much? Its like a really strong lasgun in my opinion.
-#define PRIFLE_CLIPS                58
+#define PRIFLE_CLIPS                40 //old beloved' lolards classic: 58 (too overpowered vs goons though)
 #define PRIFLE_MAXCLIPS             3
 #define PRIFLE_REPEAT               125
 #define PRIFLE_K_SCALE              1.5f //old '3' was too overpowered if the welder is a bot againts anything smaller than rant
 #define PRIFLE_RELOAD               2000
-#define PRIFLE_DMG                  HDM(14)
+#define PRIFLE_DMG                  HDM(13)
 #define PRIFLE_SPEED                3000 //1000
 //#define PRIFLE_SPREAD               300 //cancelled - usage deleted
 
 //pulse rifle from movie 'alien'
-/*#define PRIFLE_PRICE                480
+/*#define PRIFLE_PRICE                880
 #define PRIFLE_CLIPS                70
 #define PRIFLE_MAXCLIPS             0
-#define PRIFLE_REPEAT               136
+#define PRIFLE_REPEAT               180
 #define PRIFLE_K_SCALE              1.0f
 #define PRIFLE_RELOAD               2000
 #define PRIFLE_DMG                  HDM(38)
@@ -470,7 +470,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 //Flamer has a realistic shot by halving the repeat rate (2x speed) and halving the dmg
 #define FLAMER_PRICE                520
-#define FLAMER_GAS                  380 //150
+#define FLAMER_GAS                  280 //150
 #define FLAMER_REPEAT               100 //200
 #define FLAMER_K_SCALE              1.0f //1f
 #define FLAMER_DMG                  HDM(11) //20
@@ -594,7 +594,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //It gives a more realistic feel.
 #define MGTURRET_FIRE_DIRECT_SPEED  0.2
 
-#define MGTURRET_BP                 8
+#define MGTURRET_BP                 10 //There's a good reason: You can fit approx 6 tubes in 2 turret spots + turret > acid tube
 #define MGTURRET_BT                 10000
 #define MGTURRET_HEALTH             HBHM(210) //default 190. //increased to cope with tyrant's charge and pounce
 #define MGTURRET_SPLASHDAMAGE       60 //50
@@ -624,7 +624,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_ACCURACY_PITCH         0.8
 
 
-#define TESLAGEN_BP                 10
+#define TESLAGEN_BP                 12
 #define TESLAGEN_BT                 15000
 #define TESLAGEN_HEALTH             HBHM(280) //210
 #define TESLAGEN_SPLASHDAMAGE       60 //default 50
@@ -704,7 +704,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define DEFAULT_ALIEN_STAGE2_THRESH "35"
 #define DEFAULT_ALIEN_STAGE3_THRESH "90"
 #define DEFAULT_ALIEN_MAX_STAGE     "2"
-#define DEFAULT_HUMAN_BUILDPOINTS   "170"
+#define DEFAULT_HUMAN_BUILDPOINTS   "230" //raised due to turret rise
 #define DEFAULT_HUMAN_STAGE2_THRESH "35"
 #define DEFAULT_HUMAN_STAGE3_THRESH "90"
 #define DEFAULT_HUMAN_MAX_STAGE     "2"
