@@ -417,9 +417,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_BLAST_REPEAT        2000 //keep high, not too high
 
 #define LASGUN_PRICE                150
-#define LASGUN_AMMO                 370
+#define LASGUN_AMMO                 200
 #define LASGUN_REPEAT               180 //200
-#define LASGUN_MAXCLIPS             1
+#define LASGUN_MAXCLIPS             3
 #define LASGUN_K_SCALE              2.0f
 #define LASGUN_RELOAD               3000
 #define LASGUN_SPREAD               100 //works now =P (ripped from mgun)
@@ -449,7 +449,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define PRIFLE_PRICE                580 //cost much? Its like a really strong lasgun in my opinion.
 #define PRIFLE_CLIPS                40 //old beloved' lolards classic: 58 (too overpowered vs goons though)
-#define PRIFLE_MAXCLIPS             3
+#define PRIFLE_MAXCLIPS             5
 #define PRIFLE_REPEAT               125
 #define PRIFLE_K_SCALE              1.5f //old '3' was too overpowered if the welder is a bot againts anything smaller than rant
 #define PRIFLE_RELOAD               2000
