@@ -597,7 +597,7 @@ void G_BotBuy(gentity_t *self, usercmd_t *botCmdBuffer) {
             if( i == self->client->ps.weapon )
                 G_ForceWeaponChange( self, WP_NONE );
         }
-        //try to buy helmet/lightarmour /not bsuit because humans glitch
+        //try to buy helmet/lightarmour //not bsuit because humans glitch
         G_BotBuyUpgrade( self, UP_HELMET);
         G_BotBuyUpgrade( self, UP_LIGHTARMOUR);
         
@@ -797,9 +797,10 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
     targetMax = VectorLengthSquared(targetMaxs);
     myMax = VectorLengthSquared(myMaxs);
     
+//note: Grangers do not spawn. If you want them to spawn, put them on the bot spawn menu.
     switch(self->s.weapon) {
         case WP_ABUILD:
-            range = 0; //poor granger :(
+//            range = ABUILDER_CLAW_RANGE; //poor granger :( //Granger now has swipe
             secondaryRange = 0;
             break;
         case WP_ABUILD2:
@@ -823,8 +824,8 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             secondaryRange = 0;
             break;
         case WP_ALEVEL2_UPG:
-            range = LEVEL2_CLAW_RANGE;
-            secondaryRange = LEVEL2_AREAZAP_RANGE;
+            range = LEVEL2_CLAW_RANGE*1.5; //Get it to miss occasionally
+            secondaryRange = LEVEL2_AREAZAP_RANGE*1.5;
             break;
         case WP_ALEVEL3:
             range = LEVEL3_CLAW_RANGE;
@@ -847,7 +848,7 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             secondaryRange = 0;
             break;
         case WP_FLAMER:
-            range = FLAMER_SPEED * 1.6; //takes some speed from the user right?
+            range = FLAMER_SPEED * (FLAMER_LAG + 1)/2; //takes some speed from the user right?
             secondaryRange = 0;
             break;
         case WP_LAS_GUN:
@@ -862,15 +863,25 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             range = (100 * 8192)/RIFLE_SPREAD; //100 is the maximum radius we want the spread to be
             secondaryRange = 0;
             break;
+        case WP_LOCKBLOB_LAUNCHER:
+            range = 600; //Close range only. Barbs go slow. 600 because often its aliens chasing humans.
+            secondaryRange = 650; //nade!
+            break;
         case WP_CHAINGUN:
             range = 600;
-//            range = (100 * 8192)/CHAINGUN_SPREAD; //100 is the maximum radius we want the spread to be
-            secondaryRange = (100 * 8192)/RIFLE_SPREAD; //secondary uses rifle sread so yeah
+//            range = 100; //100 for bot inaccuracy reasons, don't waste ammo
+            secondaryRange = (100 * 8192)/CHAINGUN_SPREAD; //secondary
 	    break;
-
+//the following does NOT wor obviously, but i want to you get an idea of what i want. Basically, i need the secondary range to shoow the primary and primary to shoot secondary.
+/*
         case WP_LUCIFER_CANNON:
             secondaryRange = 150; //suprise?!? :D - shoots primary as it loses its charge then shoots a secondary straight after- a combo attack
             range = (100 * 8192)/CHAINGUN_SPREAD; //not too far
+            break;
+*/
+        case WP_LUCIFER_CANNON:
+            secondaryRange = 150;
+            range = 1000; //not too far
             break;
         default:
             range = 4098 * 4; //large range for guns because guns have large ranges :)
@@ -926,7 +937,11 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
             case PCL_ALIEN_LEVEL0:
                 if((distance < Square(50)) && (distance > Square(350)) && (self->client->time1000 % 300 == 0))
                     botCmdBuffer->upmove = 20; //jump when getting close
-                break; //nothing, auto hit =D
+                if(distance > Square(LEVEL0_BITE_RANGE) && distance < (LEVEL0_SCRATCH_RANGE))
+                    botCmdBuffer->buttons |= BUTTON_ATTACK;
+                else
+                    botCmdBuffer->buttons |= BUTTON_ATTACK2; //scratch for hp
+                break;
             case PCL_ALIEN_LEVEL1:
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
                 break;
@@ -952,7 +967,7 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
             case PCL_ALIEN_LEVEL2_UPG:
                 if(self->client->time1000 % 300 == 0)
                     botCmdBuffer->upmove = 20; //jump
-                if(distance <= Square(LEVEL2_CLAW_RANGE))
+                if(distance <= Square(LEVEL2_CLAW_RANGE)*1.5)
                     botCmdBuffer->buttons |= BUTTON_ATTACK;
                 else
                     botCmdBuffer->buttons |= BUTTON_ATTACK2; //zap
@@ -994,7 +1009,7 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
             
         } else if( self->client->ps.weapon == WP_LUCIFER_CANNON ) {
-            /*if(self->client->ps.ammo[WP_LUCIFER_CANNON] < 10){
+            /*if(self->client->ps.ammo[WP_LUCIFER_CANNON] < 20){
 		botCmdBuffer->buttons |= BUTTON_ATTACK2; } //use secondary when low on ammo
             else */if( self->client->time10000 % 2700 ) {
                 botCmdBuffer->buttons |= BUTTON_ATTACK;

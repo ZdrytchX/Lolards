@@ -99,13 +99,13 @@ int G_BotBuyWeapon(gentity_t *ent, int weapon);
 #define BOT_ENEMYSEARCH_INTERVAL 1500 //500
 
 //at what hp do we use medkit?
-#define BOT_USEMEDKIT_HP 40 //50
+#define BOT_USEMEDKIT_HP 48 //50
 
 //when human bots reach this ammo percentage left or less(and no enemy), they will head back to the base to refuel ammo when in range of arm as defined by BOT_ARM_RANGE
 #define BOT_LOW_AMMO 0.30f //0.50f
 
 //when human bots reach this health or below (and no medkit/enemy) they will head back to the base to heal when in range of medi as defined by BOT_MEDI_RANGE
-#define BOT_LOW_HP 80 //100 - now 80 because of slow autoregen + vamp
+#define BOT_LOW_HP 60 //100 - now 60 because of slow autoregen + vamp
 
 //TODO: implement the rest of these, currently they do nothing :)
 

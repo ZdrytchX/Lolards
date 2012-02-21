@@ -59,7 +59,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_BITE_K_SCALE         1.0f
 #define LEVEL0_SCRATCH_DMG          4 //dispite this, it is actually almost overpowered.
 #define LEVEL0_SCRATCH_REPEAT       100 //Main pupous of this attack is to drain health slowly and gain it just like mara zap.
-#define LEVEL0_SCRATCH_RANGE        100
+#define LEVEL0_SCRATCH_RANGE        120
 
 #define LEVEL1_CLAW_DMG             ADM(48)
 #define LEVEL1_CLAW_RANGE           96.0f //96
@@ -83,7 +83,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_CLAW_K_SCALE         1.0f//1
 #define LEVEL2_CLAW_U_REPEAT        333 //Okay, i admit, it is overpowered. So i decided to change it back to before. (original Lolards qvm had 250 here and 333 in normal mar)
 #define LEVEL2_CLAW_U_K_SCALE       1.0f//1
-#define LEVEL2_AREAZAP_DMG          ADM(120) //default 80 //but remember, this is dealt over 3 seconds.
+#define LEVEL2_AREAZAP_DMG          ADM(120) //default 80 //but remember, this is dealt over 3 seconds, not 0.75.
 #define LEVEL2_AREAZAP_RANGE        360.0f // default 300 //Overpowered, but its good practice to stay withing a 360 area first because its easier.
 #define LEVEL2_AREAZAP_WIDTH        30.0f //30 //keep small or it will 'hit a wall'
 #define LEVEL2_AREAZAP_REPEAT       750 //1500 //max of 5 can overlap in 3 seconds
@@ -99,7 +99,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_CLAW_K_SCALE         1.0f
 #define LEVEL3_CLAW_U_REPEAT        600 //usuaULLY 600 //800 ^^what i said
 #define LEVEL3_CLAW_U_K_SCALE       1.0f
-#define LEVEL3_POUNCE_DMG           ADM(180) //default 100, but i increased it to relate to gpp values of killing armoured.
+#define LEVEL3_POUNCE_DMG           ADM(135) //default 100, but i increased it to relate to gpp values of killing armoured.
 #define LEVEL3_POUNCE_RANGE         48.0f //default 72. Remember 0 is at the centre, it won't hit anything. Want 36, but can't hit because it still isn't long enough :( Gpp's value is probably 48, cause thats what it says in TremX's source code.
 #define LEVEL3_POUNCE_WIDTH         32.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 32 for a more 'realistic' pounce so adv goons can get humans without aiming down. Works almost perfectly at this setting. It is basically the width of the goon/2.
 #define LEVEL3_POUNCE_SPEED         700 //pounce speed usually 700
@@ -107,7 +107,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_POUNCE_SPEED_MOD     0.75f //speed when charging pounce default 0.75
 #define LEVEL3_POUNCE_CHARGE_TIME   700 //charge time, default 700
 #define LEVEL3_POUNCE_TIME          400 //delay after touching ground?!? default 400
-#define LEVEL3_BOUNCEBALL_DMG       ADM(135) //110 default. Not to be increased higher than 200 as it can kill reactor easily. //180 //decreased as it is now explosive like gpp.
+#define LEVEL3_BOUNCEBALL_DMG       ADM(150) //110 default. Not to be increased higher than 200 as it can kill reactor easily. //180 //decreased as it is now explosive like gpp.
 
 //I've added these to g_missile.c and bg_misc.c already for you.
 #define LEVEL3_BOUNCEBALL_AMMO      3
@@ -185,30 +185,30 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define LEVEL2_SPEED                1.2f
 #define LEVEL2_VALUE                AVM(320)
-#define LEVEL2_HEALTH               AHM(100)
+#define LEVEL2_HEALTH               AHM(100) //Marauder is a glass cannon.
 #define LEVEL2_REGEN                3
 #define LEVEL2_COST                 1
 
 #define LEVEL2_UPG_SPEED            1.3f
-#define LEVEL2_UPG_VALUE            AVM(575)
-#define LEVEL2_UPG_HEALTH           AHM(172)
+#define LEVEL2_UPG_VALUE            AVM(730)
+#define LEVEL2_UPG_HEALTH           AHM(172) //Previous, 192. Too high, as they steal hp.
 #define LEVEL2_UPG_REGEN            6
 #define LEVEL2_UPG_COST             3
 
 #define LEVEL3_SPEED                1.1f
-#define LEVEL3_VALUE                AVM(400)
+#define LEVEL3_VALUE                AVM(575)
 #define LEVEL3_HEALTH               AHM(236)
 #define LEVEL3_REGEN                7
 #define LEVEL3_COST                 2
 
 #define LEVEL3_UPG_SPEED            1.1f
-#define LEVEL3_UPG_VALUE            AVM(730)
+#define LEVEL3_UPG_VALUE            AVM(880)
 #define LEVEL3_UPG_HEALTH           AHM(275)
 #define LEVEL3_UPG_REGEN            8
 #define LEVEL3_UPG_COST             2
 
 #define LEVEL4_SPEED                1.1f //1.2f
-#define LEVEL4_VALUE                AVM(880)
+#define LEVEL4_VALUE                AVM(920)
 #define LEVEL4_HEALTH               AHM(480)
 #define LEVEL4_REGEN                (0.025f * LEVEL4_HEALTH)
 #define LEVEL4_COST                 3
@@ -389,10 +389,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define RIFLE_DMG                   HDM(6) //5 //6
 
 #define PAINSAW_PRICE               100
-#define PAINSAW_REPEAT              65 //enough to touch below feet of a normal human
+#define PAINSAW_REPEAT              65 
 #define PAINSAW_K_SCALE             1.0f
-#define PAINSAW_DAMAGE              HDM(13)
-#define PAINSAW_RANGE               60.0f //40f
+#define PAINSAW_DAMAGE              HDM(16)
+#define PAINSAW_RANGE               60.0f //40f //enough to touch below feet of a normal human
 
 //Super Grenade Throw!
 #define GRENADE_PRICE               600 //200 //mininuke
@@ -417,9 +417,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_BLAST_REPEAT        2000 //keep high, not too high
 
 #define LASGUN_PRICE                150
-#define LASGUN_AMMO                 200
+#define LASGUN_AMMO                 370
 #define LASGUN_REPEAT               180 //200
-#define LASGUN_MAXCLIPS             3
+#define LASGUN_MAXCLIPS             0
 #define LASGUN_K_SCALE              2.0f
 #define LASGUN_RELOAD               3000
 #define LASGUN_SPREAD               100 //works now =P (ripped from mgun)
@@ -488,7 +488,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_RELOAD              5000
 #define LCANNON_DAMAGE              HDM(372) //265 //395
 #define LCANNON_RADIUS              120 //splash radius. Default 150, wanted 180, but too overpowered
-#define LCANNON_SECONDARY_DAMAGE    HDM(132) //default 27, prefered 30, but gets overpowered if rapid //now direct hit
+#define LCANNON_SECONDARY_DAMAGE    HDM(100) //default 27, prefered 30, but gets overpowered if rapid //now direct hit
 #define LCANNON_SECONDARY_RADIUS    55 //75
 #define LCANNON_SPEED               400 //330 //Noob Tube! //780 //changed back, see g_missile.c for reason.
 /*OR you can just read this: It is porportional to how much you power up.
@@ -690,21 +690,21 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MAX_FALL_DISTANCE           720.0f //the fall distance at which maximum damage is dealt //240f //change higher to 360 //changed higher to 720 because more damage is delt at maximum damage
 #define AVG_FALL_DISTANCE           ((MIN_FALL_DISTANCE+MAX_FALL_DISTANCE)/2.0f)
 
-#define HUMAN_MAXED                 900   //a human with a strong selection of weapons/upgrades // << i dont get this
+#define HUMAN_MAXED                 1200   //a human with a strong selection of weapons/upgrades // << i dont get this, but it might be credit -> evo converter //900
 #define HUMAN_MAX_CREDITS           3000 //max creds, usually 2000
-#define ALIEN_MAX_KILLS             13 //max evos, usually 9
-#define ALIEN_MAX_SINGLE_KILLS      4 //uh... probably for G_alienstage?threshold?
+#define ALIEN_MAX_KILLS             13 //max evos
+#define ALIEN_MAX_SINGLE_KILLS      4 //Max evos earned from HUMAN_MAXED i guess... i never looked into this
 
-#define FREEKILL_PERIOD             60000 //msec // What i think it is the free credits recieved after a amount of time. //120000
+#define FREEKILL_PERIOD             90000 //msec // free credits recieved after this amount of time. //120000
 #define FREEKILL_ALIEN              1 // one evo per 120000 miliseconds or whatever FREEKILL_PERIOD is.
-#define FREEKILL_HUMAN              220 // LEVEL0_VALUE is default. This is enough for lasgun and larmour.
+#define FREEKILL_HUMAN              200 // LEVEL0_VALUE is default. 220 is enough for lasgun and larmour, but when it stacks, it overpowers
 
 //thresholds usually 20, then 40, bp is 100 both, but usually prefered 150 for aliens.
 #define DEFAULT_ALIEN_BUILDPOINTS   "230"
 #define DEFAULT_ALIEN_STAGE2_THRESH "35"
 #define DEFAULT_ALIEN_STAGE3_THRESH "90"
 #define DEFAULT_ALIEN_MAX_STAGE     "2"
-#define DEFAULT_HUMAN_BUILDPOINTS   "230" //raised due to turret rise
+#define DEFAULT_HUMAN_BUILDPOINTS   "200" //raised due to turret rise
 #define DEFAULT_HUMAN_STAGE2_THRESH "35"
 #define DEFAULT_HUMAN_STAGE3_THRESH "90"
 #define DEFAULT_HUMAN_MAX_STAGE     "2"

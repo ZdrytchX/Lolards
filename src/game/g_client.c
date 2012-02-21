@@ -936,7 +936,7 @@ char *G_NextNewbieName( gentity_t *ent )
   if( g_newbieNamePrefix.string[ 0 ] )
     Q_strncpyz( namePrefix, g_newbieNamePrefix.string , sizeof( namePrefix ) );
   else
-    strcpy( namePrefix, "Newbie#" );
+    strcpy( namePrefix, "^1Lolard#" );
 
   while( level.numNewbies < 10000 )
   {
@@ -1596,8 +1596,8 @@ void ClientBegin( int clientNum )
     if( !Q_stricmp( ent->client->pers.guid, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" ) )
     {
       trap_SendServerCommand( client->ps.clientNum, va( "print \"^1Your client is out of date. Updating your client will allow you to "
-        "become an admin on servers and download maps much more quickly. Please replace your client executable with the one "
-        "at ^2http://trem.tjw.org/backport/^1 and reconnect. \n\"" ) );
+        "become an admin or register on servers and download maps much more quickly. Please replace your client executable with the one "
+        "at ^2http://trem.tjw.org/backport/^1 or ^2http://tremfusion.net^1 and reconnect. \n\"" ) );
     }
   }
 

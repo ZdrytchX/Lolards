@@ -382,7 +382,7 @@ buildableAttributes_t bg_buildableList[ ] =
     MEDISTAT_BP,           //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     MEDISTAT_HEALTH,       //int       health;
-    1,                     //int       regenRate;
+    2,                     //int       regenRate;
     MEDISTAT_SPLASHDAMAGE, //int       splashDamage;
     MEDISTAT_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -495,7 +495,7 @@ buildableAttributes_t bg_buildableList[ ] =
     DC_BP,                 //int       buildPoints;
     ( 1 << S2 )|( 1 << S3 ), //int       stages
     DC_HEALTH,             //int       health;
-    5,                     //int       regenRate;
+    8,                     //int       regenRate;
     DC_SPLASHDAMAGE,       //int       splashDamage;
     DC_SPLASHRADIUS,       //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -532,7 +532,7 @@ buildableAttributes_t bg_buildableList[ ] =
     ARMOURY_BP,            //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     ARMOURY_HEALTH,        //int       health;
-    5,                     //int       regenRate;
+    4,                     //int       regenRate;
     ARMOURY_SPLASHDAMAGE,  //int       splashDamage;
     ARMOURY_SPLASHRADIUS,  //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -606,7 +606,7 @@ buildableAttributes_t bg_buildableList[ ] =
     REPEATER_BP,           //int       buildPoints;
     ( 1 << S2 )|( 1 << S3 ), //int  stages
     REPEATER_HEALTH,       //int       health;
-    2,                     //int       regenRate;
+    1,                     //int       regenRate;
     REPEATER_SPLASHDAMAGE, //int       splashDamage;
     REPEATER_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -1586,7 +1586,7 @@ classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   zOffset
     0, 0,                                           //int     viewheight, crouchviewheight;
     ABUILDER_HEALTH,                                //int     health;
-    0.2f,                                           //float   fallDamage;
+    3.2f,                                           //float   fallDamage;
     ABUILDER_REGEN,                                 //int     regenRate;
     SCA_TAKESFALLDAMAGE|SCA_FOVWARPS|SCA_ALIENSENSE,//int     abilities;
     WP_ABUILD,                                      //weapon_t  startWeapon
@@ -1664,7 +1664,7 @@ classAttributes_t bg_classList[ ] =
     -8.0f,                                          //float   zOffset
     0, 0,                                           //int     viewheight, crouchviewheight;
     LEVEL0_HEALTH,                                  //int     health;
-    0.0f,                                           //float   fallDamage;
+    2.0f,                                           //float   fallDamage;
     LEVEL0_REGEN,                                   //int     regenRate;
     SCA_WALLCLIMBER|SCA_NOWEAPONDRIFT|
       SCA_FOVWARPS|SCA_ALIENSENSE,                  //int     abilities;
@@ -1984,7 +1984,7 @@ classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   zOffset
     26, 12,                                         //int     viewheight, crouchviewheight;
     100,                                            //int     health;
-    3.0f,                                           //float   fallDamage;
+    6.0f,                                           //float   fallDamage;
     0,                                              //int     regenRate;
     SCA_TAKESFALLDAMAGE|
       SCA_CANUSELADDERS,                            //int     abilities;
@@ -3710,8 +3710,8 @@ weaponAttributes_t bg_weapons[ ] =
   {
     WP_LOCKBLOB_LAUNCHER, //int       weaponNum;
     2000,                    //int       price;
-    ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
-    ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  nakedStages
+    ( 1 << S3 ),           //int  stages
+    ( 1 << S3 ),           //int  nakedStages
     SLOT_WEAPON,          //int       slots;
     "lockblob",           //char      *weaponName;
     "Lock Blob",          //char      *weaponHumanName;
