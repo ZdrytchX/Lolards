@@ -209,7 +209,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define LEVEL4_SPEED                1.1f //1.2f
 #define LEVEL4_VALUE                AVM(920)
-#define LEVEL4_HEALTH               AHM(480)
+#define LEVEL4_HEALTH               AHM(420)
 #define LEVEL4_REGEN                (0.025f * LEVEL4_HEALTH)
 #define LEVEL4_COST                 3
 
@@ -254,7 +254,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define BARRICADE_BP                8
 #define BARRICADE_BT                12000
-#define BARRICADE_HEALTH            ABHM(800)//default 200, yes i know thats hell weak. gpp is 300, but i put 600 to deal with luci spammers.
+#define BARRICADE_HEALTH            ABHM(600)//default 200, yes i know thats hell weak. gpp is 300, but i put 600 to deal with luci spammers.
 #define BARRICADE_REGEN             32 //regen is high priority as well
 #define BARRICADE_SPLASHDAMAGE      150
 #define BARRICADE_SPLASHRADIUS      150
@@ -386,7 +386,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define RIFLE_RELOAD                1800
 #define RIFLE_PRICE                 0
 #define RIFLE_SPREAD                170
-#define RIFLE_DMG                   HDM(6) //5 //6
+#define RIFLE_DMG                   HDM(7) //5 //6
 
 #define PAINSAW_PRICE               100
 #define PAINSAW_REPEAT              65 
@@ -407,7 +407,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_SHELLS              10
 #define SHOTGUN_PELLETS             14 //used to sync server and client side //long range combat shot - 12
 #define SHOTGUN_MAXCLIPS            7 //default 3
-#define SHOTGUN_REPEAT              700 //1000
+#define SHOTGUN_REPEAT              800 //1000 /Lolards original without vampire is 700. Raised because the bots become impossible to kill because they steal too much hp
 #define SHOTGUN_K_SCALE             2.0f
 #define SHOTGUN_RELOAD              5000 //spray of defeat - 6000 //clip based - 3000
 #define SHOTGUN_SPREAD              1320 //900 //1320=spray of defeat
@@ -482,13 +482,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Easier to get dretches, and lucijump. Also improved to match tyrant's and other alien's new health.
 #define LCANNON_PRICE               700
 #define LCANNON_AMMO                200
-#define LCANNON_REPEAT              1250 //500 //400
+#define LCANNON_REPEAT              1350 //500 //400
 #define LCANNON_K_SCALE             3.27f//1f
 #define LCANNON_CHARGEREPEAT        500 //800
 #define LCANNON_RELOAD              5000
-#define LCANNON_DAMAGE              HDM(372) //265 //395
+#define LCANNON_DAMAGE              HDM(320) //265 //395
 #define LCANNON_RADIUS              120 //splash radius. Default 150, wanted 180, but too overpowered
-#define LCANNON_SECONDARY_DAMAGE    HDM(100) //default 27, prefered 30, but gets overpowered if rapid //now direct hit
+#define LCANNON_SECONDARY_DAMAGE    HDM(80) //default 27,//now direct hit
 #define LCANNON_SECONDARY_RADIUS    55 //75
 #define LCANNON_SPEED               400 //330 //Noob Tube! //780 //changed back, see g_missile.c for reason.
 /*OR you can just read this: It is porportional to how much you power up.
@@ -498,7 +498,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_CHARGE_TIME         2800 //2000
 #define LCANNON_TOTAL_CHARGE        355 //255
 #define LCANNON_MIN_CHARGE          36 //50
-#define LCANNON_MAXCLIPS	    1
+#define LCANNON_MAXCLIPS	      1 //give some hopes for a human who fired his shots till his battery couldn't handle anymore
+//(below 70, the maxcharge lessens.)
 
 #define HBUILD_PRICE                0
 #define HBUILD_REPEAT               1000 //1000
@@ -525,7 +526,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //medkit price ?!?
 #define MEDKIT_PRICE                0
 
-#define BATTPACK_PRICE              100
+#define BATTPACK_PRICE              200 //increase as it is very useful
 #define BATTPACK_MODIFIER           1.6f //modifier for extra energy storage available 1.5f
 
 #define JETPACK_PRICE               120
@@ -536,7 +537,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define BSUIT_PRICE                 500
 #define BSUIT_POISON_PROTECTION     5
-//#define HUMAN_REGEN                 (client->ps.stats[ STAT_MAX_HEALTH ] / 25) //human regeneration. Once every 10 seconds. //Fuck it. I need to use a variable that is declared somewhere else. I can't be bothered directing the file.
+//#define HUMAN_REGEN               1 //Redone somewhere else, this variable is ignored for now
 
 //physical ammo prices, all default 0
 #define MGCLIP_PRICE                0

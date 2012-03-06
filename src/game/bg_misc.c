@@ -4363,7 +4363,7 @@ upgradeAttributes_t bg_upgrades[ ] =
     GRENADE_PRICE,          //int   price;
     ( 1 << S2 )|( 1 << S3 ),//int  stages
     0,                      //int  nakedStages
-    SLOT_NONE|SLOT_ARMS,              //int   slots;
+    SLOT_NONE,              //int   slots;
     "gren",                 //char  *upgradeName;
     "Grenade",              //char  *upgradeHumanName;
     0,
