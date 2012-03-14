@@ -486,7 +486,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_K_SCALE             3.27f//1f
 #define LCANNON_CHARGEREPEAT        500 //800
 #define LCANNON_RELOAD              5000
-#define LCANNON_DAMAGE              HDM(320) //265 //395
+#define LCANNON_DAMAGE              HDM(290) //265 //395
 #define LCANNON_RADIUS              120 //splash radius. Default 150, wanted 180, but too overpowered
 #define LCANNON_SECONDARY_DAMAGE    HDM(80) //default 27,//now direct hit
 #define LCANNON_SECONDARY_RADIUS    55 //75
