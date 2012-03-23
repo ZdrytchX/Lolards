@@ -1635,11 +1635,11 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
         attacker->client->pers.statscounters.repairspoisons++;
         level.alienStatsCounters.repairspoisons++;
       }
+/*
 	//testing another add-onn burn effect
       if( targ->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
           !( targ->client->ps.stats[ STAT_STATE ] & SS_POISONED ) &&
-          mod = MOD_FLAMER && //"poison" burn through direct flame hit
-          targ->client->poisonImmunityTime < level.time )
+          mod = MOD_FLAMER && targ->client->poisonImmunityTime < level.time )//"poison" burn through direct flame hit
       {
         targ->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
         targ->client->lastPoisonTime = level.time;
@@ -1647,6 +1647,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
         attacker->client->pers.statscounters.repairspoisons++;
         level.humanStatsCounters.repairspoisons++;//not sure if this will work
       }
+*/
 //pass the radiation/burn on through firing lcannon, flamer or anything not listed here:
 //but remember, if this works, change the cg_event.c for poison kill.
 //Does not work.
