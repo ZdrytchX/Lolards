@@ -394,8 +394,11 @@ gentity_t *fire_blaster( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_BLASTER;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -1.0f;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 1.0f;
 
   bolt->s.pos.trType = TR_LINEAR;
+//bolt->s.pos.trType = TR_GRAVITY; //LINEAR //for the lolz
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
   VectorScale( dir, BLASTER_SPEED, bolt->s.pos.trDelta );
@@ -422,7 +425,7 @@ gentity_t *fire_pulseRifle( gentity_t *self, vec3_t start, vec3_t dir )
 
   bolt = G_Spawn();
   bolt->classname = "pulse";
-  bolt->nextthink = level.time + 10000; //only? Yes. Its already overpowered, you don't want to clog up vents.
+  bolt->nextthink = level.time + 20000; 
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
   bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
@@ -431,13 +434,12 @@ gentity_t *fire_pulseRifle( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = PRIFLE_DMG;
-  bolt->splashDamage = 13;
+  bolt->splashDamage = 10;
   bolt->splashRadius = 16;
   bolt->methodOfDeath = MOD_PRIFLE;
   bolt->splashMethodOfDeath = MOD_PRIFLE;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
-  //bolt->s.eFlags = EF_BOUNCE_HALF; //can be abused as its too strong
 
   bolt->s.pos.trType = TR_LINEAR;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame

@@ -83,13 +83,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_CLAW_K_SCALE         1.0f//1
 #define LEVEL2_CLAW_U_REPEAT        333 //Okay, i admit, it is overpowered. So i decided to change it back to before. (original Lolards qvm had 250 here and 333 in normal mar)
 #define LEVEL2_CLAW_U_K_SCALE       1.0f//1
+
+//Note: On any armoured human, the zap does 20dmg/s always if the sv_fps is default.
 #define LEVEL2_AREAZAP_DMG          ADM(120) //default 80 //but remember, this is dealt over 3 seconds, not 0.75.
 #define LEVEL2_AREAZAP_RANGE        360.0f // default 300 //Overpowered, but its good practice to stay withing a 360 area first because its easier.
 #define LEVEL2_AREAZAP_WIDTH        30.0f //30 //keep small or it will 'hit a wall'
-#define LEVEL2_AREAZAP_REPEAT       750 //1500 //max of 5 can overlap in 3 seconds
-#define LEVEL2_AREAZAP_TIME         3000 //1000
+#define LEVEL2_AREAZAP_REPEAT       1200 // Stacking still does the same damage to bsuits to larmour. Set'd max stack to 2.
+//#define LEVEL2_AREAZAP_REPEAT       750 //1500 //max of 5 can overlap in 3 seconds
+#define LEVEL2_AREAZAP_TIME         2000 //1000 //3000 //Stacking still does the same damage to bsuits to larmour. Now does 40 dmg total againts larmour.
 #define LEVEL2_AREAZAP_MAX_TARGETS  7 //whole shit here. But it is to help againts groups of humans and base rushes.
-#define LEVEL2_WALLJUMP_MAXSPEED    1290.0f //129
+#define LEVEL2_WALLJUMP_MAXSPEED    90000.0f //1290.0f //idk, don't really want a max
 
 //Goon modified heavily to get close to gpp values.
 #define LEVEL3_CLAW_DMG             ADM(82)
@@ -97,9 +100,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_CLAW_WIDTH           16.0f
 #define LEVEL3_CLAW_REPEAT          700 //usually 700 //900 for gpp-related
 #define LEVEL3_CLAW_K_SCALE         1.0f
-#define LEVEL3_CLAW_U_REPEAT        600 //usuaULLY 600 //800 ^^what i said
+#define LEVEL3_CLAW_U_REPEAT        600 //usuaully 600 //800 ^^what i said
 #define LEVEL3_CLAW_U_K_SCALE       1.0f
-#define LEVEL3_POUNCE_DMG           ADM(135) //default 100, but i increased it to relate to gpp values of killing armoured.
+#define LEVEL3_POUNCE_DMG           ADM(135) //default 100, but i increased it to relate to gpp values of killing armoured. Unvanquished play proves that 5 hit kills is still alright.
 #define LEVEL3_POUNCE_RANGE         48.0f //default 72. Remember 0 is at the centre, it won't hit anything. Want 36, but can't hit because it still isn't long enough :( Gpp's value is probably 48, cause thats what it says in TremX's source code.
 #define LEVEL3_POUNCE_WIDTH         32.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 32 for a more 'realistic' pounce so adv goons can get humans without aiming down. Works almost perfectly at this setting. It is basically the width of the goon/2.
 #define LEVEL3_POUNCE_SPEED         700 //pounce speed usually 700
@@ -111,8 +114,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 //I've added these to g_missile.c and bg_misc.c already for you.
 #define LEVEL3_BOUNCEBALL_AMMO      3
-#define LEVEL3_BOUNCEBALL_REPEAT    600 //default 1000 //deal with long range turrets
-#define LEVEL3_BOUNCEBALL_SPEED     1000.0f //default 1000 //1200 for longer range
+#define LEVEL3_BOUNCEBALL_REPEAT    600 //default 1000 //deal with long range turrets quicker
+#define LEVEL3_BOUNCEBALL_SPEED     1000.0f
 #define LEVEL3_BOUNCEBALL_SPLASH_DMG  110 //Explosion dmg.
 #define LEVEL3_BOUNCEBALL_SPLASH_RADIUS 92 //Splash radius. Helps with sniping. //Rememeber that reload time is 10 seconds. You don't want it overpowered.
 
@@ -121,8 +124,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_CLAW_WIDTH           20.0f
 #define LEVEL4_CLAW_REPEAT          750 //750
 #define LEVEL4_CLAW_K_SCALE         1.0f
-#define LEVEL4_REGEN_RANGE          200.0f
-#define LEVEL4_REGEN_MOD            1.5f //2 //cannot benifit from booster's x3 but i think tyrant's normal healing is already enough (~18hp/s)
+#define LEVEL4_REGEN_RANGE          200.0f //usually goes unnoticed, left default
+#define LEVEL4_REGEN_MOD            1.5f //2 //Can benifit from booster's x3 healing now
 #define LEVEL4_CHARGE_SPEED         3.0f
 #define LEVEL4_CHARGE_TIME          3000 //2000
 #define LEVEL4_CHARGE_CHARGE_TIME   1500
@@ -130,10 +133,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_CHARGE_CHARGE_RATIO  (LEVEL4_CHARGE_TIME/LEVEL4_CHARGE_CHARGE_TIME)
 #define LEVEL4_CHARGE_REPEAT        1000
 #define LEVEL4_CHARGE_DMG           ADM(209) //100 (to help with armoured)
-
+//Removed tyrant spit bomb.
+/*
 //Note: tyrant spit bomb is a trapper bomb, so it shares the facts of a trapper.
 //Change trapper facts if you want to change the stats of the spit.
-
+*/
 
 
 /*
@@ -153,19 +157,19 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
 
 #define ABUILDER_SPEED              0.8f
-#define ABUILDER_VALUE              AVM(170)
+#define ABUILDER_VALUE              AVM(160) //limit battlegrangers' reward
 #define ABUILDER_HEALTH             AHM(60)
 #define ABUILDER_REGEN              2
 #define ABUILDER_COST               0
 
 #define ABUILDER_UPG_SPEED          1.0f
-#define ABUILDER_UPG_VALUE          AVM(220)
+#define ABUILDER_UPG_VALUE          AVM(220) //limit battlegrangers' reward
 #define ABUILDER_UPG_HEALTH         AHM(90)
 #define ABUILDER_UPG_REGEN          3
 #define ABUILDER_UPG_COST           0
 
 #define LEVEL0_SPEED                1.4f
-#define LEVEL0_VALUE                AVM(160) //default 175, 180 for gpp. I forgot the values for the basilisks and mars.
+#define LEVEL0_VALUE                AVM(180) //default 175, 180 for gpp. I forgot the values for the basilisks and mars. 160 -> 180 because too much complaints about gaining nothing frm dretch kills
 #define LEVEL0_HEALTH               AHM(30)
 #define LEVEL0_REGEN                1
 #define LEVEL0_COST                 0
@@ -245,7 +249,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ASPAWN_BP                   10
 #define ASPAWN_BT                   12000
-#define ASPAWN_HEALTH               ABHM(350) //250
+#define ASPAWN_HEALTH               ABHM(300) //250 //has to be killed by one luci shot + a bit 
 #define ASPAWN_REGEN                8
 #define ASPAWN_SPLASHDAMAGE         60
 #define ASPAWN_SPLASHRADIUS         50
@@ -381,12 +385,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define RIFLE_CLIPSIZE              42 //30 //36 //42
 #define RIFLE_MAXCLIPS              9 //6
-#define RIFLE_REPEAT                110 //100 //118 //70
+#define RIFLE_REPEAT                110 //100 //110 (simulates the rate my rifle fires at in gpp) //revert back to 100 if needed because in KoRx it appears to have not much difference but here it will since rifle has 42 bullets
 #define RIFLE_K_SCALE               1.0f
 #define RIFLE_RELOAD                1800
 #define RIFLE_PRICE                 0
 #define RIFLE_SPREAD                170
-#define RIFLE_DMG                   HDM(7) //5 //6
+#define RIFLE_DMG                   HDM(6) //5 //6
 
 #define PAINSAW_PRICE               100
 #define PAINSAW_REPEAT              65 
@@ -402,7 +406,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define GRENADE_RANGE               332.0f //192 //mininuke == 500
 #define GRENADE_SPEED               780.0f //Throwing speed. Default 400
 
-//reverse pump shotgun "semi-semi-auto"
+//reverse pump shotgun "semi-semi-auto" (~80dmg/s)
 #define SHOTGUN_PRICE               250
 #define SHOTGUN_SHELLS              10
 #define SHOTGUN_PELLETS             14 //used to sync server and client side //long range combat shot - 12
@@ -412,9 +416,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_RELOAD              5000 //spray of defeat - 6000 //clip based - 3000
 #define SHOTGUN_SPREAD              1320 //900 //1320=spray of defeat
 #define SHOTGUN_DMG                 HDM(6) //spray of defeat - 6 //long range combat shot 6
-#define SHOTGUN_BLAST               110 //damage for secondary.
+#define SHOTGUN_BLAST               110 //damage for secondary. Highest instant dmg weapon.
 #define SHOTGUN_BLAST_RANGE         350
-#define SHOTGUN_BLAST_REPEAT        2000 //keep high, not too high
+#define SHOTGUN_BLAST_REPEAT        2500 //keep high, not too high 2000 -> 2500 because it instant kills marauders
 
 #define LASGUN_PRICE                150
 #define LASGUN_AMMO                 370
@@ -423,7 +427,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LASGUN_K_SCALE              2.0f
 #define LASGUN_RELOAD               3000
 #define LASGUN_SPREAD               100 //works now =P (ripped from mgun)
-#define LASGUN_DAMAGE               HDM(11) //9
+#define LASGUN_DAMAGE               HDM(10) //9 //60dmg/s, original trem 45dmg/s
 
 //Mass Driver now a Sniper Rifle with a large cooldown
 #define MDRIVER_PRICE               380
@@ -431,7 +435,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_MAXCLIPS            7
 #define MDRIVER_DMG                 HDM(72) //(random( ) * 38 + 100)
 #define MDRIVER_RADIUS              100    
-#define MDRIVER_REPEAT              1320 //2000 - wearer must remember to put ammo in his blaster to deal with dretches safely unless blaster is unlimited ammo
+#define MDRIVER_REPEAT              1375 //2000 makes it useless, but remember there are some good mass drivers in this world
 #define MDRIVER_K_SCALE             3.0f
 #define MDRIVER_RELOAD              4000
 
@@ -472,11 +476,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FLAMER_PRICE                520
 #define FLAMER_GAS                  280 //150
 #define FLAMER_REPEAT               100 //200
-#define FLAMER_K_SCALE              1.0f //1f
+#define FLAMER_K_SCALE              0.5f //1f
 #define FLAMER_DMG                  HDM(11) //20
 #define FLAMER_RADIUS               80 //splash radius //50
 #define FLAMER_LIFETIME             800.0f
-#define FLAMER_SPEED                360.0f //300
+#define FLAMER_SPEED                400.0f //300
 #define FLAMER_LAG                  0.65f  //the amount of player velocity that is added to the fireball
 
 //Easier to get dretches, and lucijump. Also improved to match tyrant's and other alien's new health.

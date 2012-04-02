@@ -846,7 +846,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
 /* This is the alien regen.
  * I swapped the Booster and tyrant regen priority
  * so you can use a booster as a tyrant.
- * Not garanteed to work.
  */
       num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
       for( i = 0; i < num; i++ )
@@ -969,24 +968,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
  
       }
     }
-	/* //following has been cancelled due to no ammo screwups
-    if( client->ps.weapon == WP_ALEVEL4 )
-    {
-      int ammo, maxAmmo;
-
-      BG_FindAmmoForWeapon( WP_ALEVEL4, &maxAmmo, NULL );
-      BG_UnpackAmmoArray( WP_ALEVEL4, client->ps.ammo, client->ps.powerups, &ammo, NULL );
-
-      if( ammo < maxAmmo )
-      {
-        ammo++;
-        BG_PackAmmoArray( WP_ALEVEL4, client->ps.ammo, client->ps.powerups, ammo, 0 );
- 
-      }
-	if (ammo > maxAmmo )
-	ammo = maxAmmo;
-    }
-	*/
 //This following is an idea i had on giving these two energy weapon ammo over time.
 //NOTE: DOES NOT WORK. [obviously]
 /*
