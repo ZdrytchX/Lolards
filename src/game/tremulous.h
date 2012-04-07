@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * ALIEN_WDMG_MODIFIER - overall damage modifier for coarse tuning
  *
+ * Knockbacks are currently disabled for claws until i get a compiler working.
  */
 
 #define ALIEN_WDMG_MODIFIER         1.0f
@@ -39,7 +40,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_CLAW_DMG           ADM(26) //20)
 #define ABUILDER_CLAW_RANGE         64.0f
 #define ABUILDER_CLAW_WIDTH         4.0f
-#define ABUILDER_CLAW_REPEAT        800
+#define ABUILDER_CLAW_REPEAT        1000 //2 hit kills are OP, lowered to default
 #define ABUILDER_BASE_CLAW_REPEAT   1000
 #define ABUILDER_CLAW_K_SCALE       1.0f
 #define ABUILDER_BASE_DELAY         12000 //17000
@@ -56,7 +57,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_BITE_RANGE           64.0f
 #define LEVEL0_BITE_WIDTH           6.0f
 #define LEVEL0_BITE_REPEAT          333 //500
-#define LEVEL0_BITE_K_SCALE         1.0f
+#define LEVEL0_BITE_K_SCALE         0.5f
 #define LEVEL0_SCRATCH_DMG          4 //dispite this, it is actually almost overpowered.
 #define LEVEL0_SCRATCH_REPEAT       100 //Main pupous of this attack is to drain health slowly and gain it just like mara zap.
 #define LEVEL0_SCRATCH_RANGE        120
@@ -66,7 +67,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL1_CLAW_WIDTH           10.0f
 #define LEVEL1_CLAW_REPEAT          666
 #define LEVEL1_CLAW_U_REPEAT        500
-#define LEVEL1_CLAW_K_SCALE         -1.0f
+#define LEVEL1_CLAW_K_SCALE         -1.0f //when i do later enable knockback
 #define LEVEL1_CLAW_U_K_SCALE       -1.0f
 #define LEVEL1_GRAB_RANGE           96.0f//64
 #define LEVEL1_GRAB_TIME            300
@@ -80,10 +81,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_CLAW_RANGE           128.0f //96
 #define LEVEL2_CLAW_WIDTH           18.0f //12f
 #define LEVEL2_CLAW_REPEAT          400 //marauder = glass cannon
-#define LEVEL2_CLAW_K_SCALE         1.0f//1
+#define LEVEL2_CLAW_K_SCALE         0.0f//1
 #define LEVEL2_CLAW_U_REPEAT        333 //Okay, i admit, it is overpowered. So i decided to change it back to before. (original Lolards qvm had 250 here and 333 in normal mar)
-#define LEVEL2_CLAW_U_K_SCALE       1.0f//1
+#define LEVEL2_CLAW_U_K_SCALE       0.0f//1
 
+/*
 //Note: On any armoured human, the zap does 20dmg/s always if the sv_fps is default.
 #define LEVEL2_AREAZAP_DMG          ADM(120) //default 80 //but remember, this is dealt over 3 seconds, not 0.75.
 #define LEVEL2_AREAZAP_RANGE        360.0f // default 300 //Overpowered, but its good practice to stay withing a 360 area first because its easier.
@@ -93,15 +95,24 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_AREAZAP_TIME         2000 //1000 //3000 //Stacking still does the same damage to bsuits to larmour. Now does 40 dmg total againts larmour.
 #define LEVEL2_AREAZAP_MAX_TARGETS  7 //whole shit here. But it is to help againts groups of humans and base rushes.
 #define LEVEL2_WALLJUMP_MAXSPEED    90000.0f //1290.0f //idk, don't really want a max
+*/
+//Note: I've changed default sv_fps to 80 so zap should have some difference between larmour and bsuit
+#define LEVEL2_AREAZAP_DMG          ADM(60) //halved because it should do more dmg/s
+#define LEVEL2_AREAZAP_RANGE        360.0f
+#define LEVEL2_AREAZAP_WIDTH        2.0f //be able to zap humans in vents
+#define LEVEL2_AREAZAP_REPEAT       800 //~25 dmg/second
+#define LEVEL2_AREAZAP_TIME         3000 
+#define LEVEL2_AREAZAP_MAX_TARGETS  7 //Kept the same.
+#define LEVEL2_WALLJUMP_MAXSPEED    90000.0f //1290.0f //idk, don't really want a max
 
 //Goon modified heavily to get close to gpp values.
 #define LEVEL3_CLAW_DMG             ADM(82)
 #define LEVEL3_CLAW_RANGE           72.0f //96
 #define LEVEL3_CLAW_WIDTH           16.0f
 #define LEVEL3_CLAW_REPEAT          700 //usually 700 //900 for gpp-related
-#define LEVEL3_CLAW_K_SCALE         1.0f
+#define LEVEL3_CLAW_K_SCALE         0.4f //Keeping it at 0.4 because it Might effect the pounce.
 #define LEVEL3_CLAW_U_REPEAT        600 //usuaully 600 //800 ^^what i said
-#define LEVEL3_CLAW_U_K_SCALE       1.0f
+#define LEVEL3_CLAW_U_K_SCALE       0.4f
 #define LEVEL3_POUNCE_DMG           ADM(135) //default 100, but i increased it to relate to gpp values of killing armoured. Unvanquished play proves that 5 hit kills is still alright.
 #define LEVEL3_POUNCE_RANGE         48.0f //default 72. Remember 0 is at the centre, it won't hit anything. Want 36, but can't hit because it still isn't long enough :( Gpp's value is probably 48, cause thats what it says in TremX's source code.
 #define LEVEL3_POUNCE_WIDTH         32.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 32 for a more 'realistic' pounce so adv goons can get humans without aiming down. Works almost perfectly at this setting. It is basically the width of the goon/2.
@@ -116,14 +127,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_BOUNCEBALL_AMMO      3
 #define LEVEL3_BOUNCEBALL_REPEAT    600 //default 1000 //deal with long range turrets quicker
 #define LEVEL3_BOUNCEBALL_SPEED     1000.0f
-#define LEVEL3_BOUNCEBALL_SPLASH_DMG  110 //Explosion dmg.
+#define LEVEL3_BOUNCEBALL_SPLASH_DMG  56 //Explosion dmg. //Halved so base killing isn't that fast since human turrets take up 10 bp
 #define LEVEL3_BOUNCEBALL_SPLASH_RADIUS 92 //Splash radius. Helps with sniping. //Rememeber that reload time is 10 seconds. You don't want it overpowered.
 
 #define LEVEL4_CLAW_DMG             ADM(110)
 #define LEVEL4_CLAW_RANGE           128.0f
 #define LEVEL4_CLAW_WIDTH           20.0f
 #define LEVEL4_CLAW_REPEAT          750 //750
-#define LEVEL4_CLAW_K_SCALE         1.0f
+#define LEVEL4_CLAW_K_SCALE         1.0f //i don't mind the knockback
 #define LEVEL4_REGEN_RANGE          200.0f //usually goes unnoticed, left default
 #define LEVEL4_REGEN_MOD            1.5f //2 //Can benifit from booster's x3 healing now
 #define LEVEL4_CHARGE_SPEED         3.0f
@@ -157,13 +168,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
 
 #define ABUILDER_SPEED              0.8f
-#define ABUILDER_VALUE              AVM(160) //limit battlegrangers' reward
+#define ABUILDER_VALUE              AVM(160) //limit battlegrangers' reward because of newbies
 #define ABUILDER_HEALTH             AHM(60)
 #define ABUILDER_REGEN              2
 #define ABUILDER_COST               0
 
 #define ABUILDER_UPG_SPEED          1.0f
-#define ABUILDER_UPG_VALUE          AVM(220) //limit battlegrangers' reward
+#define ABUILDER_UPG_VALUE          AVM(220) //limit battlegrangers' reward because of newbies
 #define ABUILDER_UPG_HEALTH         AHM(90)
 #define ABUILDER_UPG_REGEN          3
 #define ABUILDER_UPG_COST           0
@@ -218,7 +229,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_COST                 3
 
 //Basi-Suit (hidden extra, costing 9 evos, or 11 if tyrant. Somehow this is a wasted class as humans don't 'morph' into a battlesuit, so i can use it as a seperate class unlike gpp =D) Values change for bg_misc.c only.
-#define SPY_SPEED                   1.0f
+#define SPY_SPEED                   1.3f //human sprinting speed //1.0 is really hard to get to a human with quietly
 #define SPY_HEALTH                  300
 #define SPY_VALUE                   720
 #define SPY_COST                    5
@@ -243,13 +254,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define CREEP_BASESIZE              900 //700
 #define CREEP_TIMEOUT               1000
-#define CREEP_MODIFIER              0.5f
+#define CREEP_MODIFIER              0.6f
 #define CREEP_ARMOUR_MODIFIER       0.75f
 #define CREEP_SCALEDOWN_TIME        3000
 
 #define ASPAWN_BP                   10
 #define ASPAWN_BT                   12000
-#define ASPAWN_HEALTH               ABHM(300) //250 //has to be killed by one luci shot + a bit 
+#define ASPAWN_HEALTH               ABHM(295) //250 //has to be killed by one luci shot 
 #define ASPAWN_REGEN                8
 #define ASPAWN_SPLASHDAMAGE         60
 #define ASPAWN_SPLASHRADIUS         50
@@ -333,7 +344,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define HOVEL_BP                    0
 #define HOVEL_BT                    15000
-#define HOVEL_HEALTH                ABHM(537) //370
+#define HOVEL_HEALTH                ABHM(500) //370
 #define HOVEL_REGEN                 30 //20
 #define HOVEL_SPLASHDAMAGE          20
 #define HOVEL_SPLASHRADIUS          200
@@ -401,8 +412,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Super Grenade Throw!
 #define GRENADE_PRICE               600 //200 //mininuke
 #define GRENADE_REPEAT              0 //Default 0. Surely doesn't stop nade spams. (because you're discarding the weapon/upgrade as you use it, duh!)
-#define GRENADE_K_SCALE             2.0f
-#define GRENADE_DAMAGE              HDM(380) //210 //strong enough to kill egg or anything weaker.
+#define GRENADE_K_SCALE             1.0f
+#define GRENADE_DAMAGE              HDM(300) //210 //strong enough to kill egg or anything weaker.
 #define GRENADE_RANGE               332.0f //192 //mininuke == 500
 #define GRENADE_SPEED               780.0f //Throwing speed. Default 400
 
@@ -433,7 +444,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_PRICE               380
 #define MDRIVER_CLIPSIZE            5
 #define MDRIVER_MAXCLIPS            7
-#define MDRIVER_DMG                 HDM(72) //(random( ) * 38 + 100)
+#define MDRIVER_DMG                 HDM(62) //72 -> 62
 #define MDRIVER_RADIUS              100    
 #define MDRIVER_REPEAT              1375 //2000 makes it useless, but remember there are some good mass drivers in this world
 #define MDRIVER_K_SCALE             3.0f
@@ -458,7 +469,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PRIFLE_K_SCALE              1.5f //old '3' was too overpowered if the welder is a bot againts anything smaller than rant
 #define PRIFLE_RELOAD               2000
 #define PRIFLE_DMG                  HDM(13)
-#define PRIFLE_SPEED                3000 //1000
+#define PRIFLE_SPEED                2000 //1000 //3000 -> 2500 because it uses the current player's speed
 //#define PRIFLE_SPREAD               300 //cancelled - usage deleted
 
 //pulse rifle from movie 'alien'
@@ -486,11 +497,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Easier to get dretches, and lucijump. Also improved to match tyrant's and other alien's new health.
 #define LCANNON_PRICE               700
 #define LCANNON_AMMO                200
-#define LCANNON_REPEAT              1350 //500 //400
+#define LCANNON_REPEAT              1375 //500 //400
 #define LCANNON_K_SCALE             3.27f//1f
 #define LCANNON_CHARGEREPEAT        500 //800
 #define LCANNON_RELOAD              5000
-#define LCANNON_DAMAGE              HDM(290) //265 //395
+#define LCANNON_DAMAGE              HDM(300) //265 //395 //not too high, too much time range for killing goons making it too easy
 #define LCANNON_RADIUS              120 //splash radius. Default 150, wanted 180, but too overpowered
 #define LCANNON_SECONDARY_DAMAGE    HDM(80) //default 27,//now direct hit
 #define LCANNON_SECONDARY_RADIUS    55 //75
@@ -508,7 +519,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HBUILD_PRICE                0
 #define HBUILD_REPEAT               1000 //1000
 #define HBUILD_DELAY                17500 //17500
-#define HBUILD_HEALRATE             28 //18
+#define HBUILD_HEALRATE             22 //18
 
 #define HBUILD2_PRICE               0
 #define HBUILD2_REPEAT              800 //1000
