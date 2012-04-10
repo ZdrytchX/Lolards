@@ -384,15 +384,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HUMAN_WDMG_MODIFIER         1.0f
 #define HDM(d)                      ((int)((float)d*HUMAN_WDMG_MODIFIER))
 
-#define BLASTER_REPEAT              380 //500
+#define BLASTER_REPEAT              400 //500 -> 400 //approx 20 dmg/s
 #define BLASTER_K_SCALE             5.0f //knockback now noticable
 #define BLASTER_SPREAD              200 //doesn't work, soon to be fixed
 #define BLASTER_SPEED               1400 //1400 //2400
 #define BLASTER_DMG                 HDM(8) //9 //10+ to help againts dretches //18 if 18limited ammo with a slow repeat //36 - strong with ammo but ammo gets used up fast //8 because faster shoot
-#define BLASTER_CLIPSIZE            6
-#define BLASTER_MAXCLIPS            9
-#define BLASTER_MELEE               24
-#define BLASTER_MELEE_RANGE         80
+#define BLASTER_CLIPSIZE            6 //disabled
+#define BLASTER_MAXCLIPS            9 //disabled
+#define BLASTER_MELEE               24 //not too high because it would be overpowered
+#define BLASTER_MELLEE_REPEAT       500 //mellee rate //approx 48dmg/s
+#define BLASTER_MELEE_RANGE         80 //enough for combat
 
 #define RIFLE_CLIPSIZE              42 //30 //36 //42
 #define RIFLE_MAXCLIPS              9 //6
@@ -420,23 +421,23 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //reverse pump shotgun "semi-semi-auto" (~80dmg/s)
 #define SHOTGUN_PRICE               250
 #define SHOTGUN_SHELLS              10
-#define SHOTGUN_PELLETS             14 //used to sync server and client side //long range combat shot - 12
-#define SHOTGUN_MAXCLIPS            7 //default 3
+#define SHOTGUN_PELLETS             12 //used to sync server and client side //14 -> 12 [bots are OP] [105dmg/s -> 90dmg/s]
+#define SHOTGUN_MAXCLIPS            5 //default 3
 #define SHOTGUN_REPEAT              800 //1000 /Lolards original without vampire is 700. Raised because the bots become impossible to kill because they steal too much hp
 #define SHOTGUN_K_SCALE             2.0f
-#define SHOTGUN_RELOAD              5000 //spray of defeat - 6000 //clip based - 3000
+#define SHOTGUN_RELOAD              5000 //real life reloading is annoying right? Two shells/second
 #define SHOTGUN_SPREAD              1320 //900 //1320=spray of defeat
-#define SHOTGUN_DMG                 HDM(6) //spray of defeat - 6 //long range combat shot 6
+#define SHOTGUN_DMG                 HDM(6) //spray of defeat - 6 //90dmg/s
 #define SHOTGUN_BLAST               110 //damage for secondary. Highest instant dmg weapon.
 #define SHOTGUN_BLAST_RANGE         350
 #define SHOTGUN_BLAST_REPEAT        2500 //keep high, not too high 2000 -> 2500 because it instant kills marauders
 
-#define LASGUN_PRICE                150
+#define LASGUN_PRICE                180 //increase, but you need a weapon that can be bought from just one kill
 #define LASGUN_AMMO                 370
 #define LASGUN_REPEAT               180 //200
-#define LASGUN_MAXCLIPS             0
+#define LASGUN_MAXCLIPS             1 //oh wtf might as well... not much difference
 #define LASGUN_K_SCALE              2.0f
-#define LASGUN_RELOAD               3000
+#define LASGUN_RELOAD               4000 //rise it higher... changing batteries is a pain right?
 #define LASGUN_SPREAD               100 //works now =P (ripped from mgun)
 #define LASGUN_DAMAGE               HDM(10) //9 //60dmg/s, original trem 45dmg/s
 
@@ -444,7 +445,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_PRICE               380
 #define MDRIVER_CLIPSIZE            5
 #define MDRIVER_MAXCLIPS            7
-#define MDRIVER_DMG                 HDM(62) //72 -> 62
+#define MDRIVER_DMG                 HDM(62) //72 -> 62 //remember there are some good mass drivers in this world
 #define MDRIVER_RADIUS              100    
 #define MDRIVER_REPEAT              1375 //2000 makes it useless, but remember there are some good mass drivers in this world
 #define MDRIVER_K_SCALE             3.0f
@@ -454,8 +455,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CHAINGUN_PRICE              400
 #define CHAINGUN_BULLETS            300
 #define CHAINGUN_MAXCLIPS           2
-#define CHAINGUN_REPEAT             90 //without speedy barrel function
-#define CHAINGUN_REPEAT2             70 //with speedy barrel function
+#define CHAINGUN_REPEAT             90 //without speedy barrel function //78dmg/s
+#define CHAINGUN_REPEAT2            70 //with speedy barrel function //100dmg/s
 #define CHAINGUN_K_SCALE            1.0f
 #define CHAINGUN_SPREAD             500 //700
 #define CHAINGUN_DMG                HDM(7) //6
@@ -486,6 +487,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Flamer has a realistic shot by halving the repeat rate (2x speed) and halving the dmg
 #define FLAMER_PRICE                520
 #define FLAMER_GAS                  280 //150
+#define FLAMER_RELOAD               3000 //baha forgot this =/
 #define FLAMER_REPEAT               100 //200
 #define FLAMER_K_SCALE              0.5f //1f
 #define FLAMER_DMG                  HDM(11) //20

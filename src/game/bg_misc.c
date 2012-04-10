@@ -3122,7 +3122,7 @@ weaponAttributes_t bg_weapons[ ] =
     qtrue,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     BLASTER_REPEAT,       //int       repeatRate1;
-    500,                    //int       repeatRate2;
+    BLASTER_MELLEE_REPEAT,      //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     BLASTER_K_SCALE,      //float     knockbackScale;
@@ -3202,7 +3202,7 @@ weaponAttributes_t bg_weapons[ ] =
     FLAMER_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
-    3000,                    //int       reloadTime;
+    FLAMER_RELOAD,                    //int       reloadTime;
     FLAMER_K_SCALE,       //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
