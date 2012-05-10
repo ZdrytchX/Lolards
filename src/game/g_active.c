@@ -821,7 +821,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
         0, damage, 0, MOD_POISON );
     }
 
-    //replenish alien health
+    //replenish/regenerate alien health //I will add in human regen shortly once i get a linux OS
     if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
       level.surrenderTeam != PTE_ALIENS
       &&

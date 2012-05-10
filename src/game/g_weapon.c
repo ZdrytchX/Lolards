@@ -255,7 +255,8 @@ void meleeAttack( gentity_t *ent, float range, float width, int damage, meansOfD
   }
 
   if( traceEnt->takedamage )
-    G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, DAMAGE_NO_KNOCKBACK, mod );
+    G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, 0, mod );
+//     G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, DAMAGE_NO_KNOCKBACK, mod );
 }
 
 /*
@@ -1864,6 +1865,7 @@ void FireWeapon( gentity_t *ent )
 
     case WP_LOCKBLOB_LAUNCHER:
       lockBlobLauncherFire( ent );
+      slowBlobFire( ent ); //for the lols
       break;
     case WP_HIVE:
       hiveFire( ent );

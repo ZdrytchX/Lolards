@@ -189,8 +189,8 @@ buildableAttributes_t bg_buildableList[ ] =
     "team_alien_hive",     //char      *entityName;
     { "models/buildables/acid_tube/acid_tube.md3", 0, 0, 0 },
     1.0f,                  //float     modelScale;
-    { -35, -35, -25 },     //vec3_t    mins;
-    { 35, 35, 25 },        //vec3_t    maxs;
+    { -30, -30, -30 },     //vec3_t    mins; //{ -35, -35, -25 }
+    { 30, 30, 30 },        //vec3_t    maxs; //{ 35, 35, 25 }
     -15.0f,                //float     zOffset;
     TR_GRAVITY,            //trType_t  traj;
     0.0,                   //float     bounce;
@@ -345,7 +345,7 @@ buildableAttributes_t bg_buildableList[ ] =
     HSPAWN_BP,             //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     HSPAWN_HEALTH,         //int       health;
-    3,                     //int       regenRate;
+    2,                     //int       regenRate;
     HSPAWN_SPLASHDAMAGE,   //int       splashDamage;
     HSPAWN_SPLASHRADIUS,   //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -458,7 +458,7 @@ buildableAttributes_t bg_buildableList[ ] =
     TESLAGEN_BP,           //int       buildPoints;
     ( 1 << S3 ),           //int       stages
     TESLAGEN_HEALTH,       //int       health;
-    3,                     //int       regenRate;
+    2,                     //int       regenRate;
     TESLAGEN_SPLASHDAMAGE, //int       splashDamage;
     TESLAGEN_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -532,7 +532,7 @@ buildableAttributes_t bg_buildableList[ ] =
     ARMOURY_BP,            //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     ARMOURY_HEALTH,        //int       health;
-    4,                     //int       regenRate;
+    3,                     //int       regenRate;
     ARMOURY_SPLASHDAMAGE,  //int       splashDamage;
     ARMOURY_SPLASHRADIUS,  //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -569,7 +569,7 @@ buildableAttributes_t bg_buildableList[ ] =
     REACTOR_BP,            //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     REACTOR_HEALTH,        //int       health;
-    7,                     //int       regenRate;
+    4,                     //int       regenRate;
     REACTOR_SPLASHDAMAGE,  //int       splashDamage;
     REACTOR_SPLASHRADIUS,  //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -3228,7 +3228,7 @@ weaponAttributes_t bg_weapons[ ] =
     CHAINGUN_REPEAT,      //int       repeatRate1;
     CHAINGUN_REPEAT2,     //int       repeatRate2;
     0,                    //int       repeatRate3;
-    5000,                    //int       reloadTime;
+    CHAINGUN_RELOAD,                    //int       reloadTime;
     CHAINGUN_K_SCALE,     //float     knockbackScale;
     qtrue,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
@@ -3337,7 +3337,7 @@ weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
-    90.0f,                //float     zoomFov;
+    70.0f,                //float     zoomFov;
     qtrue,                //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     0,                    //int       buildDelay;
