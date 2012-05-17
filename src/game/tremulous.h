@@ -58,8 +58,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_BITE_WIDTH           6.0f
 #define LEVEL0_BITE_REPEAT          333 //500 //333 makes stronger againts stationary battlesuits
 #define LEVEL0_BITE_K_SCALE         0.5f
-#define LEVEL0_SCRATCH_DMG          4 //dispite this, it is actually almost overpowered.
-#define LEVEL0_SCRATCH_REPEAT       100 //Main pupous of this attack is to drain health slowly and gain it just like mara zap.
+#define LEVEL0_SCRATCH_DMG          2 //dispite this, it is actually almost overpowered.
+#define LEVEL0_SCRATCH_REPEAT       50 //Main pupous of this attack is to drain health slowly and gain it just like mara zap.
 #define LEVEL0_SCRATCH_RANGE        120
 
 #define LEVEL1_CLAW_DMG             ADM(48)
@@ -67,14 +67,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL1_CLAW_WIDTH           10.0f
 #define LEVEL1_CLAW_REPEAT          666
 #define LEVEL1_CLAW_U_REPEAT        500
-#define LEVEL1_CLAW_K_SCALE         -1.0f //brings enemy closer for a hug
-#define LEVEL1_CLAW_U_K_SCALE       -1.0f
+#define LEVEL1_CLAW_K_SCALE         0.0f //-1.0fbrings enemy closer for a hug
+#define LEVEL1_CLAW_U_K_SCALE       0.0f
 #define LEVEL1_GRAB_RANGE           96.0f//64
 #define LEVEL1_GRAB_TIME            300
 #define LEVEL1_GRAB_U_TIME          450
 #define LEVEL1_PCLOUD_DMG           ADM(8)
-#define LEVEL1_PCLOUD_RANGE         600.0f //300
-#define LEVEL1_PCLOUD_REPEAT        1200 //2000
+#define LEVEL1_PCLOUD_RANGE         200.0f //300 //limit troll gassers
+#define LEVEL1_PCLOUD_REPEAT        1200 //2000 //adjust to visual animation
 #define LEVEL1_PCLOUD_TIME          10000 //
 
 #define LEVEL2_CLAW_DMG             ADM(42)
@@ -137,16 +137,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_CLAW_K_SCALE         0.8f //i don't mind the knockback
 #define LEVEL4_REGEN_RANGE          200.0f //usually goes unnoticed, left default
 #define LEVEL4_REGEN_MOD            1.5f //2 //Can benifit from booster's x3 healing now
-#define LEVEL4_CHARGE_SPEED         3.0f
-#define LEVEL4_CHARGE_TIME          4000 //2000 //3000
-#define LEVEL4_CHARGE_CHARGE_TIME   2000 //1500
+#define LEVEL4_CHARGE_SPEED         2.5f //3.0 a bit too fast in small areas
+#define LEVEL4_CHARGE_TIME          3500 //2000 //3000
+#define LEVEL4_CHARGE_CHARGE_TIME   1500 //1500
 #define LEVEL4_MIN_CHARGE_TIME      750
 #define LEVEL4_CHARGE_CHARGE_RATIO  (LEVEL4_CHARGE_TIME/LEVEL4_CHARGE_CHARGE_TIME)
 #define LEVEL4_CHARGE_REPEAT        1000
 #define LEVEL4_CHARGE_DMG           ADM(209) //100 (to help with armoured)
 //Removed tyrant spit bomb.
 /*
-//Note: tyrant spit bomb is a trapper bomb, so it shares the facts of a trapper.
+//Note: tyrant spit bomb is a trapper bomb, so it currently shares the facts of a trapper.
 //Change trapper facts if you want to change the stats of the spit.
 */
 
@@ -506,7 +506,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_RELOAD              3000 //is reload time too long? //5000 -> 3000
 #define LCANNON_DAMAGE              HDM(285) //265 //395 //not too high, too much time range for killing goons making it too easy
 #define LCANNON_RADIUS              120 //splash radius. Default 150, wanted 180, but too overpowered
-#define LCANNON_SECONDARY_DAMAGE    HDM(80) //default 27,//now direct hit, instant kills marauders
+#define LCANNON_SECONDARY_DAMAGE    HDM(80) //default 27,//100 for some reason instant kills tubes (138 hp)//now direct hit, instant kills marauders
 #define LCANNON_SECONDARY_RADIUS    55 //75
 #define LCANNON_SPEED               400 //330 //Noob Tube! //780 //changed back, see g_missile.c for reason.
 /*OR you can just read this: It is porportional to how much you power up.
@@ -528,6 +528,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HBUILD2_REPEAT              800 //1000
 #define HBUILD2_DELAY               10000 //15000
 
+/*
+//note: Lockblob launcher is [also] a trapper bomb, see trapper
+// vars for changing
+*/
+
 
 
 /*
@@ -541,8 +546,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HELMET_RANGE                1000.0f //1000f //2000.0f
 #define HELMET_POISON_PROTECTION    2 
 
-//medkit price ?!?
-#define MEDKIT_PRICE                0
+//medkit price
+#define MEDKIT_PRICE                20 //Uses credits without medistation to prevent no-medistat bases
+//							such as the ones ViruS builds
 
 #define BATTPACK_PRICE              130 //increase as it is very useful //made in a way tha batt+standard armour + luci = 1000 creds, luci + bsuit = 1200 creds)
 #define BATTPACK_MODIFIER           1.6f //modifier for extra energy storage available 1.5f

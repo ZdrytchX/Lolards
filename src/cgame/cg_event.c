@@ -88,7 +88,7 @@ static void CG_Obituary( entityState_t *ent )
       message = "tried to fly";
       break;
     case MOD_CRUSH:
-      message = "got crushed and now fits in a filing cabinet";
+      message = "now can fit in a filing cabinet";
       break;
     case MOD_WATER:
       message = "didn't know how to swim properly";
@@ -97,7 +97,7 @@ static void CG_Obituary( entityState_t *ent )
       message = "thought ^2acid^7 tasted good";
       break;
     case MOD_LAVA:
-      message = "melted under some mysterious ^1red ^7liquid ";
+      message = "melted under some mysterious ^1red ^7substance";
       break;
     case MOD_TARGET_LASER:
       message = "shouldn't have touched that ^1laser";
@@ -127,10 +127,10 @@ static void CG_Obituary( entityState_t *ent )
       message = "didn't know what a electricity generator was";
       break;
     case MOD_SLOWBLOB:
-      message = "was spat on by a baby ^2granger";
+      message = "was laid by a baby ^2granger";
       break;
     case MOD_SWARM:
-      message = "shouldn't have disturbed that hive";
+      message = "shouldn't have gone near that hive";
       break;
     default:
       message = NULL;
@@ -146,27 +146,27 @@ static void CG_Obituary( entityState_t *ent )
         if( gender == GENDER_FEMALE )
           message = "thought this was 1.2 tremulous.";
         else if( gender == GENDER_NEUTER )
-          message = "toasted itself";
+          message = "toasted oneself";
         else
           message = "tried to make barbeque";
         break;
 
       case MOD_LCANNON_SPLASH:
         if( gender == GENDER_FEMALE )
-          message = "learned not to luci spam";
+          message = "should've learned not to luci spam";
         else if( gender == GENDER_NEUTER )
-          message = "blew itself up";
+          message = "blew oneself's body up into the air";
         else
           message = "tried a luci jump";
         break;
 
       case MOD_GRENADE:
         if( gender == GENDER_FEMALE )
-          message = "threw the pin instead of the grenade";
+          message = "had her nade betray her";
         else if( gender == GENDER_NEUTER )
           message = "blew itself up";
         else
-          message = "had his nade betray him";
+          message = "threw the pin instead of the grenade";
         break;
 
       default:
@@ -224,13 +224,13 @@ static void CG_Obituary( entityState_t *ent )
         message = "ate plasma from";
         break;
       case MOD_MDRIVER:
-        message = "learned a lesson in nuclear physics from";
+        message = "learned a lesson in subnuclear physics from";
         break;
       case MOD_LASGUN:
-        message = "was laser spammed by";
+        message = "was laser spammed down by";
         break;
       case MOD_FLAMER:
-        message = "was tanned dangerously by";
+        message = "was unintentionally tanned by";
         message2 = "'s grill";
         break;
       case MOD_FLAMER_SPLASH:
@@ -247,7 +247,7 @@ static void CG_Obituary( entityState_t *ent )
         break;
       case MOD_GRENADE:
         message = "didn't see";
-        message2 = "drop a mininuke";
+        message2 = "drop the bottle";
         break;
 
       case MOD_ABUILDER_CLAW:
@@ -272,13 +272,13 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL2_ZAP:
-        message = "'s life was drained by a shock treatment from";
+        message = "'s life was drained during a shock treatment from";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL2 ) );
         message2 = className;
         break;
       case MOD_LEVEL3_CLAW:
-        message = "was decapicated by";
+        message = "used ^1DECAPITATE ^7skill on";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL3 ) );
         message2 = className;
@@ -290,19 +290,19 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL3_BOUNCEBALL:
-        message = "caught the barb of";
+        message = "accidentally caught the acid barb of";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL3 ) );
         message2 = className;
         break;
       case MOD_LEVEL4_CLAW:
-        message = "was split by the arm of";
+        message = "should've yelled '^1TAAAANK!^7' when he saw";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL4 ) );
         message2 = className;
         break;
       case MOD_LEVEL4_CHARGE:
-        message = "should've yelled '^1TAAAANK!^7' when he saw";
+        message = "should be flat now after";
         Com_sprintf( className, 64, "'s %s",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL4 ) );
         message2 = className;

@@ -494,7 +494,7 @@ void G_BotGoto(gentity_t *self, botTarget_t target, usercmd_t *botCmdBuffer) {
     //stay away from enemy as human
         getTargetPos(target, &tmpVec);
         if(self->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS && 
-        DistanceSquared(self->s.pos.trBase,tmpVec) < Square(350) && botTargetInAttackRange(self, target) && self->s.weapon != WP_PAIN_SAW
+        DistanceSquared(self->s.pos.trBase,tmpVec) < Square(400) && botTargetInAttackRange(self, target) && self->s.weapon != WP_PAIN_SAW
         && getTargetTeam(target) == PTE_ALIENS)
         {
             botCmdBuffer->forwardmove = -100;
