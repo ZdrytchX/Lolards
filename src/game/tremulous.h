@@ -57,7 +57,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_BITE_RANGE           64.0f
 #define LEVEL0_BITE_WIDTH           6.0f
 #define LEVEL0_BITE_REPEAT          333 //500 //333 makes stronger againts stationary battlesuits
-#define LEVEL0_BITE_K_SCALE         0.5f
+#define LEVEL0_BITE_K_SCALE         1.0f
 #define LEVEL0_SCRATCH_DMG          2 //dispite this, it is actually almost overpowered.
 #define LEVEL0_SCRATCH_REPEAT       50 //Main pupous of this attack is to drain health slowly and gain it just like mara zap.
 #define LEVEL0_SCRATCH_RANGE        120
@@ -67,7 +67,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL1_CLAW_WIDTH           10.0f
 #define LEVEL1_CLAW_REPEAT          666
 #define LEVEL1_CLAW_U_REPEAT        500
-#define LEVEL1_CLAW_K_SCALE         0.0f //-1.0fbrings enemy closer for a hug
+#define LEVEL1_CLAW_K_SCALE         0.0f //-1.0f brings enemy closer for a hug but comes with hardships of letting go of the human
 #define LEVEL1_CLAW_U_K_SCALE       0.0f
 #define LEVEL1_GRAB_RANGE           96.0f//64
 #define LEVEL1_GRAB_TIME            300
@@ -81,9 +81,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_CLAW_RANGE           128.0f //96 //longest range, since mar is glass cannon
 #define LEVEL2_CLAW_WIDTH           18.0f //12f
 #define LEVEL2_CLAW_REPEAT          400 //normal marauder is still a glass cannon, just weaker in health.
-#define LEVEL2_CLAW_K_SCALE         0.0f//1
+#define LEVEL2_CLAW_K_SCALE         -1.0f//1
 #define LEVEL2_CLAW_U_REPEAT        333 //Okay, i admit, it is overpowered. So i decided to change it back to before. (original Lolards qvm had 250 here and 333 in normal mar)
-#define LEVEL2_CLAW_U_K_SCALE       0.0f//1
+#define LEVEL2_CLAW_U_K_SCALE       -1.0f//1
 
 /*
 //Note: On any armoured human, the zap does 20dmg/s always if the sv_fps is default.
@@ -137,9 +137,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_CLAW_K_SCALE         0.8f //i don't mind the knockback
 #define LEVEL4_REGEN_RANGE          200.0f //usually goes unnoticed, left default
 #define LEVEL4_REGEN_MOD            1.5f //2 //Can benifit from booster's x3 healing now
-#define LEVEL4_CHARGE_SPEED         2.5f //3.0 a bit too fast in small areas
+#define LEVEL4_CHARGE_SPEED         3.0f //
 #define LEVEL4_CHARGE_TIME          3500 //2000 //3000
-#define LEVEL4_CHARGE_CHARGE_TIME   1500 //1500
+#define LEVEL4_CHARGE_CHARGE_TIME   2300 //1500
 #define LEVEL4_MIN_CHARGE_TIME      750
 #define LEVEL4_CHARGE_CHARGE_RATIO  (LEVEL4_CHARGE_TIME/LEVEL4_CHARGE_CHARGE_TIME)
 #define LEVEL4_CHARGE_REPEAT        1000
@@ -176,7 +176,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_UPG_SPEED          1.0f
 #define ABUILDER_UPG_VALUE          AVM(220) //limit battlegrangers' reward because of newbies
 #define ABUILDER_UPG_HEALTH         AHM(90)
-#define ABUILDER_UPG_REGEN          3
+#define ABUILDER_UPG_REGEN          2
 #define ABUILDER_UPG_COST           0
 
 #define LEVEL0_SPEED                1.4f
@@ -207,25 +207,25 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_UPG_SPEED            1.3f
 #define LEVEL2_UPG_VALUE            AVM(730)
 #define LEVEL2_UPG_HEALTH           AHM(172) //Previous, 192. Too high, as they steal hp.
-#define LEVEL2_UPG_REGEN            6
+#define LEVEL2_UPG_REGEN            5
 #define LEVEL2_UPG_COST             3
 
 #define LEVEL3_SPEED                1.1f
 #define LEVEL3_VALUE                AVM(575)
 #define LEVEL3_HEALTH               AHM(236)
-#define LEVEL3_REGEN                7
+#define LEVEL3_REGEN                6
 #define LEVEL3_COST                 2
 
 #define LEVEL3_UPG_SPEED            1.1f
 #define LEVEL3_UPG_VALUE            AVM(880)
 #define LEVEL3_UPG_HEALTH           AHM(275)
-#define LEVEL3_UPG_REGEN            8
+#define LEVEL3_UPG_REGEN            7
 #define LEVEL3_UPG_COST             2
 
 #define LEVEL4_SPEED                1.1f //1.2f
 #define LEVEL4_VALUE                AVM(920)
 #define LEVEL4_HEALTH               AHM(420)
-#define LEVEL4_REGEN                (0.025f * LEVEL4_HEALTH)
+#define LEVEL4_REGEN                8
 #define LEVEL4_COST                 3
 
 //Basi-Suit (hidden extra, costing 9 evos, or 11 if tyrant. Somehow this is a wasted class as humans don't 'morph' into a battlesuit, so i can use it as a seperate class unlike gpp =D) Values change for bg_misc.c only.
@@ -385,14 +385,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HDM(d)                      ((int)((float)d*HUMAN_WDMG_MODIFIER))
 
 #define BLASTER_REPEAT              400 //500 -> 400 //approx 20 dmg/s
-#define BLASTER_K_SCALE             5.0f //knockback now noticable
+#define BLASTER_K_SCALE             5.0f //knockback now very noticable
 #define BLASTER_SPREAD              200 //doesn't work, soon to be fixed
 #define BLASTER_SPEED               1400 //1400 //2400
 #define BLASTER_DMG                 HDM(8) //9 //10+ to help againts dretches //18 if 18limited ammo with a slow repeat //36 - strong with ammo but ammo gets used up fast //8 because faster shoot
 #define BLASTER_CLIPSIZE            6 //disabled
 #define BLASTER_MAXCLIPS            9 //disabled
 #define BLASTER_MELEE               24 //not too high because it would be overpowered
-#define BLASTER_MELLEE_REPEAT       500 //mellee rate //approx 48dmg/s
+#define BLASTER_MELLEE_REPEAT       800 //mellee rate
 #define BLASTER_MELEE_RANGE         80 //enough for combat
 
 #define RIFLE_CLIPSIZE              42 //30 //36 //42
@@ -423,7 +423,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_SHELLS              6 //10 -> 6 because it is able to kill om quickly, making it worth more than psaw
 #define SHOTGUN_PELLETS             12 //used to sync server and client side //14 -> 12 [bots are OP] [105dmg/s -> 90dmg/s]
 #define SHOTGUN_MAXCLIPS            5 //default 3
-#define SHOTGUN_REPEAT              800 //1000 /Lolards original without vampire is 700. Raised because the bots become impossible to kill because they steal too much hp
+#define SHOTGUN_REPEAT              700 //1000 //lowered from 800-> 700 because now underpowered... :/
 #define SHOTGUN_K_SCALE             2.0f
 #define SHOTGUN_RELOAD              ( SHOTGUN_SHELLS * 500 + 1000 ) //real life reloading is annoying right? Two shells/second
 #define SHOTGUN_SPREAD              1320 //900 //1320=spray of defeat on goons, but useless middle-long range especially againts dretches
@@ -741,7 +741,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 //Vampire mode settings
 //See the rest in g_combat.c, ~line 1762 [might change due to line additions]
-#define VAMP_EXTRA                  50
+#define VAMP_EXTRA                  50 //works like this: Maths calculates the ammount should take from the dmg done, add this variable, then times porportional to current class's hp.
 
 // g_suddenDeathMode settings
 #define SDMODE_BP                   29 // This is why gpp sudden death sucks, you can't build an armoury. Here, you can build a maximum of one armoury,a reactor and medi, dcc and repeater. 

@@ -1497,10 +1497,10 @@ void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
     return;
 //The following MAY stop aliens from being boosted
 
-  if( client && client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
+  if( client && client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS ){
     client->ps.stats[ STAT_STATE ] |= SS_POISONED;
     client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED;	
-    return;
+    return; }
 
   //only allow boostage once every 3 seconds
   if( client->lastBoostedTime + BOOSTER_INTERVAL > level.time )

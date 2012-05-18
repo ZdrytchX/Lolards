@@ -822,8 +822,8 @@ void ClientTimerActions( gentity_t *ent, int msec )
     }
 
     //replenish/regenerate alien health //I will add in human regen shortly once i get a linux OS
-    if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
-      level.surrenderTeam != PTE_ALIENS
+    if( //client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
+      //level.surrenderTeam != PTE_ALIENS
       &&
       ( !client->pers.nakedPlayer ||
         ( BG_FindNakedStagesForClass( client->pers.classSelection, g_alienStage.integer ) &&
@@ -847,6 +847,8 @@ void ClientTimerActions( gentity_t *ent, int msec )
  * I swapped the Booster and tyrant regen priority
  * so you can use a booster as a tyrant.
  */
+if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens right?
+	{
       num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
       for( i = 0; i < num; i++ )
       {
@@ -866,11 +868,12 @@ void ClientTimerActions( gentity_t *ent, int msec )
           break;
         }
       }
-
+	}
+//regen
       if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
           ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
         ent->health += BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) * modifier;
-
+//vamp settings
       if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] )
 	{ ent->health-= (client->ps.stats[ STAT_MAX_HEALTH ] / 25); } //lose 1hp/second * [health per 25 in total hp] when over standard max health
       //  ent->health = client->ps.stats[ STAT_MAX_HEALTH ]

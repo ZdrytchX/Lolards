@@ -372,12 +372,12 @@ static float PM_CmdScale( usercmd_t *cmd )
     }
 
     //must have +ve stamina to jump
-    if( pm->ps->stats[ STAT_STAMINA ] <= -500 )// able to jump still
-      cmd->upmove = 0;
+    if( pm->ps->stats[ STAT_STAMINA ] < 0 )// able to jump still
+      cmd->upmove = 10;
 
     //slow down once stamina depletes
     if( pm->ps->stats[ STAT_STAMINA ] <= -50 )
-      modifier *= (float)( pm->ps->stats[ STAT_STAMINA ] + 1000 ) / 500.0f;
+      modifier *= (float)( pm->ps->stats[ STAT_STAMINA ] + 1000 ) / 50.0f;
 
     if( pm->ps->stats[ STAT_STATE ] & SS_CREEPSLOWED )
     {
