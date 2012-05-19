@@ -441,7 +441,7 @@ gentity_t *fire_pulseRifle( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
 
-  bolt->s.pos.trType = TR_BUOYANCY; //linear
+  bolt->s.pos.trType = TR_SINE; //linear
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
   VectorScale( dir, PRIFLE_SPEED, bolt->s.pos.trDelta );
@@ -517,7 +517,7 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int da
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
 
-  bolt->s.pos.trType = TR_LINEAR;
+  bolt->s.pos.trType = TR_LINEAR;//TR_LINEAR
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
   SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
