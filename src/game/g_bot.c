@@ -938,9 +938,9 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
                 if((distance < Square(50)) && (distance > Square(350)) && (self->client->time1000 % 300 == 0))
                     botCmdBuffer->upmove = 20; //jump when getting close
                 if(distance > Square(LEVEL0_BITE_RANGE) && distance < (LEVEL0_SCRATCH_RANGE))
-                    botCmdBuffer->buttons |= BUTTON_ATTACK;
+                    botCmdBuffer->buttons |= BUTTON_ATTACK2; //scratch for hp, its actually very useful for bots as they hit frequently
                 else
-                    botCmdBuffer->buttons |= BUTTON_ATTACK2; //scratch for hp
+                    botCmdBuffer->buttons |= BUTTON_ATTACK; //aka do nothing
                 break;
             case PCL_ALIEN_LEVEL1:
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
@@ -967,7 +967,7 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
             case PCL_ALIEN_LEVEL2_UPG:
                 if(self->client->time1000 % 300 == 0)
                     botCmdBuffer->upmove = 20; //jump
-                if(distance <= Square(LEVEL2_CLAW_RANGE)*1.5)
+                if(distance <= Square(LEVEL2_CLAW_RANGE)*1.0) //Change this modifier to get it to miss more often
                     botCmdBuffer->buttons |= BUTTON_ATTACK;
                 else
                     botCmdBuffer->buttons |= BUTTON_ATTACK2; //zap
@@ -985,10 +985,12 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
                     distance > Square(LEVEL3_CLAW_RANGE) ) {
                     botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 6 - self->client->ps.delta_angles[PITCH]; //look up a bit more
                     botCmdBuffer->buttons |= BUTTON_USE_HOLDABLE; //barb
+			  botCmdBuffer->forwardmove = 0 //stop moving forward
+			  botCmdBuffer->rightmove = 0 //stop dodging because snipe uses inertia
                 } else {       
                     if(distance > Square(LEVEL3_CLAW_RANGE + LEVEL3_CLAW_RANGE/2) && 
                     self->client->ps.stats[ STAT_MISC ] < LEVEL3_POUNCE_UPG_SPEED) {
-                        botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 5 - self->client->ps.delta_angles[PITCH];; //not as high because uses current velocity
+                        botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 7 - self->client->ps.delta_angles[PITCH];; //not as high because uses current velocity
                         botCmdBuffer->buttons |= BUTTON_ATTACK2; //pounce
                     }else
                         botCmdBuffer->buttons |= BUTTON_ATTACK;
@@ -1009,10 +1011,11 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
             
         } else if( self->client->ps.weapon == WP_LUCIFER_CANNON ) {
-            /*if(self->client->ps.ammo[WP_LUCIFER_CANNON] < 20){
-		botCmdBuffer->buttons |= BUTTON_ATTACK2; } //use secondary when low on ammo
-            else */if( self->client->time10000 % 2700 ) {
+            if( self->client->time10000 % 2700 ) {
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
+			/*else if(self->client->ps.ammo[WP_LUCIFER_CANNON] < 30){
+			botCmdBuffer->buttons |= BUTTON_ATTACK2; } //use secondary when low on ammo //TODO when i can compile freely
+         	    */
                 self->botMind->isFireing = qtrue;
             }
         } else if(self->client->ps.weapon == WP_HBUILD || self->client->ps.weapon == WP_HBUILD2) {

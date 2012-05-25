@@ -118,16 +118,16 @@ static void CG_Obituary( entityState_t *ent )
       message = "had a deadly electrical massage";
       break;
     case MOD_ATUBE:
-      message = "shouldn't have gone in the alien base to shower off his dead skin";
+      message = "shouldn't have gone near the alien base for a shower";
       break;
     case MOD_OVERMIND:
       message = "shouldn't convince the ^4Overmind^7 for intercourse.";
       break;
     case MOD_REACTOR:
-      message = "didn't know what a electricity generator was";
+      message = "didn't know what the ^4product^7 from an electricity generator was";
       break;
     case MOD_SLOWBLOB:
-      message = "was laid by a baby ^2granger";
+      message = "was fucked up by a baby ^2granger";
       break;
     case MOD_SWARM:
       message = "shouldn't have gone near that hive";
@@ -155,7 +155,7 @@ static void CG_Obituary( entityState_t *ent )
         if( gender == GENDER_FEMALE )
           message = "should've learned not to luci spam";
         else if( gender == GENDER_NEUTER )
-          message = "blew oneself's body up into the air";
+          message = "blew oneself's body up into the air making a magnificent firework display";
         else
           message = "tried a luci jump";
         break;
@@ -885,7 +885,7 @@ void CG_EntityEvent( centity_t *cent, vec3_t position )
       if( cg.predictedPlayerState.stats[ STAT_PTEAM ] == PTE_ALIENS )
       {
         trap_S_StartLocalSound( cgs.media.alienOvermindAttack, CHAN_ANNOUNCER );
-        CG_CenterPrint( "The Overmind is hurt!", 200, GIANTCHAR_WIDTH * 4 );
+        CG_CenterPrint( "The Overmind is under attack!", 200, GIANTCHAR_WIDTH * 4 );
       }
       break;
 
@@ -903,7 +903,7 @@ void CG_EntityEvent( centity_t *cent, vec3_t position )
       if( cg.predictedPlayerState.stats[ STAT_PTEAM ] == PTE_HUMANS )
       {
         //trap_S_StartLocalSound( cgs.media.humanDCCAttack, CHAN_ANNOUNCER );
-        CG_CenterPrint( "Our base is under attack!", 200, GIANTCHAR_WIDTH * 4 );
+        CG_CenterPrint( "Aliens has been detetected attacking our base!", 200, GIANTCHAR_WIDTH * 4 );
       }
       break;
 

@@ -1779,9 +1779,13 @@ void FireWeapon2( gentity_t *ent )
 
     case WP_ABUILD:
     case WP_ABUILD2:
+      cancelBuildFire( ent );
+      break;
+
     case WP_HBUILD:
     case WP_HBUILD2:
       cancelBuildFire( ent );
+      meleeAttack( ent, LEVEL1_CLAW_RANGE, LEVEL1_CLAW_WIDTH, LEVEL1_CLAW_DMG, MOD_LEVEL1_CLAW );
       break;
     default:
       break;

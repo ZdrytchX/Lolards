@@ -3512,7 +3512,7 @@ weaponAttributes_t bg_weapons[ ] =
     qtrue,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     LEVEL0_BITE_REPEAT,   //int       repeatRate1;
-    100,                    //int       repeatRate2;
+    LEVEL0_SCRATCH_REPEAT,  //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     LEVEL0_BITE_K_SCALE,  //float     knockbackScale;

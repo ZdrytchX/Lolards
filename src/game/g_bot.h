@@ -81,13 +81,13 @@ int G_BotBuyWeapon(gentity_t *ent, int weapon);
 //For a reference of how far a number represents, take a look at tremulous.h
 
 //how far the bots can be from a medistat to walk to it to heal, if they are too far away, they will not go to it
-#define BOT_MEDI_RANGE 1500.0f
+#define BOT_MEDI_RANGE 1000.0f //1500 -> 1000
 
 //how far the bots can be from an armoury to walk to it to buy stuff, if they are too far, they will not go to the arm
 #define BOT_ARM_RANGE 1500.0f
 
 //when closer to the enemy than this range, the human bots will backup
-#define BOT_BACKUP_RANGE 300.0f
+#define BOT_BACKUP_RANGE 400.0f //300 -> 400
 
 //How long in milliseconds the bots will chase an enemy if he goes out of their sight (humans) or radar (aliens)
 #define BOT_ENEMY_CHASETIME 15000 //5000
@@ -96,7 +96,7 @@ int G_BotBuyWeapon(gentity_t *ent, int weapon);
 #define BOT_FRIEND_CHASETIME 15000 //5000
 
 //How often in milliseconds, we will search for a new (closer) enemy this needs to be kept <= 10000 for now
-#define BOT_ENEMYSEARCH_INTERVAL 1500 //500
+#define BOT_ENEMYSEARCH_INTERVAL 3000 //500 //1500 -> 3000, they keep changing too often
 
 //at what hp do we use medkit?
 #define BOT_USEMEDKIT_HP 48 //50

@@ -39,7 +39,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_BUILD_REPEAT       500
 #define ABUILDER_CLAW_DMG           ADM(26) //20)
 #define ABUILDER_CLAW_RANGE         64.0f
-#define ABUILDER_CLAW_WIDTH         4.0f
+#define ABUILDER_CLAW_WIDTH         25.0f //4f
 #define ABUILDER_CLAW_REPEAT        1000 //2 hit kills are OP, lowered to default
 #define ABUILDER_BASE_CLAW_REPEAT   1000
 #define ABUILDER_CLAW_K_SCALE       0.0f
@@ -79,7 +79,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define LEVEL2_CLAW_DMG             ADM(42)
 #define LEVEL2_CLAW_RANGE           128.0f //96 //longest range, since mar is glass cannon
-#define LEVEL2_CLAW_WIDTH           18.0f //12f
+#define LEVEL2_CLAW_WIDTH           18.0f //18f
 #define LEVEL2_CLAW_REPEAT          400 //normal marauder is still a glass cannon, just weaker in health.
 #define LEVEL2_CLAW_K_SCALE         -1.0f//1
 #define LEVEL2_CLAW_U_REPEAT        333 //Okay, i admit, it is overpowered. So i decided to change it back to before. (original Lolards qvm had 250 here and 333 in normal mar)
@@ -108,7 +108,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Goon modified heavily to get close to gpp values.
 #define LEVEL3_CLAW_DMG             ADM(82)
 #define LEVEL3_CLAW_RANGE           72.0f //96
-#define LEVEL3_CLAW_WIDTH           16.0f
+#define LEVEL3_CLAW_WIDTH           12.0f //16f
 #define LEVEL3_CLAW_REPEAT          700 //usually 700 //900 for gpp-related
 #define LEVEL3_CLAW_K_SCALE         0.8f //0.4 //Was at 0.4 because it Might effect the pounce.
 #define LEVEL3_CLAW_U_REPEAT        600 //usuaully 600 //800 ^^what i said
@@ -132,7 +132,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define LEVEL4_CLAW_DMG             ADM(110)
 #define LEVEL4_CLAW_RANGE           128.0f
-#define LEVEL4_CLAW_WIDTH           20.0f
+#define LEVEL4_CLAW_WIDTH           18.0f //20f
 #define LEVEL4_CLAW_REPEAT          750 //750
 #define LEVEL4_CLAW_K_SCALE         0.8f //i don't mind the knockback
 #define LEVEL4_REGEN_RANGE          200.0f //usually goes unnoticed, left default
@@ -522,7 +522,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HBUILD_PRICE                0
 #define HBUILD_REPEAT               1000 //1000
 #define HBUILD_DELAY                17500 //17500
-#define HBUILD_HEALRATE             22 //18
+#define HBUILD_HEALRATE             12 //18
+#define HBUILD_TEAMHEALRATE         -10 //This is a test. Its a claw that does negative damage.
 
 #define HBUILD2_PRICE               0
 #define HBUILD2_REPEAT              800 //1000
@@ -628,6 +629,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_ANGULARSPEED       5  //degrees/think 8 ~= 200deg/sec //3 //now 5 because of added MGTURRET_FIRE_SPEED
 #define MGTURRET_ACCURACYTOLERANCE  MGTURRET_ANGULARSPEED / 1.5f //1.5 angular difference for turret to fire
 #define MGTURRET_VERTICALCAP        30  // +/- maximum pitch //45
+#define MGTURRET_DROOPSCALE 0.25     //droop rate when unpowered
 #define MGTURRET_REPEAT             79 //100
 #define MGTURRET_K_SCALE            1.0f
 #define MGTURRET_RANGE              580.0f //default 300, same goes for atube
