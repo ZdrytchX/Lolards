@@ -38,18 +38,18 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ABUILDER_BUILD_REPEAT       500
 #define ABUILDER_CLAW_DMG           ADM(26) //20)
-#define ABUILDER_CLAW_RANGE         64.0f
+#define ABUILDER_CLAW_RANGE         78.0f //64f
 #define ABUILDER_CLAW_WIDTH         25.0f //4f
 #define ABUILDER_CLAW_REPEAT        1000 //2 hit kills are OP, lowered to default
 #define ABUILDER_BASE_CLAW_REPEAT   1000
 #define ABUILDER_CLAW_K_SCALE       0.0f
 #define ABUILDER_BASE_DELAY         12000 //17000
-#define ABUILDER_ADV_DELAY          8000 //12000
+#define ABUILDER_ADV_DELAY          10000 //12000 //8000->10000 to fix build timer vs build time of overmind
 
 #define ABUILDER_BLOB_DMG           ADM(6)//4
 #define ABUILDER_BLOB_RADIUS        75     //explosion radius
-#define ABUILDER_BLOB_REPEAT        500
-#define ABUILDER_BLOB_SPEED         800.0f //800
+#define ABUILDER_BLOB_REPEAT        800 //500->800
+#define ABUILDER_BLOB_SPEED         780.0f //800 -> 780 to match grenade
 #define ABUILDER_BLOB_SPEED_MOD     0.6f
 #define ABUILDER_BLOB_TIME          5000 //5000 how long a guy gets slowed down
 
@@ -79,7 +79,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define LEVEL2_CLAW_DMG             ADM(42)
 #define LEVEL2_CLAW_RANGE           128.0f //96 //longest range, since mar is glass cannon
-#define LEVEL2_CLAW_WIDTH           18.0f //18f
+#define LEVEL2_CLAW_WIDTH           3.0f //18f //helps againts walls
 #define LEVEL2_CLAW_REPEAT          400 //normal marauder is still a glass cannon, just weaker in health.
 #define LEVEL2_CLAW_K_SCALE         -1.0f//1
 #define LEVEL2_CLAW_U_REPEAT        333 //Okay, i admit, it is overpowered. So i decided to change it back to before. (original Lolards qvm had 250 here and 333 in normal mar)
@@ -121,7 +121,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_POUNCE_SPEED_MOD     0.75f //speed when charging pounce default 0.75
 #define LEVEL3_POUNCE_CHARGE_TIME   700 //charge time, default 700
 #define LEVEL3_POUNCE_TIME          400 //delay after touching ground?!? default 400
-#define LEVEL3_BOUNCEBALL_DMG       ADM(150) //110 default. Not to be increased higher than 200 as it can kill reactor easily. //180 //decreased as it is now explosive like gpp.
+#define LEVEL3_BOUNCEBALL_DMG       ADM(139) //110 default. Not to be increased higher than 200 as it can kill reactor easily. //180 //decreased as it is now explosive like gpp.
 
 //I've added these to g_missile.c and bg_misc.c already for you.
 #define LEVEL3_BOUNCEBALL_AMMO      3
@@ -131,7 +131,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_BOUNCEBALL_SPLASH_RADIUS 92 //Splash radius. Helps with sniping. //Rememeber that reload time is 10 seconds. You don't want it overpowered.
 
 #define LEVEL4_CLAW_DMG             ADM(110)
-#define LEVEL4_CLAW_RANGE           128.0f
+#define LEVEL4_CLAW_RANGE           111.0f //128
 #define LEVEL4_CLAW_WIDTH           18.0f //20f
 #define LEVEL4_CLAW_REPEAT          750 //750
 #define LEVEL4_CLAW_K_SCALE         0.8f //i don't mind the knockback
@@ -329,7 +329,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LOCKBLOB_LIFETIME           6000
 #define LOCKBLOB_DOT                0.85f // max angle = acos( LOCKBLOB_DOT )
 #define LOCKBLOB_K_SCALE            -1.0f //1.0f
-#define LOCKBLOB_DMG                97 //headshots instant kill nakeds! :D
+#define LOCKBLOB_DMG                93 //headshots instant kill nakeds! :D //97 -> 93 so lockblob doesnt instant kill marauders
 
 #define OVERMIND_BP                 0
 #define OVERMIND_BT                 20000
@@ -420,7 +420,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 //reverse pump shotgun "semi-semi-auto" (~80dmg/s)
 #define SHOTGUN_PRICE               300
-#define SHOTGUN_SHELLS              6 //10 -> 6 because it is able to kill om quickly, making it worth more than psaw
+#define SHOTGUN_SHELLS              6 //10 -> 6 because it is able to kill om quickly, making it worth more than psaw. //Now a 'energy weapon' and therefore can hold 10 caps per clip.
 #define SHOTGUN_PELLETS             12 //used to sync server and client side //14 -> 12 [bots are OP] [105dmg/s -> 90dmg/s]
 #define SHOTGUN_MAXCLIPS            5 //default 3
 #define SHOTGUN_REPEAT              700 //1000 //lowered from 800-> 700 because now underpowered... :/
@@ -456,8 +456,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CHAINGUN_BULLETS            300
 #define CHAINGUN_MAXCLIPS           2
 #define CHAINGUN_RELOAD             5000
-#define CHAINGUN_REPEAT             90 //without speedy barrel function //78dmg/s
-#define CHAINGUN_REPEAT2            90 //with speedy barrel function: 70 //100dmg/s //marauder's worst enemy //"removed" because OP againts goons
+//with speedy barrel function -70 //100dmg/s
+//without speedy barrel function: -90 //78dmg/s //marauder's worst enemy //"removed" because OP againts goons
+#define CHAINGUN_REPEAT             90 //Single barrel shots
+#define CHAINGUN_REPEAT2            180 //double barrel shots
 #define CHAINGUN_K_SCALE            1.0f
 #define CHAINGUN_SPREAD             500 //700
 #define CHAINGUN_DMG                HDM(7) //6
@@ -468,7 +470,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PRIFLE_CLIPS                40 //old beloved' lolards classic: 58 (too overpowered vs goons though)
 #define PRIFLE_MAXCLIPS             5
 #define PRIFLE_REPEAT               125
-#define PRIFLE_K_SCALE              1.5f //old '3' was too overpowered if the welder is a bot againts anything smaller than rant
+#define PRIFLE_K_SCALE              1.0f //old '3' was too overpowered if the welder is a bot againts anything smaller than rant
 #define PRIFLE_RELOAD               2000
 #define PRIFLE_DMG                  HDM(13)
 #define PRIFLE_SPEED                2000 //1000 //3000 -> 2500 because it uses the current player's speed

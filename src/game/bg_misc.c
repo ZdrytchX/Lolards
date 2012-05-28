@@ -3172,7 +3172,7 @@ weaponAttributes_t bg_weapons[ ] =
     SHOTGUN_SHELLS,       //int       maxAmmo;
     SHOTGUN_MAXCLIPS,     //int       maxClips;
     qfalse,               //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
+    qtrue,               //int       usesEnergy; //battpack gives shotty 10 ammo instead of 6
     SHOTGUN_REPEAT,       //int       repeatRate1;
     SHOTGUN_BLAST_REPEAT,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -3721,7 +3721,7 @@ weaponAttributes_t bg_weapons[ ] =
     qfalse,               //int       usesEnergy;
     1000,                  //int       repeatRate1;
     2500,                  //int       repeatRate2; //nader so keep it low!
-    2000,                  //int       repeatRate3;
+    150,                  //int       repeatRate3;
     2000,                    //int       reloadTime;
     LOCKBLOB_K_SCALE,     //float     knockbackScale;
     qtrue,               //qboolean  hasAltMode;

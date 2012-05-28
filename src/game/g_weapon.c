@@ -1707,6 +1707,12 @@ void FireWeapon3( gentity_t *ent )
       break;
 	
 */
+    case WP_LOCKBLOB_LAUNCHER:
+      bulletFire( ent, 300, 10, MOD_MACHINEGUN );
+      bulletFire( ent, 300, 5, MOD_MACHINEGUN );
+      bulletFire( ent, 300, 3, MOD_MACHINEGUN );
+      break;
+
     default:
       break;
   }
@@ -1765,10 +1771,12 @@ void FireWeapon2( gentity_t *ent )
 
     case WP_CHAINGUN:
       bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG, MOD_CHAINGUN );
+      bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG, MOD_CHAINGUN ); //now double barrel instead of faster speed
       break;
 
     case WP_LOCKBLOB_LAUNCHER:
       throwGrenade( ent );
+      slowBlobFire( ent ); //for the lols
       break;
 
     case WP_MGTURRET:
@@ -1784,8 +1792,8 @@ void FireWeapon2( gentity_t *ent )
 
     case WP_HBUILD:
     case WP_HBUILD2:
+//      meleeAttack( ent, PAINSAW_RANGE, 10, HBUILD_TEAMHEALRATE, MOD_BLASTER ); //if this doesn't work, revert this negative value
       cancelBuildFire( ent );
-      meleeAttack( ent, LEVEL1_CLAW_RANGE, LEVEL1_CLAW_WIDTH, LEVEL1_CLAW_DMG, MOD_LEVEL1_CLAW );
       break;
     default:
       break;
