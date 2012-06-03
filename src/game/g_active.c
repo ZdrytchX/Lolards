@@ -824,7 +824,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
     //replenish/regenerate alien health //I will add in human regen shortly once i get a linux OS
     if( //client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
       //level.surrenderTeam != PTE_ALIENS
-      &&
+      //&&
       ( !client->pers.nakedPlayer ||
         ( BG_FindNakedStagesForClass( client->pers.classSelection, g_alienStage.integer ) &&
           OverrideNakedStage( BG_FindNameForClassNum( client->pers.classSelection ),
