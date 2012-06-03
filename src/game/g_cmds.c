@@ -3733,7 +3733,7 @@ void Cmd_Boost_f( gentity_t *ent )
     return;
 
   if( ( ent->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS ) &&
-      ( ent->client->ps.stats[ STAT_STAMINA ] > 0 ) )
+      ( ent->client->ps.stats[ STAT_STAMINA ] > 0 ) ) //>0
     ent->client->ps.stats[ STAT_STATE ] |= SS_SPEEDBOOST;
 }
 

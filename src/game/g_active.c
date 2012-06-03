@@ -1836,6 +1836,7 @@ void ClientThink_real( gentity_t *ent )
 #define USE_OBJECT_RANGE 64
 
       int       entityList[ MAX_GENTITIES ];
+
       vec3_t    range = { USE_OBJECT_RANGE, USE_OBJECT_RANGE, USE_OBJECT_RANGE };
       vec3_t    mins, maxs;
       int       i, num;

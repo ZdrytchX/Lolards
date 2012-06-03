@@ -306,7 +306,7 @@ buildableAttributes_t bg_buildableList[ ] =
     TR_GRAVITY,            //trType_t  traj;
     0.0,                   //float     bounce;
     HOVEL_BP,              //int       buildPoints;
-    ( 1 << S3 ),           //int  stages
+    ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ),           //int  stages
     HOVEL_HEALTH,          //int       health;
     HOVEL_REGEN,           //int       regenRate;
     HOVEL_SPLASHDAMAGE,    //int       splashDamage;
@@ -327,7 +327,7 @@ buildableAttributes_t bg_buildableList[ ] =
     HOVEL_CREEPSIZE,       //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
-    qtrue,                 //qboolean  reactorTest;
+    qfalse,                 //qboolean  reactorTest; //true
     qfalse,                //qboolean  replacable;
   },
   {
@@ -345,7 +345,7 @@ buildableAttributes_t bg_buildableList[ ] =
     HSPAWN_BP,             //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     HSPAWN_HEALTH,         //int       health;
-    2,                     //int       regenRate;
+    3,                     //int       regenRate;
     HSPAWN_SPLASHDAMAGE,   //int       splashDamage;
     HSPAWN_SPLASHRADIUS,   //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -382,7 +382,7 @@ buildableAttributes_t bg_buildableList[ ] =
     MEDISTAT_BP,           //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     MEDISTAT_HEALTH,       //int       health;
-    2,                     //int       regenRate;
+    1,                     //int       regenRate;
     MEDISTAT_SPLASHDAMAGE, //int       splashDamage;
     MEDISTAT_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -421,7 +421,7 @@ buildableAttributes_t bg_buildableList[ ] =
     MGTURRET_BP,           //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     MGTURRET_HEALTH,       //int       health;
-    2,                     //int       regenRate;
+    1,                     //int       regenRate;
     MGTURRET_SPLASHDAMAGE, //int       splashDamage;
     MGTURRET_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -532,7 +532,7 @@ buildableAttributes_t bg_buildableList[ ] =
     ARMOURY_BP,            //int       buildPoints;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     ARMOURY_HEALTH,        //int       health;
-    3,                     //int       regenRate;
+    2,                     //int       regenRate;
     ARMOURY_SPLASHDAMAGE,  //int       splashDamage;
     ARMOURY_SPLASHRADIUS,  //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
@@ -604,7 +604,7 @@ buildableAttributes_t bg_buildableList[ ] =
     TR_GRAVITY,            //trType_t  traj;
     0.0,                   //float     bounce;
     REPEATER_BP,           //int       buildPoints;
-    ( 1 << S2 )|( 1 << S3 ), //int  stages
+    ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages //allow s1 building
     REPEATER_HEALTH,       //int       health;
     1,                     //int       regenRate;
     REPEATER_SPLASHDAMAGE, //int       splashDamage;
@@ -1556,6 +1556,7 @@ classAttributes_t bg_classList[ ] =
     0.000f,                                         //float   bob;
     1.0f,                                           //float   bobCycle;
     0,                                              //int     steptime;
+
     600,                                            //float   speed;
     10.0f,                                          //float   acceleration;
     1.0f,                                           //float   airAcceleration;
