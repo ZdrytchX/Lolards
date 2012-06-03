@@ -550,7 +550,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HELMET_POISON_PROTECTION    2 
 
 //medkit price
-#define MEDKIT_PRICE                20 //Uses credits without medistation to prevent no-medistat bases
+#define MEDKIT_PRICE                0 //Uses credits without medistation to prevent no-medistat bases
 //							such as the ones ViruS builds
 
 #define BATTPACK_PRICE              130 //increase as it is very useful //made in a way tha batt+standard armour + luci = 1000 creds, luci + bsuit = 1200 creds)
