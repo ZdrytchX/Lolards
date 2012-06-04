@@ -491,7 +491,7 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int da
     bolt->nextthink = level.time + 100000;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -2.0f;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 2.0f;
-  VectorScale( dir, (LCANNON_SPEED * 8), bolt->s.pos.trDelta ); //tiny ball of DEATH! Also extremely fast.
+  VectorScale( dir, (LCANNON_SPEED * 9), bolt->s.pos.trDelta ); //tiny ball of DEATH! Also extremely fast. //*8->*9 because primary actually becomes faster)
 	}
   else //to make sure it doesn't go bonkers, and makes it stand out so the glitch can be reported if happens:
 	{

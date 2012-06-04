@@ -343,7 +343,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define OVERMIND_VALUE              800
 
 #define HOVEL_BP                    0
-#define HOVEL_BT                    15000
+#define HOVEL_BT                    10000 //Fast-home
 #define HOVEL_HEALTH                ABHM(500) //370
 #define HOVEL_REGEN                 30 //20
 #define HOVEL_SPLASHDAMAGE          20
@@ -391,7 +391,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BLASTER_DMG                 HDM(8) //9 //10+ to help againts dretches //18 if 18limited ammo with a slow repeat //36 - strong with ammo but ammo gets used up fast //8 because faster shoot
 #define BLASTER_CLIPSIZE            6 //disabled
 #define BLASTER_MAXCLIPS            9 //disabled
-#define BLASTER_MELEE               24 //not too high because it would be overpowered
+#define BLASTER_MELEE               18 //not too high because it would be overpowered
 #define BLASTER_MELLEE_REPEAT       800 //mellee rate
 #define BLASTER_MELEE_RANGE         80 //enough for combat
 
@@ -419,7 +419,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define GRENADE_SPEED               780.0f //Throwing speed. Default 400
 
 //reverse pump shotgun "semi-semi-auto" (~80dmg/s)
-#define SHOTGUN_PRICE               300
+#define SHOTGUN_PRICE               180 //reswap back prices of lasgun-shotgun back to normal
 #define SHOTGUN_SHELLS              6 //10 -> 6 because it is able to kill om quickly, making it worth more than psaw. //Now a 'energy weapon' and therefore can hold 10 caps per clip.
 #define SHOTGUN_PELLETS             12 //used to sync server and client side //14 -> 12 [bots are OP] [105dmg/s -> 90dmg/s]
 #define SHOTGUN_MAXCLIPS            5 //default 3
@@ -432,7 +432,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_BLAST_RANGE         350
 #define SHOTGUN_BLAST_REPEAT        2500 //keep high, not too high 2000 -> 2500 because it instant kills marauders
 
-#define LASGUN_PRICE                180 //increase, but you need a weapon that can be bought from just one kill
+#define LASGUN_PRICE                300 //increase, but you need a weapon that can be bought from just one kill //reswap back prices of lasgun-shotgun back to normal
 #define LASGUN_AMMO                 370 //its not like people run out
 #define LASGUN_REPEAT               180 //200
 #define LASGUN_MAXCLIPS             1 //oh wtf might as well... not much difference
@@ -508,7 +508,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_RELOAD              3000 //is reload time too long? //5000 -> 3000
 #define LCANNON_DAMAGE              HDM(285) //265 //395 //not too high, too much time range for killing goons making it too easy
 #define LCANNON_RADIUS              120 //splash radius. Default 150, wanted 180, but too overpowered
-#define LCANNON_SECONDARY_DAMAGE    HDM(80) //default 27,//100 for some reason instant kills tubes (138 hp)//now direct hit, instant kills marauders
+#define LCANNON_SECONDARY_DAMAGE    HDM(80) //default 27,//100 does for some reason instant kills tubes (138 hp)//now direct hit, instant kills marauders
 #define LCANNON_SECONDARY_RADIUS    55 //75
 #define LCANNON_SPEED               400 //330 //Noob Tube! //780 //changed back, see g_missile.c for reason.
 /*OR you can just read this: It is porportional to how much you power up.
@@ -661,7 +661,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TESLAGEN_SPLASHDAMAGE       60 //default 50
 #define TESLAGEN_SPLASHRADIUS       100
 #define TESLAGEN_REPEAT             100 //default 250
-#define TESLAGEN_K_SCALE            6.0f //4f //higher for lower dmg, be cautious of repeat rates though
+#define TESLAGEN_K_SCALE            5.0f //4f //higher for lower dmg, be cautious of repeat rates though //6->5 for it sends marauders flying everywhere
 #define TESLAGEN_RANGE              280 //default 250 //350 -> 280 so marauders can zap them
 #define TESLAGEN_DMG                HDM(5) //default 9
 
@@ -741,7 +741,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define DEFAULT_HUMAN_MAX_STAGE     "2"
 
 #define DAMAGE_FRACTION_FOR_KILL    0.5f //how much damage players (versus structures) need to
-                                         //do to increment the stage kill counters. Usually 0.5. I had 0.9 but that made humans come up slowly.
+                                         //do to increment the stage kill counters. Usually 0.5. I had 0.9 but that made humans come up slowly since they like camping. Encourage them to get out giving them s3.
 
 //Vampire mode settings
 //See the rest in g_combat.c, ~line 1762 [might change due to line additions]
