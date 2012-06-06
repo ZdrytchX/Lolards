@@ -769,7 +769,7 @@ gentity_t *fire_slowBlob( gentity_t *self, vec3_t start, vec3_t dir )
 
   bolt = G_Spawn( );
   bolt->classname = "slowblob";
-  bolt->nextthink = level.time + 5000; //dont want minefields do you? Make sure they explode after a while!
+  bolt->nextthink = level.time + ABUILDER_BLOB_LIFETIME; //dont want minefields do you? Make sure they explode after a while!
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
   bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
@@ -784,7 +784,7 @@ gentity_t *fire_slowBlob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_SLOWBLOB;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
-  bolt->s.eFlags = EF_BOUNCE_HALF | EF_NO_BOUNCE_SOUND;
+  bolt->s.eFlags = EF_BOUNCE_HALF;// | EF_NO_BOUNCE_SOUND;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -5.0f;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 5.0f;
 

@@ -875,7 +875,7 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
         ent->health += BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) * modifier;
 //vamp settings
       if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] )
-	{ ent->health-= (client->ps.stats[ STAT_MAX_HEALTH ] / 25); } //lose 1hp/second * [health per 25 in total hp] when over standard max health
+	{ ent->health -= ((client->ps.stats[ STAT_HEALTH ] - (client->ps.stats[ STAT_MAX_HEALTH ] ) / VAMP_TAKE ) + 0.5 ); } //Degeneration now takes up extrahealth/VAMP_TAKE + 0.5
       //  ent->health = client->ps.stats[ STAT_MAX_HEALTH ]
       if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] * 1.5 ) //vamp mode: remember! modifier 1.5x max health
         ent->health = client->ps.stats[ STAT_MAX_HEALTH ] * 1.5;
@@ -971,49 +971,6 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
  
       }
     }
-//This following is an idea i had on giving these two energy weapon ammo over time.
-//NOTE: DOES NOT WORK. [obviously]
-/*
-if( client->ps.weapon == WP_LUCIFER_CANNON ) {
-            if( ammo < 190){
-		ammo += 10; }
-*/
-/*if( client->ps.weapon == WP_LAS_GUN )
-if ( BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) ||  BG_InventoryContainsUpgrade( UP_BATTPACK, pm->ps->stats ) )
-    {
-      int ammo, maxAmmo;
-
-      BG_FindAmmoForWeapon( WP_LAS_GUN, &maxAmmo, NULL );
-      BG_UnpackAmmoArray( WP_LAS_GUN, client->ps.ammo, client->ps.powerups, &ammo, NULL );
-
-      if( ammo < (maxAmmo - 10 ) )
-      {
-        ammo+= 10;
-        BG_PackAmmoArray( WP_LAS_GUN, client->ps.ammo, client->ps.powerups, ammo, 0 );
- 
-      }
-    }
-if( client->ps.weapon == WP_LUCIFER_CANNON )
-if ( BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) ||  BG_InventoryContainsUpgrade( UP_BATTPACK, pm->ps->stats ) )
-    {
-      int ammo, maxAmmo;
-
-      BG_FindAmmoForWeapon( WP_LUCIFER_CANNON, &maxAmmo, NULL );
-      BG_UnpackAmmoArray( WP_LUCIFER_CANNON, client->ps.ammo, client->ps.powerups, &ammo, NULL );
-
-      if( ammo < maxAmmo - 100 )
-      {
-        ammo+= 20;
-        BG_PackAmmoArray( WP_LUCIFER_CANNON, client->ps.ammo, client->ps.powerups, ammo, 0 );
- 
-      }
-      if( ammo < maxAmmo - 20 ) //so it doesn't give you another clip to reload
-      {
-        ammo+= 10;
-        BG_PackAmmoArray( WP_LUCIFER_CANNON, client->ps.ammo, client->ps.powerups, ammo, 0 );
- 
-      }
-    }*/
 
 	//REGENERATION/DEGENERATION for humans (slower)
     if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && ent->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
@@ -1024,20 +981,6 @@ if ( BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) ||  BG_Inventor
 		}
 	 }
   }
-/*while( client->time3000 >= 3000 ) //5 sec regen doesn't work; back to default
-  {
-    client->time3000 -= 3000;
-	{
-	//REGENERATION/DEGENERATION for humans (slower) //moved up to 10 sec timer
-    if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && ent->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
-   	 {
-		if ( ent->health < client->ps.stats[STAT_MAX_HEALTH])
-		{
-		ent->health += 1; //once every 10 seconds. Lovely.
-		}
-	 }
-	}
-  }*/
 }
 
 /*
@@ -1836,6 +1779,7 @@ void ClientThink_real( gentity_t *ent )
 #define USE_OBJECT_RANGE 64
 
       int       entityList[ MAX_GENTITIES ];
+
 
       vec3_t    range = { USE_OBJECT_RANGE, USE_OBJECT_RANGE, USE_OBJECT_RANGE };
       vec3_t    mins, maxs;

@@ -40,18 +40,19 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_CLAW_DMG           ADM(26) //20)
 #define ABUILDER_CLAW_RANGE         78.0f //64f
 #define ABUILDER_CLAW_WIDTH         25.0f //4f
-#define ABUILDER_CLAW_REPEAT        1000 //2 hit kills are OP, lowered to default
+#define ABUILDER_CLAW_REPEAT        900 //2 hit kills are OP
 #define ABUILDER_BASE_CLAW_REPEAT   1000
 #define ABUILDER_CLAW_K_SCALE       0.0f
 #define ABUILDER_BASE_DELAY         12000 //17000
 #define ABUILDER_ADV_DELAY          10000 //12000 //8000->10000 to fix build timer vs build time of overmind
 
-#define ABUILDER_BLOB_DMG           ADM(6)//4
+#define ABUILDER_BLOB_DMG           ADM(6)//4 -> 6
 #define ABUILDER_BLOB_RADIUS        75     //explosion radius
 #define ABUILDER_BLOB_REPEAT        800 //500->800
 #define ABUILDER_BLOB_SPEED         780.0f //800 -> 780 to match grenade
 #define ABUILDER_BLOB_SPEED_MOD     0.6f
-#define ABUILDER_BLOB_TIME          5000 //5000 how long a guy gets slowed down
+#define ABUILDER_BLOB_LIFETIME      ABUILDER_BLOB_REPEAT*3.5//Blob lifetime before exploding on its own; default is 5000 seconds, but you dont want a minefield of them because they get OP againts big guys
+#define ABUILDER_BLOB_TIME          8000 //5000 how long a guy gets slowed down //5000 -> 8000
 
 #define LEVEL0_BITE_DMG             ADM(36)
 #define LEVEL0_BITE_RANGE           64.0f
@@ -97,7 +98,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_WALLJUMP_MAXSPEED    90000.0f //1290.0f //idk, don't really want a max
 */
 //Note: I've changed default sv_fps to 80 so zap should have some difference between larmour and bsuit
-#define LEVEL2_AREAZAP_DMG          ADM(60) //halved because it should do more dmg/s
+#define LEVEL2_AREAZAP_DMG          ADM(80) //
 #define LEVEL2_AREAZAP_RANGE        300.0f //360[lolards default] -> 300
 #define LEVEL2_AREAZAP_WIDTH        2.0f //be able to zap humans in vents
 #define LEVEL2_AREAZAP_REPEAT       1000 //~25 dmg/second //800 [lolards default] -> 1000
@@ -115,7 +116,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_CLAW_U_K_SCALE       0.8f
 #define LEVEL3_POUNCE_DMG           ADM(135) //default 100, but i increased it to relate to gpp values of killing armoured. // Unvanquished play proves that 5 hit kills is still alright. Decreased from 180 -> 135
 #define LEVEL3_POUNCE_RANGE         48.0f //default 72. Remember 0 is at the centre, it won't hit anything. Want 36, but can't hit because it still isn't long enough :( Gpp's value is probably 48, cause thats what it says in TremX's source code.
-#define LEVEL3_POUNCE_WIDTH         32.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 32 for a more 'realistic' pounce so adv goons can get humans without aiming down. Works almost perfectly at this setting. It is basically the width of the goon/2.
+#define LEVEL3_POUNCE_WIDTH         30.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 32 for a more 'realistic' pounce so adv goons can get humans without aiming down. Works almost perfectly at this setting. It is basically the width of the goon/2. //32->30 because it hits stuff before you pounce-launch
 #define LEVEL3_POUNCE_SPEED         700 //pounce speed usually 700
 #define LEVEL3_POUNCE_UPG_SPEED     800 //pounce speed for adv goon usually 800
 #define LEVEL3_POUNCE_SPEED_MOD     0.75f //speed when charging pounce default 0.75
@@ -359,8 +360,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
 
-#define ALIENSENSE_RANGE            1000.0f //look up ^^ usually 1000, want 2000 but can't evolve in some areas 
-
+#define ALIENSENSE_RANGE            1000.0f //look up ^^ usually 1000
 #define ALIEN_POISON_TIME           12000 //miliseconds how long poison lasts for, usually 8000
 #define ALIEN_POISON_DMG            7 //default 5
 #define ALIEN_POISON_DIVIDER        (1.0f/1.32f) //about 1.0/(time`th root of damage)[1.0f/1.32f]
@@ -692,7 +692,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define REPEATER_BP                 3
 #define REPEATER_BT                 10000
 #define REPEATER_HEALTH             HBHM(350) //250
-#define REPEATER_SPLASHDAMAGE       250 //50
+#define REPEATER_SPLASHDAMAGE       150 //50 //crazy nuke decreased from 250->150
 #define REPEATER_SPLASHRADIUS       400 // 100
 #define REPEATER_INACTIVE_TIME      90000
 
@@ -723,7 +723,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define HUMAN_MAXED                 1200   //a human with a strong selection of weapons/upgrades // means max 'evos' [after conversion] that an alien can get. Default 900
 #define HUMAN_MAX_CREDITS           3000 //max creds, usually 2000
-#define ALIEN_MAX_KILLS             13 //max evos
+#define ALIEN_MAX_KILLS             15 //max evos //13->15 because human can buy two sets of lucisuits, aliens need to be able to use two ranties
 #define ALIEN_MAX_SINGLE_KILLS      4 //Max evos earned from HUMAN_MAXED i guess... i never looked into this
 
 #define FREEKILL_PERIOD             90000 //msec // free credits recieved after this amount of time. //120000
@@ -746,6 +746,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Vampire mode settings
 //See the rest in g_combat.c, ~line 1762 [might change due to line additions]
 #define VAMP_EXTRA                  50 //works like this: Maths calculates the ammount should take from the dmg done, add this variable, then times porportional to current class's hp.
+#define VAMP_TAKE                   12.5 //Takes (extrahealth/this value + 0.5) ( 0.5 for rounding intergers up) every second when degenerating
+                                       //Human max extra health is 50, so it takes with the default value of '6.25', it will take 8hp at max value and the average of 4 hp/s like before.
 
 // g_suddenDeathMode settings
 #define SDMODE_BP                   29 // This is why gpp sudden death sucks, you can't build an armoury. Here, you can build a maximum of one armoury,a reactor and medi, dcc and repeater. 
