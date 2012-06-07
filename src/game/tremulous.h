@@ -40,7 +40,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_CLAW_DMG           ADM(26) //20)
 #define ABUILDER_CLAW_RANGE         78.0f //64f
 #define ABUILDER_CLAW_WIDTH         25.0f //4f
-#define ABUILDER_CLAW_REPEAT        900 //2 hit kills are OP
+#define ABUILDER_CLAW_REPEAT        900 //2 hit kills are OP //not 2 hit kill with new human_Base.armour
 #define ABUILDER_BASE_CLAW_REPEAT   1000
 #define ABUILDER_CLAW_K_SCALE       0.0f
 #define ABUILDER_BASE_DELAY         12000 //17000
@@ -62,6 +62,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_SCRATCH_DMG          2 //dispite this, it is actually almost overpowered.
 #define LEVEL0_SCRATCH_REPEAT       50 //Main pupous of this attack is to drain health slowly and gain it just like mara zap.
 #define LEVEL0_SCRATCH_RANGE        120
+#define LEVEL0_SCRATCH_WIDTH        3
 
 #define LEVEL1_CLAW_DMG             ADM(48)
 #define LEVEL1_CLAW_RANGE           96.0f //96
@@ -98,10 +99,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_WALLJUMP_MAXSPEED    90000.0f //1290.0f //idk, don't really want a max
 */
 //Note: I've changed default sv_fps to 80 so zap should have some difference between larmour and bsuit
-#define LEVEL2_AREAZAP_DMG          ADM(80) //
+#define LEVEL2_AREAZAP_DMG          ADM(60) //gpp default, who cares.
 #define LEVEL2_AREAZAP_RANGE        300.0f //360[lolards default] -> 300
 #define LEVEL2_AREAZAP_WIDTH        2.0f //be able to zap humans in vents
-#define LEVEL2_AREAZAP_REPEAT       1000 //~25 dmg/second //800 [lolards default] -> 1000
+#define LEVEL2_AREAZAP_REPEAT       750 //
 #define LEVEL2_AREAZAP_TIME         3000 
 #define LEVEL2_AREAZAP_MAX_TARGETS  7 //Kept the same.
 #define LEVEL2_WALLJUMP_MAXSPEED    90000.0f //1290.0f //idk, don't really want a max
@@ -122,11 +123,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_POUNCE_SPEED_MOD     0.75f //speed when charging pounce default 0.75
 #define LEVEL3_POUNCE_CHARGE_TIME   700 //charge time, default 700
 #define LEVEL3_POUNCE_TIME          400 //delay after touching ground?!? default 400
-#define LEVEL3_BOUNCEBALL_DMG       ADM(139) //110 default. Not to be increased higher than 200 as it can kill reactor easily. //180 //decreased as it is now explosive like gpp.
+#define LEVEL3_BOUNCEBALL_DMG       ADM(136) //110 default. Not to be increased higher than 200 as it can kill reactor easily. //180 //decreased as it is now explosive like gpp. //139 -> 136 because otherwise it'd two-hit kill goons
 
 //I've added these to g_missile.c and bg_misc.c already for you.
 #define LEVEL3_BOUNCEBALL_AMMO      3
-#define LEVEL3_BOUNCEBALL_REPEAT    600 //default 1000 //deal with long range turrets quicker
+#define LEVEL3_BOUNCEBALL_REPEAT    600 //default 1000 //deal with long range turrets quicker as a upside to the barb using player's inertia
 #define LEVEL3_BOUNCEBALL_SPEED     1000.0f
 #define LEVEL3_BOUNCEBALL_SPLASH_DMG  75 //Explosion dmg. //Halved so base killing isn't that fast since human turrets take up 10 bp //56 -> 75
 #define LEVEL3_BOUNCEBALL_SPLASH_RADIUS 92 //Splash radius. Helps with sniping. //Rememeber that reload time is 10 seconds. You don't want it overpowered.
@@ -200,13 +201,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL1_UPG_COST             2
 
 #define LEVEL2_SPEED                1.2f
-#define LEVEL2_VALUE                AVM(320)
+#define LEVEL2_VALUE                AVM(380) //Marauder is chineese cheap. Asians should be able to use this a pwn with it though, while others would waste. So here's the refund. For a massdriver that is.
 #define LEVEL2_HEALTH               AHM(100) //Marauder is a glass cannon.
 #define LEVEL2_REGEN                3
 #define LEVEL2_COST                 1
 
 #define LEVEL2_UPG_SPEED            1.3f
-#define LEVEL2_UPG_VALUE            AVM(730)
+#define LEVEL2_UPG_VALUE            AVM(730) //Marauder is a broken character.
 #define LEVEL2_UPG_HEALTH           AHM(172) //Previous, 192. Too high, as they steal hp.
 #define LEVEL2_UPG_REGEN            5
 #define LEVEL2_UPG_COST             3
@@ -224,7 +225,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_UPG_COST             2
 
 #define LEVEL4_SPEED                1.1f //1.2f
-#define LEVEL4_VALUE                AVM(920)
+#define LEVEL4_VALUE                AVM(980)//If aliens get 5 evos, humans should get 1000 creds right? Well close enough.
 #define LEVEL4_HEALTH               AHM(420)
 #define LEVEL4_REGEN                8
 #define LEVEL4_COST                 3
@@ -420,7 +421,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 //reverse pump shotgun "semi-semi-auto" (~80dmg/s)
 #define SHOTGUN_PRICE               180 //reswap back prices of lasgun-shotgun back to normal
-#define SHOTGUN_SHELLS              6 //10 -> 6 because it is able to kill om quickly, making it worth more than psaw. //Now a 'energy weapon' and therefore can hold 10 caps per clip.
+#define SHOTGUN_SHELLS              6 //10 -> 6 because it is able to kill om quickly, making it worth more than psaw. //Now a 'energy weapon' and therefore can hold 10 caps per clip. Disable this through bg_misc.c
 #define SHOTGUN_PELLETS             12 //used to sync server and client side //14 -> 12 [bots are OP] [105dmg/s -> 90dmg/s]
 #define SHOTGUN_MAXCLIPS            5 //default 3
 #define SHOTGUN_REPEAT              700 //1000 //lowered from 800-> 700 because now underpowered... :/
@@ -452,14 +453,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_RELOAD              4000
 
 //Chaingun actually fires faster
-#define CHAINGUN_PRICE              400
+#define CHAINGUN_PRICE              520 //increased, bots do not buy it and its actually OP
 #define CHAINGUN_BULLETS            300
 #define CHAINGUN_MAXCLIPS           2
 #define CHAINGUN_RELOAD             5000
 //with speedy barrel function -70 //100dmg/s
 //without speedy barrel function: -90 //78dmg/s //marauder's worst enemy //"removed" because OP againts goons
 #define CHAINGUN_REPEAT             90 //Single barrel shots
-#define CHAINGUN_REPEAT2            180 //double barrel shots
+#define CHAINGUN_REPEAT2            90 //tripple barrel shots, but does half damage
 #define CHAINGUN_K_SCALE            1.0f
 #define CHAINGUN_SPREAD             500 //700
 #define CHAINGUN_DMG                HDM(7) //6
@@ -623,7 +624,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //It gives a more realistic feel.
 #define MGTURRET_FIRE_DIRECT_SPEED  0.2
 
-#define MGTURRET_BP                 8 //8->10 There's a good reason: You can fit approx 6 tubes in 2 turret spots + turret > acid tube
+#define MGTURRET_BP                 8 //8->10 {reverted}
 #define MGTURRET_BT                 10000
 #define MGTURRET_HEALTH             HBHM(210) //default 190. //increased to cope with tyrant's charge and pounce
 #define MGTURRET_SPLASHDAMAGE       60 //50
@@ -662,7 +663,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TESLAGEN_SPLASHRADIUS       100
 #define TESLAGEN_REPEAT             100 //default 250
 #define TESLAGEN_K_SCALE            5.0f //4f //higher for lower dmg, be cautious of repeat rates though //6->5 for it sends marauders flying everywhere
-#define TESLAGEN_RANGE              280 //default 250 //350 -> 280 so marauders can zap them
+#define TESLAGEN_RANGE              280 //default 200 //350 -> 280 so marauders can zap them
 #define TESLAGEN_DMG                HDM(5) //default 9
 
 #define DC_BP                       8
@@ -673,7 +674,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ARMOURY_BP                  10
 #define ARMOURY_BT                  17500
-#define ARMOURY_HEALTH              HBHM(580) //380
+#define ARMOURY_HEALTH              HBHM(580) //380 //5 snipes to kill
 #define ARMOURY_SPLASHDAMAGE        80 //50
 #define ARMOURY_SPLASHRADIUS        200 //100
 
@@ -692,9 +693,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define REPEATER_BP                 3
 #define REPEATER_BT                 10000
 #define REPEATER_HEALTH             HBHM(350) //250
-#define REPEATER_SPLASHDAMAGE       150 //50 //crazy nuke decreased from 250->150
+#define REPEATER_SPLASHDAMAGE       300 //50 //crazy nuke
 #define REPEATER_SPLASHRADIUS       400 // 100
-#define REPEATER_INACTIVE_TIME      90000
+#define REPEATER_INACTIVE_TIME      180000 //3 minutes or else... Boom!
 
 /*
  * HUMAN misc
@@ -724,7 +725,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HUMAN_MAXED                 1200   //a human with a strong selection of weapons/upgrades // means max 'evos' [after conversion] that an alien can get. Default 900
 #define HUMAN_MAX_CREDITS           3000 //max creds, usually 2000
 #define ALIEN_MAX_KILLS             15 //max evos //13->15 because human can buy two sets of lucisuits, aliens need to be able to use two ranties
-#define ALIEN_MAX_SINGLE_KILLS      4 //Max evos earned from HUMAN_MAXED i guess... i never looked into this
+#define ALIEN_MAX_SINGLE_KILLS      5 //Max evos earned from HUMAN_MAXED i guess... i never looked into this //3->4->5
 
 #define FREEKILL_PERIOD             90000 //msec // free credits recieved after this amount of time. //120000
 #define FREEKILL_ALIEN              1 // one evo per 120000 miliseconds or whatever FREEKILL_PERIOD is.

@@ -1742,7 +1742,7 @@ void FireWeapon2( gentity_t *ent )
   {
 
     case WP_ALEVEL0:
-      meleeAttack( ent, LEVEL0_SCRATCH_RANGE, 2, LEVEL0_SCRATCH_DMG, MOD_LEVEL0_BITE );
+      meleeAttack( ent, LEVEL0_SCRATCH_RANGE, LEVEL0_SCRATCH_WIDTH, LEVEL0_SCRATCH_DMG, MOD_LEVEL0_BITE );
       break;
     case WP_ALEVEL1_UPG:
       poisonCloud( ent );
@@ -1760,18 +1760,19 @@ void FireWeapon2( gentity_t *ent )
 //meleeAttack( ent, [range], [width], [damage], MOD_[means of death] );
 //note: keep width 20 for humans otherwise it will not hit the target in vents.
     case WP_BLASTER:
-      meleeAttack( ent, BLASTER_MELEE_RANGE, 20, BLASTER_MELEE, MOD_BLASTER );
+      meleeAttack( ent, BLASTER_MELEE_RANGE, 1, BLASTER_MELEE, MOD_BLASTER );
       break;
     case WP_SHOTGUN:
-      meleeAttack( ent, SHOTGUN_BLAST_RANGE, 20, SHOTGUN_BLAST, MOD_SHOTGUN ); //acts like a forward explosion
+      meleeAttack( ent, SHOTGUN_BLAST_RANGE, 10, SHOTGUN_BLAST, MOD_SHOTGUN ); //acts like a forward explosion
       break;
     case WP_PULSE_RIFLE:
       lasGunFire( ent, LASGUN_SPREAD*2 );
       break;
 
     case WP_CHAINGUN:
-      bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG, MOD_CHAINGUN );
-      bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG, MOD_CHAINGUN ); //now double barrel instead of faster speed
+      bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG/2.3, MOD_CHAINGUN ); //Even out so the real damage is still '7' per shot
+      bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG/3.5, MOD_CHAINGUN ); //now tripple barrel instead of faster speed
+      bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG/3.5, MOD_CHAINGUN );
       break;
 
     case WP_LOCKBLOB_LAUNCHER:

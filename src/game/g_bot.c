@@ -472,7 +472,8 @@ void G_BotGoto(gentity_t *self, botTarget_t target, usercmd_t *botCmdBuffer) {
     
     //this is here so we dont run out of stamina..
     //basically, just me being too lazy to make bots stop and regain stamina
-    self->client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
+    //self->client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
+    self->client->ps.stats[ STAT_STAMINA ] += (MAX_STAMINA/500);//test: regain stamina even if running
     
     //we have stopped moving forward, try to get around whatever is blocking us
     if( botPathIsBlocked(self) ) {
@@ -494,10 +495,17 @@ void G_BotGoto(gentity_t *self, botTarget_t target, usercmd_t *botCmdBuffer) {
     //stay away from enemy as human
         getTargetPos(target, &tmpVec);
         if(self->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS && 
-        DistanceSquared(self->s.pos.trBase,tmpVec) < Square(400) && botTargetInAttackRange(self, target) && self->s.weapon != WP_PAIN_SAW
+        DistanceSquared(self->s.pos.trBase,tmpVec) < Square(500) && DistanceSquared(self->s.pos.trBase,tmpVec) > Square(200) && botTargetInAttackRange(self, target) && self->s.weapon != WP_PAIN_SAW
         && getTargetTeam(target) == PTE_ALIENS)
         {
-            botCmdBuffer->forwardmove = -100;
+            botCmdBuffer->forwardmove = -100; //-100
+        }
+
+        else if(self->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS && 
+        DistanceSquared(self->s.pos.trBase,tmpVec) > Square(100) && botTargetInAttackRange(self, target) && self->s.weapon != WP_PAIN_SAW
+        && getTargetTeam(target) == PTE_ALIENS)
+        {
+            botCmdBuffer->forwardmove = 0; //allow faster dodging
         }
     
 }
@@ -564,7 +572,7 @@ void G_BotHeal(gentity_t *self, usercmd_t *botCmdBuffer) {
     
     vec3_t targetPos;
     getTargetPos(self->botMind->goal, &targetPos);
-    if(DistanceSquared(self->s.origin, targetPos) > Square(50))
+    if(DistanceSquared(self->s.origin, targetPos) > Square(150)) //50
         G_BotMoveDirectlyToGoal(self, botCmdBuffer);
     
 }
@@ -593,21 +601,23 @@ void G_BotBuy(gentity_t *self, usercmd_t *botCmdBuffer) {
                 G_AddCreditToClient( self->client, (short)BG_FindPriceForWeapon( i ), qfalse );
             }
             
-            //if we have this weapon selected, force a new selection
+            //if we have this weapon selected, force a new selection //causes bugs
             if( i == self->client->ps.weapon )
                 G_ForceWeaponChange( self, WP_NONE );
         }
-        //try to buy helmet/lightarmour //not bsuit because humans glitch
+        //try to buy helmet/lightarmour //not bsuit because humans glitch //UP_BATTLESUIT - retry
+        if( !G_BotBuyUpgrade( self, UP_BATTLESUIT) ){
         G_BotBuyUpgrade( self, UP_HELMET);
         G_BotBuyUpgrade( self, UP_LIGHTARMOUR);
+	}
         
         // buy most expensive first, then one cheaper, etc, dirty but working way
       if( !G_BotBuyWeapon( self, WP_LOCKBLOB_LAUNCHER ) )
         if( !G_BotBuyWeapon( self, WP_LUCIFER_CANNON ) )
             if( !G_BotBuyWeapon( self, WP_PULSE_RIFLE ) )
                 if( !G_BotBuyWeapon( self, WP_FLAMER ) )
-                    if( !G_BotBuyWeapon( self, WP_MASS_DRIVER ) )
-                        if( !G_BotBuyWeapon( self, WP_CHAINGUN ) )
+                      if( !G_BotBuyWeapon( self, WP_CHAINGUN ) ) //Shifted back
+                 	  if( !G_BotBuyWeapon( self, WP_MASS_DRIVER ) )
                             if( !G_BotBuyWeapon( self, WP_SHOTGUN ) )
                                 if( !G_BotBuyWeapon( self, WP_LAS_GUN ) )
                                     if( !G_BotBuyWeapon( self, WP_PAIN_SAW ) )
@@ -630,12 +640,12 @@ void G_BotEvolve ( gentity_t *self, usercmd_t *botCmdBuffer )
 {
     // very not-clean code, but hey, it works and I'm lazy 
     int res;
-//    if(!G_BotEvolveToClass(self, "human_bsuit", botCmdBuffer))
+    if(!G_BotEvolveToClass(self, "human_bsuit", botCmdBuffer)) //AHA fuck it i'll re-enabled it. After all max evos increased to '15'.
 //^^fuck them suits - they just waste their evos. We need proper human players. I'm sorry.
 //Ehem. Remember to re-disable this after LAN-use because it is useless againts humans. Well almost.
     if(!G_BotEvolveToClass(self, "level4", botCmdBuffer))
         if(!G_BotEvolveToClass(self, "level3upg", botCmdBuffer)) {
-            res = (random()>0.7) ? G_BotEvolveToClass(self, "level3", botCmdBuffer) : G_BotEvolveToClass(self, "level2upg", botCmdBuffer);
+            res = (random()>0.9) ? G_BotEvolveToClass(self, "level3", botCmdBuffer) : G_BotEvolveToClass(self, "level2upg", botCmdBuffer);
             if(!res) {
                 res = (random()>0.5) ? G_BotEvolveToClass(self, "level2", botCmdBuffer) : G_BotEvolveToClass(self, "level1upg", botCmdBuffer);
                 if(!res)
@@ -693,15 +703,18 @@ void G_BotReactToEnemy(gentity_t *self, usercmd_t *botCmdBuffer) {
             break;
         case PCL_ALIEN_LEVEL2:
         case PCL_ALIEN_LEVEL2_UPG:
-            if(DistanceSquared(self->s.pos.trBase, level.nodes[self->botMind->targetNodeID].coord) > Square(400))
+	    if(DistanceSquared(self->s.pos.trBase, level.nodes[self->botMind->targetNodeID].coord) > Square(600))
+            //dodge
+            G_BotDodge(self,botCmdBuffer);
+            if(DistanceSquared(self->s.pos.trBase, level.nodes[self->botMind->targetNodeID].coord) < Square(800))
                 botCmdBuffer->upmove = 20;
             break;
         case PCL_ALIEN_LEVEL3:
         case PCL_ALIEN_LEVEL3_UPG:
             self->botMind->followingRoute = qfalse;
-            //dodge: stop dodging within a 150-400 range for a good pounce
+            //dodge: stop dodging within a 150-800 range for a good pounce
 	    //also helps get around corners when stuck
-            if(DistanceSquared( muzzle, targetPos ) > 400)
+            if(DistanceSquared( muzzle, targetPos ) > 800)
 		{
 			G_BotDodge(self,botCmdBuffer);
 		}
@@ -825,7 +838,7 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             break;
         case WP_ALEVEL2_UPG:
             range = LEVEL2_CLAW_RANGE*1.5; //Get it to miss occasionally
-            secondaryRange = LEVEL2_AREAZAP_RANGE*1.5;
+            secondaryRange = LEVEL2_AREAZAP_RANGE*2;
             break;
         case WP_ALEVEL3:
             range = LEVEL3_CLAW_RANGE;
@@ -844,7 +857,7 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             secondaryRange = 0;
             break;
         case WP_PAIN_SAW:
-            range = PAINSAW_RANGE;
+            range = PAINSAW_RANGE*5; //bzzzzt
             secondaryRange = 0;
             break;
         case WP_FLAMER:
@@ -983,7 +996,7 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
             case PCL_ALIEN_LEVEL3_UPG:
                 if(self->client->ps.ammo[WP_ALEVEL3_UPG] > 0 && 
                     distance > Square(LEVEL3_CLAW_RANGE) ) {
-                    botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 6 - self->client->ps.delta_angles[PITCH]; //look up a bit more
+                    botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 5.5 - self->client->ps.delta_angles[PITCH]; //look up a bit more
                     botCmdBuffer->buttons |= BUTTON_USE_HOLDABLE; //barb
 			  botCmdBuffer->forwardmove = 0 //stop moving forward
 			  botCmdBuffer->rightmove = 0 //stop dodging because snipe uses inertia
@@ -1013,10 +1026,10 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
         } else if( self->client->ps.weapon == WP_LUCIFER_CANNON ) {
             if( self->client->time10000 % 2700 ) {
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
+                self->botMind->isFireing = qtrue;
 			/*else if(self->client->ps.ammo[WP_LUCIFER_CANNON] < 30){
 			botCmdBuffer->buttons |= BUTTON_ATTACK2; } //use secondary when low on ammo //TODO when i can compile freely
          	    */
-                self->botMind->isFireing = qtrue;
             }
         } else if(self->client->ps.weapon == WP_HBUILD || self->client->ps.weapon == WP_HBUILD2) {
             botCmdBuffer->buttons |= BUTTON_ATTACK2;
@@ -1605,7 +1618,7 @@ void findNewNode( gentity_t *self, usercmd_t *botCmdBuffer) {
         self->botMind->timeFoundNode = level.time;
         self->botMind->state = TARGETNODE;
     } else {
-        self->botMind->state = LOST;
+        self->botMind->state = LOST;//Maybe ask for a search party to the team, or maybe kill oneself after x minutes
         botCmdBuffer->forwardmove = 0;
         botCmdBuffer->upmove = -1;
         botCmdBuffer->rightmove = 0;
@@ -1672,7 +1685,7 @@ void setSkill(gentity_t *self, int skill) {
         self->botMind->botSkill.aimShake = (int) (20 - (skill * 2) );
     } else {
         self->botMind->botSkill.aimSlowness = (float) ( skill * 3 ) / 30;
-        self->botMind->botSkill.aimShake = (int) (30 - skill * 2);
+        self->botMind->botSkill.aimShake = (int) (20 - skill * 2);
     }
 }
     

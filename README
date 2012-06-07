@@ -1,5 +1,9 @@
 CoW Tremulous QVM v2.0 merge with Lolards v0.7 mod
 
+Credits for bots:
+The original works of vcxzet (lamebot3) were used a guide to create TremBot.
+The works of Amine Haddad (TremBot) and Sex (PBot) where used/modified to create COW Bot
+
 From CoW bot code by Fuma (not up-to-date):
 {
  Current Features (Over Lakitu QVM 5.5):
@@ -33,10 +37,10 @@ See his source code @ https://github.com/cmf028/CoW-Tremulous
 
 ==Bot edits by me==
 -Goon pounces TO human, not ABOVE human. (pitch was *10, now *6)
--Lcannon charges 2.7 mseconds instead of original 2 because my luci charge takes 2.8 seconds
--now buys lockblob launcher [see below] with an exception of basi-suit
+-Bot Lcannon charges 2.7 rather than original 2
+-now buys lockblob launcher [see below] and possibly basi-suit* TODO (make a variable g_bot_basisuit)
 
-From Lolards v0.7 qvm by ZdrytchX [a.k.a. ULTRA Random ViruS , please keep this a secret :D]:
+From Lolards v0.7 qvm by ZdrytchX [a.k.a. ViruS with capital 'S' always]:
 
 'Balance' mod - changed variables and stuff:
 ==MAIN POINTS== [not all listed here]
@@ -118,7 +122,7 @@ From Lolards v0.7 qvm by ZdrytchX [a.k.a. ULTRA Random ViruS , please keep this 
 
 /// And shitloads moar! \\\
 
-12/2/12 edit (through windows, uncompiled/tested):
+12/2/12:
 -Dretch 'scratch' range should be little longer
 -Goon pounce weakened again so it doesn't kill light armour that easily (hopefully it is on the verge of doing 2 hit kill)
 -Hive troll feature removed - there should be a limit
@@ -129,5 +133,27 @@ From Lolards v0.7 qvm by ZdrytchX [a.k.a. ULTRA Random ViruS , please keep this 
 -Teslagen weaker to almost its original value (~40dmg/s)
 -Alien structure healing rates down
 -Overmind depowered a bit so saws can actually saw the overmind without going to critical hp (that is, 10 hp)
--other stuff
-/\/\/\N/B: THIS UPDATE WAS NOT TESTED! IT MAY HAVE COMPILING ERRORS
+-Adv marauder nerf: hp 192->172 and Bot 'attempt' range is *1.5 to prevent it from pretty much instant kill helmetless humans.
+-adv ckit now heals long range, dunno what use this is at the moment
+	*planning to make it heal team mates like in korx and deal damage to aliens
+-Added permanent human buildable healing, increased aliens'
+
+Mid-12:
+-Modified calculations for Vampire Degeneration
+	-TODO (if possible through qvm): Calculate un-modified damage dealt to humans when slicing. Aliens gain almost no health when slicing armoured. A possible way to do this is by constantly doing (default damage from trem.h) rather than from what it really does. The reason why this is impossible for me at the moment is because the damage modifier is in the data-1.1.0.pk3 or armour/human[type].armour or whatever the directory is.
+	-TODOTOO: To make a variable to enable/disable the vamipre mode so it isnt permanent, preferably with a /callvote vmp [-r]
+-Modified the adv goon so it doesnt snipe the ceiling from its own inertia
+-Changed pulse down to a massive difference due to its OPness. Now default is 40, battpack is 64.
+-Dretch 'scratch' is faster and has a longer range now.
+-Bot dodge ranges and such is now longer.
+-Adv mara zap nerf
+-Repeat rates of some aliens nerfed
+-Range of some aliens nerfed, marauder kept its status
+-Gas down to 200 quake units
+-Granger build repeat rate increased to match the overmind's building speed
+-Buildable healing nerfed of both teams, aliens closer to default, humans stay around the 1-4 hp/s zone
+-Granger bomb lifetime decreased to (repeat rate*3.5) which is currently around 2 seconds
+-Lolards.pk3 - Head modifier changed to *1.8 rather than *2.0 to deal with the stronger blows (110 dmg) from the tyrant, now receives 40 dmg to the head like standard trem
+-other tiny stuff i can't remember now
+-Made the bot stop running backwards when at point blank
+TODO: Make the bot dodge faster because of point blank, need someone else to do this for me as i do not have an everyday linux
