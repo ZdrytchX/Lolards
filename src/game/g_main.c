@@ -311,7 +311,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_dedicated, "dedicated", "0", 0, 0, qfalse  },
 
   { &g_speed, "g_speed", "320", CVAR_SERVERINFO, 0, qtrue  },
-  { &g_gravity, "g_gravity", "800", CVAR_SERVERINFO, 0, qtrue  },
+  { &g_gravity, "g_gravity", "800", CVAR_SERVERINFO, 0, qtrue  }, //I would like the default to be 700, as gravity accel is 9.8 m/s and a human is about 60 units high.
   { &g_knockback, "g_knockback", "1000", CVAR_SERVERINFO, 0, qtrue  },
   { &g_quadfactor, "g_quadfactor", "3", 0, 0, qtrue  },
   { &g_weaponRespawn, "g_weaponrespawn", "5", 0, 0, qtrue  },
@@ -375,7 +375,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_floodMaxDemerits, "g_floodMaxDemerits", "5000", CVAR_ARCHIVE, 0, qfalse  },
   { &g_floodMinTime, "g_floodMinTime", "2000", CVAR_ARCHIVE, 0, qfalse  },
 
-  { &g_markDeconstruct, "g_markDeconstruct", "0", CVAR_ROM, 0, qfalse  },
+  { &g_markDeconstruct, "g_markDeconstruct", "0", CVAR_ARCHIVE, 0, qfalse  },
   { &g_deconDead, "g_deconDead", "0", CVAR_ARCHIVE, 0, qtrue  },
 
   { &g_debugMapRotation, "g_debugMapRotation", "0", 0, 0, qfalse  },
@@ -408,7 +408,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_myStats, "g_myStats", "1", CVAR_ARCHIVE, 0, qfalse  },
   { &g_publicSayadmins, "g_publicSayadmins", "1", CVAR_ARCHIVE, 0, qfalse  },    
   { &g_minLevelToSpecMM1, "g_minLevelToSpecMM1", "0", CVAR_ARCHIVE, 0, qfalse  },
-  { &g_antiSpawnBlock, "g_antiSpawnBlock", "0", CVAR_ARCHIVE, 0, qfalse  },
+  { &g_antiSpawnBlock, "g_antiSpawnBlock", "150", CVAR_ARCHIVE, 0, qfalse  },
   
   { &g_devmapKillerHP, "g_devmapKillerHP", "0", CVAR_ARCHIVE, 0, qtrue  },
   
@@ -429,7 +429,7 @@ static cvarTable_t   gameCvarTable[ ] =
   // <bot stuff>
   
   // bot buy cvars
-  { &g_bot_buy, "g_bot_buy", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_buy, "g_bot_buy", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   { &g_bot_rifle, "g_bot_rifle", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   { &g_bot_psaw, "g_bot_psaw", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   { &g_bot_shotgun, "g_bot_shotgun", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
@@ -441,21 +441,21 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_bot_luci, "g_bot_luci", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   
   // bot evolution cvars
-  { &g_bot_evolve, "g_bot_evolve", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_evolve, "g_bot_evolve", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   { &g_bot_basi, "g_bot_basi", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
-  { &g_bot_advbasi, "g_bot_advbasi", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
-  { &g_bot_mara, "g_bot_mara", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
-  { &g_bot_advmara, "g_bot_advmara", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
-  { &g_bot_goon, "g_bot_goon", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
-  { &g_bot_advgoon, "g_bot_advgoon", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
-  { &g_bot_tyrant, "g_bot_tyrant", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_advbasi, "g_bot_advbasi", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_mara, "g_bot_mara", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_advmara, "g_bot_advmara", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_goon, "g_bot_goon", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_advgoon, "g_bot_advgoon", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_tyrant, "g_bot_tyrant", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   
   // misc bot cvars
   { &g_bot_attackStruct, "g_bot_attackStruct", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
-  { &g_bot_roam, "g_bot_roam", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_roam, "g_bot_roam", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   { &g_bot_infinite_funds, "g_bot_infinite_funds", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   { &g_bot_survival, "g_bot_survival", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
-  { &g_bot_wave_interval, "g_bot_wave_interval", "60", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_wave_interval, "g_bot_wave_interval", "120", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   
   // </bot stuff>
   
@@ -1245,6 +1245,7 @@ int G_GetSpawnQueueLength( spawnQueue_t *sq )
 
   return length;
 }
+
 
 /*
 ============

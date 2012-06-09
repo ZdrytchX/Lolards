@@ -59,8 +59,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_BITE_WIDTH           6.0f
 #define LEVEL0_BITE_REPEAT          333 //500 //333 makes stronger againts stationary battlesuits
 #define LEVEL0_BITE_K_SCALE         1.0f
-#define LEVEL0_SCRATCH_DMG          2 //dispite this, it is actually almost overpowered.
-#define LEVEL0_SCRATCH_REPEAT       50 //Main pupous of this attack is to drain health slowly and gain it just like mara zap.
+#define LEVEL0_SCRATCH_DMG          3 //dispite this, it is actually almost overpowered. //Changed to match dmg/s from normal bite on buildables
+#define LEVEL0_SCRATCH_REPEAT       56 //Main pupous of this attack is to drain health slowly and gain it just like mara zap. //Changed to match dmg/s from normal bite on buildables
 #define LEVEL0_SCRATCH_RANGE        120
 #define LEVEL0_SCRATCH_WIDTH        3
 
