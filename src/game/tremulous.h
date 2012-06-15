@@ -745,10 +745,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                                          //do to increment the stage kill counters. Usually 0.5. I had 0.9 but that made humans come up slowly since they like camping. Encourage them to get out giving them s3.
 
 //Vampire mode settings
-//See the rest in g_combat.c, ~line 1762 [might change due to line additions]
-#define VAMP_EXTRA                  50 //works like this: Maths calculates the ammount should take from the dmg done, add this variable, then times porportional to current class's hp.
-#define VAMP_TAKE                   12.5 //Takes (extrahealth/this value + 0.5) ( 0.5 for rounding intergers up) every second when degenerating
-                                       //Human max extra health is 50, so it takes with the default value of '6.25', it will take 8hp at max value and the average of 4 hp/s like before.
+//See below for the equation on how much hp is added:
+//(( attacker->[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / (2 * target->[ STAT_MAX_HEALTH ])) / VAMP_DIVIDE + 0.5)
+//edit: That was removed, but i left it here for you to see the old one. It was OP againts dretches.
+//Here's the new one:
+//(( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / ( VAMP_ENEMY_INIT_MAX_HP * 2 )) / VAMP_DIVIDE + 0.5)
+
+#define VAMP_EXTRA                  50 //
+#define VAMP_DIVIDE                 5   //2 is too low, human vs human doing 5 dmg gains 4.25 hp back, so make it smaller by increasing. //Adjusted to '5', i recommend you to not change it. This means that for rifle to dretch you get 1 hp, but for chaingun 2 hp. It also means that chaingun earns you less for bigger characters.
+#define VAMP_TAKE                   6.25 //
+                                       //Human max extra health is 50, so it takes 8 hp/s at most...
 
 // g_suddenDeathMode settings
 #define SDMODE_BP                   29 // This is why gpp sudden death sucks, you can't build an armoury. Here, you can build a maximum of one armoury,a reactor and medi, dcc and repeater. 
