@@ -998,8 +998,8 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
                     distance > Square(LEVEL3_CLAW_RANGE) ) {
                     botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 5.5 - self->client->ps.delta_angles[PITCH]; //look up a bit more
                     botCmdBuffer->buttons |= BUTTON_USE_HOLDABLE; //barb
-			  botCmdBuffer->forwardmove = 0 //stop moving forward
-			  botCmdBuffer->rightmove = 0 //stop dodging because snipe uses inertia
+		    botCmdBuffer->forwardmove = 0; //stop moving forward
+		    botCmdBuffer->rightmove = 0; //stop dodging because snipe uses inertia
                 } else {       
                     if(distance > Square(LEVEL3_CLAW_RANGE + LEVEL3_CLAW_RANGE/2) && 
                     self->client->ps.stats[ STAT_MISC ] < LEVEL3_POUNCE_UPG_SPEED) {

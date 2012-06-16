@@ -2249,54 +2249,55 @@ void HMGTurret_Think( gentity_t *self )
 
   //if not powered don't do anything and check again for power next think
   if( !( self->powered = G_FindPower( self ) ) )
-  {
-    // unpowered turret barrel falls to bottom of range
-    float droop;
-    droop = AngleNormalize180( self->s.angles2[ PITCH ] );
-    if( droop < MGTURRET_VERTICALCAP )
     {
-      droop +=  MGTURRET_DROOPSCALE;
-      if( droop > MGTURRET_VERTICALCAP )
-        droop = MGTURRET_VERTICALCAP;
-      self->s.angles2[ PITCH ] = droop;
+      // unpowered turret barrel falls to bottom of range
+      float droop;
+      droop = AngleNormalize180( self->s.angles2[ PITCH ] );
+      if( droop < MGTURRET_VERTICALCAP )
+	{
+	  droop +=  MGTURRET_DROOPSCALE;
+	  if( droop > MGTURRET_VERTICALCAP )
+	    droop = MGTURRET_VERTICALCAP;
+	  self->s.angles2[ PITCH ] = droop;
 
-    self->nextthink = level.time + POWER_REFRESH_TIME;
-    return;
-  }
+	  self->nextthink = level.time + POWER_REFRESH_TIME;
+	  return;
+	}
 
-  if( self->spawned )
-  {
-    //find a dcc for self
-    self->dcced = G_FindDCC( self );
+      if( self->spawned )
+	{
+	  //find a dcc for self
+	  self->dcced = G_FindDCC( self );
 
-    //if the current target is not valid find a new one
-    if( !HMGTurret_CheckTarget( self, self->enemy, qfalse ) )
-    {
-      if( self->enemy )
-        self->enemy->targeted = NULL;
+	  //if the current target is not valid find a new one
+	  if( !HMGTurret_CheckTarget( self, self->enemy, qfalse ) )
+	    {
+	      if( self->enemy )
+		self->enemy->targeted = NULL;
 
-      HMGTurret_FindEnemy( self );
+	      HMGTurret_FindEnemy( self );
+	    }
+
+	  //if a new target cannot be found don't do anything
+	  if( !self->enemy )
+	    return;
+
+	  self->enemy->targeted = self;
+
+	  //if we are pointing at our target and we can fire shoot it
+	  if( HMGTurret_TrackEnemy( self ) && ( self->count < level.time ) )
+	    {
+	      //fire at target
+	      FireWeapon( self );
+
+	      self->s.eFlags |= EF_FIRING;
+	      G_AddEvent( self, EV_FIRE_WEAPON, 0 );
+	      G_SetBuildableAnim( self, BANIM_ATTACK1, qfalse );
+
+	      self->count = level.time + firespeed;
+	    }
+	}
     }
-
-    //if a new target cannot be found don't do anything
-    if( !self->enemy )
-      return;
-
-    self->enemy->targeted = self;
-
-    //if we are pointing at our target and we can fire shoot it
-    if( HMGTurret_TrackEnemy( self ) && ( self->count < level.time ) )
-    {
-      //fire at target
-      FireWeapon( self );
-
-      self->s.eFlags |= EF_FIRING;
-      G_AddEvent( self, EV_FIRE_WEAPON, 0 );
-      G_SetBuildableAnim( self, BANIM_ATTACK1, qfalse );
-
-      self->count = level.time + firespeed;
-    }
-  }
 }
 
 
