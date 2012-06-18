@@ -1777,6 +1777,10 @@ void FireWeapon2( gentity_t *ent )
 
     case WP_LOCKBLOB_LAUNCHER:
       throwGrenade( ent );
+      slowBlobFire( ent ); //30 dmg of lockblobs
+      slowBlobFire( ent );
+      slowBlobFire( ent );
+      slowBlobFire( ent );
       slowBlobFire( ent ); //for the lols
       break;
 
@@ -1878,6 +1882,7 @@ void FireWeapon( gentity_t *ent )
 
     case WP_LOCKBLOB_LAUNCHER:
       lockBlobLauncherFire( ent );
+//may be removed in the future
       slowBlobFire( ent ); //for the lols
       break;
     case WP_HIVE:

@@ -2765,6 +2765,7 @@ float BG_FindBuildDistForClass( int pclass )
     {
       return bg_classList[ i ].buildDist;
     }
+
   }
 
   Com_Printf( S_COLOR_YELLOW "WARNING: fallthrough in BG_FindBuildDistForClass\n" );
@@ -3720,7 +3721,7 @@ weaponAttributes_t bg_weapons[ ] =
     9,                    //int       maxClips;
     qfalse,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
-    1000,                  //int       repeatRate1;
+    TRAPPER_REPEAT,                  //int       repeatRate1;
     2500,                  //int       repeatRate2; //nader so keep it low!
     150,                  //int       repeatRate3;
     2000,                    //int       reloadTime;
@@ -4309,6 +4310,7 @@ upgradeAttributes_t bg_upgrades[ ] =
   },
   {
     UP_MEDKIT,              //int   upgradeNum;
+
     MEDKIT_PRICE,           //int   price;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  nakedStages
@@ -4654,6 +4656,7 @@ void BG_EvaluateTrajectory( const trajectory_t *tr, int atTime, vec3_t result )
       VectorMA( tr->trBase, deltaTime, tr->trDelta, result );
       result[ 2 ] -= 0.5 * DEFAULT_GRAVITY * deltaTime * deltaTime;   // FIXME: local gravity...
       break;
+
 
     case TR_BUOYANCY:
       deltaTime = ( atTime - tr->trTime ) * 0.001;  // milliseconds to seconds

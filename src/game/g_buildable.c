@@ -1591,8 +1591,9 @@ qboolean ATrapper_CheckTarget( gentity_t *self, gentity_t *target, int range )
     return qfalse;
   if( target == self ) // is the target us?
     return qfalse;
-  if( !target->client ) // is the target a bot or player?
-    return qfalse;
+//Gonna test if it attacks buildables :D
+//  if( !target->client ) // is the target a bot or player?
+//    return qfalse;
   if( target->flags & FL_NOTARGET ) // is the target cheating?
     return qfalse;
   if( target->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) // one of us?
@@ -1787,7 +1788,7 @@ void HReactor_Think( gentity_t *self )
 
       if( enemy->flags & FL_NOTARGET )
         continue;
-
+//Test if it can attack buildables - remove client. May cause a problem with client stats.
       if( enemy->client && enemy->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
       {
         self->timestamp = level.time;
@@ -2138,9 +2139,9 @@ qboolean HMGTurret_CheckTarget( gentity_t *self, gentity_t *target, qboolean ign
 
   if( target->flags & FL_NOTARGET )
     return qfalse;
-
-  if( !target->client )
-    return qfalse;
+//Gonna test if the turret can attack buildables
+//  if( !target->client )
+//    return qfalse;
 
   if( target->client->ps.stats[ STAT_STATE ] & SS_HOVELING )
     return qfalse;

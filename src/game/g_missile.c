@@ -150,7 +150,7 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
     if( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
     {
       other->client->ps.stats[ STAT_STATE ] |= SS_BLOBLOCKED; //too overpowered againts aliens otherwise so use SS_SLOWLOCKED
-      other->client->lastLockTime = level.time + (LOCKBLOB_LIFETIME*((500 - other->client->ps.stats[ STAT_MAX_HEALTH ])/300));;
+      other->client->lastLockTime = level.time + (LOCKBLOB_LIFETIME*((500 - other->client->ps.stats[ STAT_MAX_HEALTH ])/300) + LOCKBLOB_LOCKTIME );;
         //actually, nah, ill keep it like this:
 	//6000*((500 - 480)/300) //was /600 but changed because dretches simply die in one hit and will be ignored.
       AngleVectors( other->client->ps.viewangles, dir, NULL, NULL );

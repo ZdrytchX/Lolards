@@ -322,10 +322,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TRAPPER_SPLASHRADIUS        90
 #define TRAPPER_CREEPSIZE           30
 #define TRAPPER_RANGE               600 //default 300 or 200
-#define TRAPPER_REPEAT              1000  //Wrong. Unused. Real value is 500.
+#define TRAPPER_REPEAT              1000  //Has been added, previously did nothing
 #define TRAPPER_K_SCALE             1.0f //explosion. Keep positive for trapper/lockblob jumping.
 #define LOCKBLOB_SPEED              650.0f //default 650 //originally 1250 but trappers can't lock humans
-#define LOCKBLOB_LOCKTIME           20 //default 6000 //8000
+#define LOCKBLOB_LOCKTIME           200 //default 6000 //8000 //added to the lock time value for aliens only.
 //the REAL lifetime of lock because aliens now get locked as well
 //refer to g_missile.c's blob code
 #define LOCKBLOB_LIFETIME           6000
