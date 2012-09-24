@@ -1,7 +1,7 @@
 *This qvm is no longer in active developement. If you have requests, feel free to do so here or email me at my youtube channel
 youtube.com/user/zdrytchx
 
-CoW Tremulous QVM v2.0 merge with Lolards v0.7 mod
+CoW Tremulous QVM v2.0 [incomplete] merge with Lolards v0.7 mod
 
 Credits for bots:
 The original works of vcxzet (lamebot3) were used a guide to create TremBot.
@@ -29,14 +29,14 @@ From CoW bot code by Fuma (not up-to-date):
  Evolve
  Use secondary abilities like lighting, pounce, snipe, charge
  Wallcrawl
- Use waypoints to navigate the map and go to a location without getting stuck
- Effectively dodge.
- Will not keep human players from spawning
+ Use waypoints to navigate the map and go to a location
+ Dodge.
+ Will not keep human players in a long spawn queue
  Anti-Hax-type aiming using recoil system depending on skill level
 }
 Great thanks to him for helping me with setting up a github account and helping me with the code
 See his source code @ https://github.com/cmf028/CoW-Tremulous
-
+FYI his version number needs to increment to 3.0. Don't get the wrong idea that i've upgraded to the new one.
 
 ==Bot edits by me==
 -Goon pounces TO human, not ABOVE human. (pitch was *10, now *6)
