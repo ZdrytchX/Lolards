@@ -115,7 +115,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_CLAW_K_SCALE         0.8f //0.4 //Was at 0.4 because it Might effect the pounce.
 #define LEVEL3_CLAW_U_REPEAT        600 //usuaully 600 //800 ^^what i said
 #define LEVEL3_CLAW_U_K_SCALE       0.8f
-#define LEVEL3_POUNCE_DMG           ADM(135) //default 100, but i increased it to relate to gpp values of killing armoured. // Unvanquished play proves that 5 hit kills is still alright. Decreased from 180 -> 135
+#define LEVEL3_POUNCE_DMG           ADM(125) //default 100 // Unvanquished play proves that 5 hit kills is still alright. Decreased from 180 -> 135 // -> 125 (bsuits take the same damage as laroured)
 #define LEVEL3_POUNCE_RANGE         48.0f //default 72. Remember 0 is at the centre, it won't hit anything. Want 36, but can't hit because it still isn't long enough :( Gpp's value is probably 48, cause thats what it says in TremX's source code.
 #define LEVEL3_POUNCE_WIDTH         30.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 32 for a more 'realistic' pounce so adv goons can get humans without aiming down. Works almost perfectly at this setting. It is basically the width of the goon/2. //32->30 because it hits stuff before you pounce-launch
 #define LEVEL3_POUNCE_SPEED         700 //pounce speed usually 700
