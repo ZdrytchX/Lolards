@@ -1771,15 +1771,17 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       else if( attacker != targ && OnSameTeam( targ, attacker ) )
         targ->client->tkcredits[ attacker->client->ps.clientNum ] += takeNoOverkill;
     }
+
 //The following is OP when killing dretches..
-//#define VAMP (( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / ( targ->client->ps.stats[ STAT_MAX_HEALTH ] * 2 )) / VAMP_DIVIDE + 0.5); // supports health gain that is less than 1 value and the '+50' means proportionate to (health + 50). Its also to help dretches and small ones gain health. Now also proportionate to the enemy's health.
-int VAMP_ENEMY_INIT_MAX_HP;
-VAMP_ENEMY_INIT_MAX_HP = targ->client->ps.stats[ STAT_MAX_HEALTH ];
-	if( VAMP_ENEMY_INIT_MAX_HP < 100)
+#define VAMP (( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / ( targ->client->ps.stats[ STAT_MAX_HEALTH ] * 2 )) / VAMP_DIVIDE + 0.5); // supports health gain that is less than 1 value and the '+50' means proportionate to (health + 50). Its also to help dretches and small ones gain health. Now also proportionate to the enemy's health.
+/* //cancel
+#define VAMP_ENEMY_INIT_MAX_HP targ->client->ps.stats[ STAT_MAX_HEALTH ];
+	if( VAMP_ENEMY_INIT_MAX_HP < 100 )
 	{
-		VAMP_ENEMY_INIT_MAX_HP = 100;
+	#define	VAMP_ENEMY_INIT_MAX_HP = 100;
 	} //fuck i know this may not work... i don't do programming, i just add/mod stuff. Honestly i do not credit myself for much except for the ideas like the luci speed and this vamp calculations
-#define VAMP (( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / ( VAMP_ENEMY_INIT_MAX_HP * 2 )) / VAMP_DIVIDE + 0.5);
+*/
+//#define VAMP (( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / ( VAMP_ENEMY_INIT_MAX_HP * 2 )) / VAMP_DIVIDE + 0.5);
 
     if( targ->health <= 0 )
     {
@@ -1816,7 +1818,7 @@ VAMP_ENEMY_INIT_MAX_HP = targ->client->ps.stats[ STAT_MAX_HEALTH ];
 }*/
 
 	else
-{
+		{
           attacker->health = attacker->health + VAMP; //gain according to the player's health ratio so a dretch doesn't become invincable.//Also, they gain porportional according to their max health (+ 50).
           if (attacker->health > attacker->client->ps.stats[ STAT_MAX_HEALTH ] * 1.5) 
           {
@@ -1829,7 +1831,7 @@ VAMP_ENEMY_INIT_MAX_HP = targ->client->ps.stats[ STAT_MAX_HEALTH ];
          //Apprently you still see ur HUDs though... i can't fix this
          //Also, these apply to those who heal once every second, in this case its only aliens. This becomes a problem as humans become invincable still. This is fixed in g_active.c
 //note: It fixed itself 'somehow'. This code was not needed anymore although it was spammed 3 times throughout the source code including in g_active.c
-}
+		}
 	}
   }
 }

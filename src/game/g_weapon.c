@@ -1770,9 +1770,9 @@ void FireWeapon2( gentity_t *ent )
       break;
 
     case WP_CHAINGUN:
-      bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG/2.3, MOD_CHAINGUN ); //Even out so the real damage is still '7' per shot
-      bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG/3.5, MOD_CHAINGUN ); //now tripple barrel instead of faster speed
-      bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG/3.5, MOD_CHAINGUN );
+      bulletFire( ent, CHAINGUN_SPREAD2, CHAINGUN_DMG/3, MOD_CHAINGUN ); 
+      bulletFire( ent, CHAINGUN_SPREAD2, CHAINGUN_DMG/3, MOD_CHAINGUN ); 
+      bulletFire( ent, CHAINGUN_SPREAD2, CHAINGUN_DMG/3, MOD_CHAINGUN );
       break;
 
     case WP_LOCKBLOB_LAUNCHER:

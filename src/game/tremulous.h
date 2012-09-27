@@ -47,6 +47,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_ADV_DELAY          10000 //12000 //8000->10000 to fix build timer vs build time of overmind
 
 #define ABUILDER_BLOB_DMG           ADM(6)//4 -> 6
+#define ABUILDER_BLOB_SPLASH_DMG    ADM(15)//Explosion damage
 #define ABUILDER_BLOB_RADIUS        75     //explosion radius
 #define ABUILDER_BLOB_REPEAT        800 //500->800
 #define ABUILDER_BLOB_SPEED         780.0f //800 -> 780 to match grenade
@@ -459,11 +460,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CHAINGUN_RELOAD             5000
 //with speedy barrel function -70 //100dmg/s
 //without speedy barrel function: -90 //78dmg/s //marauder's worst enemy //"removed" because OP againts goons
-#define CHAINGUN_REPEAT             90 //Single barrel shots
-#define CHAINGUN_REPEAT2            90 //tripple barrel shots, but does half damage
+#define CHAINGUN_REPEAT             70 //Single barrel shots
+#define CHAINGUN_REPEAT2            90 //tripple barrel shots, total damage stays the same
 #define CHAINGUN_K_SCALE            1.0f
 #define CHAINGUN_SPREAD             500 //700
-#define CHAINGUN_DMG                HDM(7) //6
+#define CHAINGUN_SPREAD2            800
+#define CHAINGUN_DMG                HDM(6) //6 //7 is too powerful-revert
 
 //Prifle - slow spam, doing max 112 dmg/s
 

@@ -4657,11 +4657,16 @@ void BG_EvaluateTrajectory( const trajectory_t *tr, int atTime, vec3_t result )
       result[ 2 ] -= 0.5 * DEFAULT_GRAVITY * deltaTime * deltaTime;   // FIXME: local gravity...
       break;
 
+    case TR_LIGHTGRAVITY:
+      deltaTime = ( atTime - tr->trTime ) * 0.001;  // milliseconds to seconds
+      VectorMA( tr->trBase, deltaTime, tr->trDelta, result );
+      result[ 2 ] -= 0.1 * DEFAULT_GRAVITY * deltaTime * deltaTime;   // FIXME: local gravity...
+      break;
 
     case TR_BUOYANCY:
       deltaTime = ( atTime - tr->trTime ) * 0.001;  // milliseconds to seconds
       VectorMA( tr->trBase, deltaTime, tr->trDelta, result );
-      result[ 2 ] += 0.1 * DEFAULT_GRAVITY * deltaTime * deltaTime;   // FIXME: local gravity...
+      result[ 2 ] += 0.5 * DEFAULT_GRAVITY * deltaTime * deltaTime;   // FIXME: local gravity...
       break; //used for long range projectiles
 
     default:
@@ -4713,6 +4718,12 @@ void BG_EvaluateTrajectoryDelta( const trajectory_t *tr, int atTime, vec3_t resu
       deltaTime = ( atTime - tr->trTime ) * 0.001;  // milliseconds to seconds
       VectorCopy( tr->trDelta, result );
       result[ 2 ] -= DEFAULT_GRAVITY * deltaTime;   // FIXME: local gravity...
+      break;
+
+    case TR_LIGHTGRAVITY:
+      deltaTime = ( atTime - tr->trTime ) * 0.001;  // milliseconds to seconds
+      VectorCopy( tr->trDelta, result );
+      result[ 2 ] -= DEFAULT_GRAVITY * deltaTime * 0.2;   // FIXME: local gravity...
       break;
 
     case TR_BUOYANCY:

@@ -395,10 +395,9 @@ gentity_t *fire_blaster( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -1.0f;
-  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 1.0f;
-
-  bolt->s.pos.trType = TR_GRAVIT; //TR_BUOYANCY; //ehem... its too useful againts long distance- buildable killing, dont use linear
-//bolt->s.pos.trType = TR_GRAVITY; //LINEAR //for the lolz
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 1.0f;\
+  bolt->s.pos.trType = TR_LIGHTGRAVITY; //ehem... its too useful againts long distance- buildable killing, dont use linear
+//bolt->s.pos.trType = TR_GRAVITY; //LINEAR is linear, TR_BUOYANCY goes up
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
   VectorScale( dir, BLASTER_SPEED, bolt->s.pos.trDelta );
@@ -441,7 +440,7 @@ gentity_t *fire_pulseRifle( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
 
-  bolt->s.pos.trType = TR_LINEAR;//TR_SINE to test; //linear
+  bolt->s.pos.trType = TR_SINE; //TR_LINEAR;//TR_SINE to test; //linear
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
   VectorScale( dir, PRIFLE_SPEED, bolt->s.pos.trDelta );
@@ -778,7 +777,7 @@ gentity_t *fire_slowBlob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = ABUILDER_BLOB_DMG;
-  bolt->splashDamage = ABUILDER_BLOB_DMG;
+  bolt->splashDamage = ABUILDER_BLOB_SPLASH_DMG;
   bolt->splashRadius = ABUILDER_BLOB_RADIUS;
   bolt->methodOfDeath = MOD_SLOWBLOB;
   bolt->splashMethodOfDeath = MOD_SLOWBLOB;

@@ -1150,6 +1150,7 @@ typedef enum {
 	TR_LINEAR_STOP,
 	TR_SINE,					// value = base + sin( time / duration ) * delta
 	TR_GRAVITY,
+        TR_LIGHTGRAVITY, //ZdrytchX: New one
 	TR_BUOYANCY //TA: what the hell is this doing in here anyway?
 } trType_t;
 
