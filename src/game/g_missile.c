@@ -396,7 +396,7 @@ gentity_t *fire_blaster( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->target_ent = NULL;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -1.0f;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 1.0f;\
-  bolt->s.pos.trType = TR_LIGHTGRAVITY; //ehem... its too useful againts long distance- buildable killing, dont use linear
+  bolt->s.pos.trType = TR_GRAVITY; //TR_LIGHTGRAVITY; //ehem... its too useful againts long distance- buildable killing, dont use linear
 //bolt->s.pos.trType = TR_GRAVITY; //LINEAR is linear, TR_BUOYANCY goes up
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
@@ -440,7 +440,7 @@ gentity_t *fire_pulseRifle( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
 
-  bolt->s.pos.trType = TR_SINE; //TR_LINEAR;//TR_SINE to test; //linear
+  bolt->s.pos.trType = TR_LINEAR; //TR_SINE to test; //linear
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
   VectorScale( dir, PRIFLE_SPEED, bolt->s.pos.trDelta );

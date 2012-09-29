@@ -37,18 +37,18 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ADM(d)                      ((int)((float)d*ALIEN_WDMG_MODIFIER))
 
 #define ABUILDER_BUILD_REPEAT       500
-#define ABUILDER_CLAW_DMG           ADM(26) //20)
+#define ABUILDER_CLAW_DMG           ADM(26) //20) //still 3 hit kill with new armour system... (head mod = 1.8)
 #define ABUILDER_CLAW_RANGE         78.0f //64f
 #define ABUILDER_CLAW_WIDTH         25.0f //4f
-#define ABUILDER_CLAW_REPEAT        900 //2 hit kills are OP //not 2 hit kill with new human_Base.armour
+#define ABUILDER_CLAW_REPEAT        900
 #define ABUILDER_BASE_CLAW_REPEAT   1000
 #define ABUILDER_CLAW_K_SCALE       0.0f
 #define ABUILDER_BASE_DELAY         12000 //17000
 #define ABUILDER_ADV_DELAY          10000 //12000 //8000->10000 to fix build timer vs build time of overmind
 
 #define ABUILDER_BLOB_DMG           ADM(6)//4 -> 6
-#define ABUILDER_BLOB_SPLASH_DMG    ADM(15)//Explosion damage
-#define ABUILDER_BLOB_RADIUS        75     //explosion radius
+#define ABUILDER_BLOB_SPLASH_DMG    ADM(15)//Explosion damage //15
+#define ABUILDER_BLOB_RADIUS        75     //explosion radius //75
 #define ABUILDER_BLOB_REPEAT        800 //500->800
 #define ABUILDER_BLOB_SPEED         780.0f //800 -> 780 to match grenade
 #define ABUILDER_BLOB_SPEED_MOD     0.6f
@@ -58,7 +58,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_BITE_DMG             ADM(36)
 #define LEVEL0_BITE_RANGE           64.0f
 #define LEVEL0_BITE_WIDTH           6.0f
-#define LEVEL0_BITE_REPEAT          333 //500 //333 makes stronger againts stationary battlesuits
+#define LEVEL0_BITE_REPEAT          333 //500 //333 makes stronger againts stationary camptards
 #define LEVEL0_BITE_K_SCALE         1.0f
 #define LEVEL0_SCRATCH_DMG          3 //dispite this, it is actually almost overpowered. //Changed to match dmg/s from normal bite on buildables
 #define LEVEL0_SCRATCH_REPEAT       56 //Main pupous of this attack is to drain health slowly and gain it just like mara zap. //Changed to match dmg/s from normal bite on buildables
@@ -66,13 +66,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_SCRATCH_WIDTH        3
 
 #define LEVEL1_CLAW_DMG             ADM(48)
-#define LEVEL1_CLAW_RANGE           96.0f //96
+#define LEVEL1_CLAW_RANGE           80.0f //96
 #define LEVEL1_CLAW_WIDTH           10.0f
 #define LEVEL1_CLAW_REPEAT          666
 #define LEVEL1_CLAW_U_REPEAT        500
 #define LEVEL1_CLAW_K_SCALE         0.0f //-1.0f brings enemy closer for a hug but comes with hardships of letting go of the human
 #define LEVEL1_CLAW_U_K_SCALE       0.0f
-#define LEVEL1_GRAB_RANGE           96.0f//64
+#define LEVEL1_GRAB_RANGE           80.0f//64
 #define LEVEL1_GRAB_TIME            300
 #define LEVEL1_GRAB_U_TIME          450
 #define LEVEL1_PCLOUD_DMG           ADM(8)
@@ -82,7 +82,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define LEVEL2_CLAW_DMG             ADM(42)
 #define LEVEL2_CLAW_RANGE           128.0f //96 //longest range, since mar is glass cannon
-#define LEVEL2_CLAW_WIDTH           3.0f //18f //helps againts walls
+#define LEVEL2_CLAW_WIDTH           7.0f //18f //helps againts walls //3 -> 7 (too hard to hit)
 #define LEVEL2_CLAW_REPEAT          400 //normal marauder is still a glass cannon, just weaker in health.
 #define LEVEL2_CLAW_K_SCALE         -1.0f//1
 #define LEVEL2_CLAW_U_REPEAT        333 //Okay, i admit, it is overpowered. So i decided to change it back to before. (original Lolards qvm had 250 here and 333 in normal mar)
@@ -102,7 +102,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Note: I've changed default sv_fps to 80 so zap should have some difference between larmour and bsuit
 #define LEVEL2_AREAZAP_DMG          ADM(60) //gpp default, who cares.
 #define LEVEL2_AREAZAP_RANGE        300.0f //360[lolards default] -> 300
-#define LEVEL2_AREAZAP_WIDTH        2.0f //be able to zap humans in vents
+#define LEVEL2_AREAZAP_WIDTH        1.0f //be able to zap humans in vents
 #define LEVEL2_AREAZAP_REPEAT       750 //
 #define LEVEL2_AREAZAP_TIME         3000 
 #define LEVEL2_AREAZAP_MAX_TARGETS  7 //Kept the same.
@@ -110,15 +110,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 //Goon modified heavily to get close to gpp values.
 #define LEVEL3_CLAW_DMG             ADM(82)
-#define LEVEL3_CLAW_RANGE           72.0f //96
+#define LEVEL3_CLAW_RANGE           72.0f //96 //72 -> 80
 #define LEVEL3_CLAW_WIDTH           12.0f //16f
 #define LEVEL3_CLAW_REPEAT          700 //usually 700 //900 for gpp-related
 #define LEVEL3_CLAW_K_SCALE         0.8f //0.4 //Was at 0.4 because it Might effect the pounce.
 #define LEVEL3_CLAW_U_REPEAT        600 //usuaully 600 //800 ^^what i said
 #define LEVEL3_CLAW_U_K_SCALE       0.8f
-#define LEVEL3_POUNCE_DMG           ADM(125) //default 100 // Unvanquished play proves that 5 hit kills is still alright. Decreased from 180 -> 135 // -> 125 (bsuits take the same damage as laroured)
-#define LEVEL3_POUNCE_RANGE         48.0f //default 72. Remember 0 is at the centre, it won't hit anything. Want 36, but can't hit because it still isn't long enough :( Gpp's value is probably 48, cause thats what it says in TremX's source code.
-#define LEVEL3_POUNCE_WIDTH         30.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 32 for a more 'realistic' pounce so adv goons can get humans without aiming down. Works almost perfectly at this setting. It is basically the width of the goon/2. //32->30 because it hits stuff before you pounce-launch
+#define LEVEL3_POUNCE_DMG           ADM(115) //default 100 // Unvanquished play proves that 5 hit kills is still alright. Decreased from 180 -> 135 // -> 115 (bsuits take the same damage as laroured)
+#define LEVEL3_POUNCE_RANGE         42.0f //default 72. Remember 0 is at the centre, it won't hit anything. Want 36, but can't hit because it still isn't long enough :( Gpp's value is probably 48, cause thats what it says in TremX's source code.// 48 -> 42
+#define LEVEL3_POUNCE_WIDTH         28.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 32 for a more 'realistic' pounce so adv goons can get humans without aiming down. Works almost perfectly at this setting. It is basically the width of the goon/2. //32->28 because it hits stuff before you pounce-launch
 #define LEVEL3_POUNCE_SPEED         700 //pounce speed usually 700
 #define LEVEL3_POUNCE_UPG_SPEED     800 //pounce speed for adv goon usually 800
 #define LEVEL3_POUNCE_SPEED_MOD     0.75f //speed when charging pounce default 0.75
@@ -140,18 +140,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_CLAW_K_SCALE         0.8f //i don't mind the knockback
 #define LEVEL4_REGEN_RANGE          200.0f //usually goes unnoticed, left default
 #define LEVEL4_REGEN_MOD            1.5f //2 //Can benifit from booster's x3 healing now
-#define LEVEL4_CHARGE_SPEED         3.0f //
-#define LEVEL4_CHARGE_TIME          3500 //2000 //3000
-#define LEVEL4_CHARGE_CHARGE_TIME   2300 //1500
+#define LEVEL4_CHARGE_SPEED         3.0f //2.5 is easier to move with
+#define LEVEL4_CHARGE_TIME          3000 //2000 //This is the time to charge the charge
+#define LEVEL4_CHARGE_CHARGE_TIME   3800 //1500 //This is the duration which you charge
 #define LEVEL4_MIN_CHARGE_TIME      750
 #define LEVEL4_CHARGE_CHARGE_RATIO  (LEVEL4_CHARGE_TIME/LEVEL4_CHARGE_CHARGE_TIME)
 #define LEVEL4_CHARGE_REPEAT        1000
 #define LEVEL4_CHARGE_DMG           ADM(209) //100 (to help with armoured)
 //Removed tyrant spit bomb.
-/*
-//Note: tyrant spit bomb is a trapper bomb, so it currently shares the facts of a trapper.
-//Change trapper facts if you want to change the stats of the spit.
-*/
 
 
 /*
@@ -523,6 +519,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_MIN_CHARGE          36 //50 //mincharge dmg value
 #define LCANNON_MAXCLIPS	      1 //give some hopes for a human who fired his shots till his battery couldn't handle anymore
 //(below 70, the maxcharge lessens.)
+#define LCANNON_BATTERY_DECAY       70 //The value by which the luci starts struggling to power a full shot
 
 #define HBUILD_PRICE                0
 #define HBUILD_REPEAT               1000 //1000
@@ -753,10 +750,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Here's the new one:
 //(( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / ( VAMP_ENEMY_INIT_MAX_HP * 2 )) / VAMP_DIVIDE + 0.5)
 
-#define VAMP_EXTRA                  50 //
-#define VAMP_DIVIDE                 5   //2 is too low, human vs human doing 5 dmg gains 4.25 hp back, so make it smaller by increasing. //Adjusted to '5', i recommend you to not change it. This means that for rifle to dretch you get 1 hp, but for chaingun 2 hp. It also means that chaingun earns you less for bigger characters.
-#define VAMP_TAKE                   6.25 //
+#define VAMP_EXTRA                  50 //50
+#define VAMP_DIVIDE                 5   //2 is too low, human vs human doing 5 dmg gains 4.25 hp back, so make it smaller by increasing. //Adjusted to '5', i recommend you to not change it.
+#define VAMP_TAKE                   6.25 //6.25
                                        //Human max extra health is 50, so it takes 8 hp/s at most...
+#define MAX_MAX_HEALTH              1.5 //Max health for players * this = Max vamped health
+//To turn vamp off, use these settings:
+/*
+#define VAMP_EXTRA                  0
+#define VAMP_DIVIDE                 500
+#define VAMP_TAKE                   1 */
+#define MAX_MAX_HEALTH              1.5 //Max health for players * this = Max vamped health
 
 // g_suddenDeathMode settings
 #define SDMODE_BP                   29 // This is why gpp sudden death sucks, you can't build an armoury. Here, you can build a maximum of one armoury,a reactor and medi, dcc and repeater. 

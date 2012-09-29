@@ -372,12 +372,12 @@ static float PM_CmdScale( usercmd_t *cmd )
     }
 
     //must have +ve stamina to jump
-    if( pm->ps->stats[ STAT_STAMINA ] < 0 )// able to jump still
+    if( pm->ps->stats[ STAT_STAMINA ] < -500 )// able to jump still
       cmd->upmove = 10;
 
     //slow down once stamina depletes
-    if( pm->ps->stats[ STAT_STAMINA ] <= -50 )
-      modifier *= (float)( pm->ps->stats[ STAT_STAMINA ] + 1000 ) / 50.0f;
+    if( pm->ps->stats[ STAT_STAMINA ] <= 0 )
+      modifier *= (float)( pm->ps->stats[ STAT_STAMINA ] + 1000 ) / 1000.0f;
 
     if( pm->ps->stats[ STAT_STATE ] & SS_CREEPSLOWED )
     {
@@ -683,7 +683,7 @@ static qboolean PM_CheckJump( void )
     return qfalse;
 
   if( ( pm->ps->stats[ STAT_PTEAM ] == PTE_HUMANS ) &&
-      ( pm->ps->stats[ STAT_STAMINA ] < 0 ) )
+      ( pm->ps->stats[ STAT_STAMINA ] < -500 ) )
     return qfalse;
 
   if( pm->ps->pm_flags & PMF_RESPAWNED )
@@ -3153,13 +3153,13 @@ static void PM_Weapon( void )
     if( pm->ps->pm_flags & PMF_DUCKED ||
         BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
     {
-      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 0.5 ) - 0.125 ) * ( 30 / (float)addTime ) );
+      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 0.7 ) - 0.125 ) * ( 30 / (float)addTime ) );
       pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 0.5 ) - 0.25 ) * ( 30.0 / (float)addTime ) );
     }
     else if (BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, pm->ps->stats ) && (BG_InventoryContainsUpgrade( UP_HELMET, pm->ps->stats )))
     {
-      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 2 ) - 0.25 ) * ( 30.0 / (float)addTime ) );
-      pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 2 ) - 1 ) * ( 30.0 / (float)addTime ) );
+      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 3 ) - 0.25 ) * ( 30.0 / (float)addTime ) );
+      pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 3 ) - 1.5 ) * ( 30.0 / (float)addTime ) );
     }
     else
     {
@@ -3188,13 +3188,13 @@ static void PM_Weapon( void )
     if( pm->ps->pm_flags & PMF_DUCKED ||
         BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
     {
-      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 0.11 ) - 0.1 ) * ( 30.0 / (float)addTime ) );
-      pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 0.1 ) - 0.05 ) * ( 30.0 / (float)addTime ) );
+      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 0.0 ) - 0.0 ) * ( 30.0 / (float)addTime ) );
+      pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 0.0 ) - 0.00 ) * ( 30.0 / (float)addTime ) );
     }
     else if (BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, pm->ps->stats ) && (BG_InventoryContainsUpgrade( UP_HELMET, pm->ps->stats )))
     {
-      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 6 ) - 2 ) * ( 30.0 / (float)addTime ) );
-      pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 4 ) - 2 ) * ( 30.0 / (float)addTime ) );
+      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 3.0 ) - 1.0 ) * ( 30.0 / (float)addTime ) );
+      pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 2.0 ) - 1.0 ) * ( 30.0 / (float)addTime ) );
     }
     else
     {

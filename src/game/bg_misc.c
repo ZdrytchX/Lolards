@@ -115,8 +115,8 @@ buildableAttributes_t bg_buildableList[ ] =
     "team_alien_booster",  //char      *entityName;
     { "models/buildables/booster/booster.md3", 0, 0, 0 },
     1.0f,                  //float     modelScale;
-    { -26, -26, -9 },     //vec3_t     mins;
-    { 26, 26, 9 },        //vec3_t     maxs;
+    { -16, -16, -9 },     //vec3_t     mins;//-26,-26,-9
+    { 16, 16, 9 },        //vec3_t     maxs;// 26,26,9
     0.0f,                  //float     zOffset;
     TR_GRAVITY,            //trType_t  traj;
     0.0,                   //float     bounce;
@@ -475,7 +475,7 @@ buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  invertNormal;
     qfalse,                //qboolean  creepTest;
     0,                     //int       creepSize;
-    qtrue,                 //qboolean  dccTest;
+    qtrue,                 //qboolean  dccTest; //required to build, not to use.
     qtrue,                 //qboolean  transparentTest;
     qfalse,                //qboolean  reactorTest;
     qfalse,                //qboolean  replacable;
@@ -1856,7 +1856,7 @@ classAttributes_t bg_classList[ ] =
     1.0f,                                           //float   shadowScale;
     "alien_general_hud",                            //char    *hudname;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ),            //int  stages
-    ( 1 << S2 )|( 1 << S3 ),                        //int  nakedStages
+    ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ),                        //int  nakedStages
     { -32, -32, -21 },                              //vec3_t  mins;
     { 32, 32, 21 },                                 //vec3_t  maxs;
     { 32, 32, 21 },                                 //vec3_t  crouchmaxs;
@@ -1895,8 +1895,8 @@ classAttributes_t bg_classList[ ] =
     "default",                                      //char    *skinname;
     1.0f,                                           //float   shadowScale;
     "alien_general_hud",                            //char    *hudname;
-    ( 1 << S3 ),                                    //int  stages
-    ( 1 << S3 ),                                              //int  nakedStages
+    ( 1 << S2 )|( 1 << S3 ),                                    //int  stages
+    ( 1 << S2 )|( 1 << S3 ),                               //int  nakedStages
     { -32, -32, -21 },                              //vec3_t  mins;
     { 32, 32, 21 },                                 //vec3_t  maxs;
     { 32, 32, 21 },                                 //vec3_t  crouchmaxs;
@@ -3353,9 +3353,9 @@ weaponAttributes_t bg_weapons[ ] =
     SLOT_ARMS,          //int       slots;
     "psaw",               //char      *weaponName;
     "Pain Saw",           //char      *weaponHumanName;
-    0,                    //int       maxAmmo;
-    0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    800,                    //int       maxAmmo;
+    2,                    //int       maxClips;
+    qfalse,                //int       infiniteAmmo; //qtrue
     qfalse,               //int       usesEnergy;
     PAINSAW_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -4656,13 +4656,13 @@ void BG_EvaluateTrajectory( const trajectory_t *tr, int atTime, vec3_t result )
       VectorMA( tr->trBase, deltaTime, tr->trDelta, result );
       result[ 2 ] -= 0.5 * DEFAULT_GRAVITY * deltaTime * deltaTime;   // FIXME: local gravity...
       break;
-
+/*
     case TR_LIGHTGRAVITY:
       deltaTime = ( atTime - tr->trTime ) * 0.001;  // milliseconds to seconds
       VectorMA( tr->trBase, deltaTime, tr->trDelta, result );
       result[ 2 ] -= 0.1 * DEFAULT_GRAVITY * deltaTime * deltaTime;   // FIXME: local gravity...
       break;
-
+*/
     case TR_BUOYANCY:
       deltaTime = ( atTime - tr->trTime ) * 0.001;  // milliseconds to seconds
       VectorMA( tr->trBase, deltaTime, tr->trDelta, result );
@@ -4719,13 +4719,13 @@ void BG_EvaluateTrajectoryDelta( const trajectory_t *tr, int atTime, vec3_t resu
       VectorCopy( tr->trDelta, result );
       result[ 2 ] -= DEFAULT_GRAVITY * deltaTime;   // FIXME: local gravity...
       break;
-
+/*
     case TR_LIGHTGRAVITY:
       deltaTime = ( atTime - tr->trTime ) * 0.001;  // milliseconds to seconds
       VectorCopy( tr->trDelta, result );
       result[ 2 ] -= DEFAULT_GRAVITY * deltaTime * 0.2;   // FIXME: local gravity...
       break;
-
+*/
     case TR_BUOYANCY:
       deltaTime = ( atTime - tr->trTime ) * 0.001;  // milliseconds to seconds
       VectorCopy( tr->trDelta, result );

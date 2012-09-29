@@ -688,7 +688,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
 
           //if the charger has stopped moving take a chunk of charge away
           if( VectorLength( client->ps.velocity ) < 32.0f || aRight )
-            client->ps.stats[ STAT_MISC ] = client->ps.stats[ STAT_MISC ] / 2;
+            client->ps.stats[ STAT_MISC ] = client->ps.stats[ STAT_MISC ] / 1; //No. [stat_misc]/2
 
           //can't charge backwards
           if( ucmd->forwardmove < 0 ) //if you stop pressing forward, it will stop
@@ -720,8 +720,8 @@ void ClientTimerActions( gentity_t *ent, int msec )
       if( client->ps.stats[ STAT_MISC ] > LCANNON_TOTAL_CHARGE )
         client->ps.stats[ STAT_MISC ] = LCANNON_TOTAL_CHARGE;
 
-      if( client->ps.stats[ STAT_MISC ] > ( ammo * LCANNON_TOTAL_CHARGE ) / 70 )
-        client->ps.stats[ STAT_MISC ] = ammo * LCANNON_TOTAL_CHARGE / 70;
+      if( client->ps.stats[ STAT_MISC ] > ( ammo * LCANNON_TOTAL_CHARGE ) / LCANNON_BATTERY_DECAY )
+        client->ps.stats[ STAT_MISC ] = ammo * LCANNON_TOTAL_CHARGE / LCANNON_BATTERY_DECAY;
     } //weaken max charge when low battery
 
     switch( client->ps.weapon )
@@ -873,12 +873,12 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
       if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
           ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
         ent->health += BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) * modifier;
-//vamp settings
+//vamp degen settings
       if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] )
-	{ ent->health -= ((client->ps.stats[ STAT_HEALTH ] - (client->ps.stats[ STAT_MAX_HEALTH ] ) / VAMP_TAKE ) + 0.5 ); } //Degeneration now takes up extrahealth/VAMP_TAKE + 0.5
+	{ ent->health -= ((client->ps.stats[ STAT_HEALTH ] - (client->ps.stats[ STAT_MAX_HEALTH ] ) )/ VAMP_TAKE  + 0.5 ); } //Degeneration now takes up extrahealth/VAMP_TAKE + 0.5
       //  ent->health = client->ps.stats[ STAT_MAX_HEALTH ]
-      if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] * 1.5 ) //vamp mode: remember! modifier 1.5x max health
-        ent->health = client->ps.stats[ STAT_MAX_HEALTH ] * 1.5;
+      if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH ) //vamp mode: remember! modifier 1.5x max health
+        ent->health = client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH;
     }
     
     //these are just for stats when doing /(!)mystats or /(!)allstats
@@ -911,15 +911,15 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
 		}*/
 		if ( ent->health < 0)
 		{
-		ent->health = -99999; //glitchy hack, but works. The higher the number (toward 0 of course) the higher chance of a human glitch-reviving with ghost mode.
+		ent->health = -9999; //glitchy hack, but works. The higher the number (toward 0 of course) the higher chance of a human glitch-reviving with ghost mode.
 		}
 		if ( ent->health > client->ps.stats[STAT_MAX_HEALTH])
 		{
 		ent->health -= (client->ps.stats[ STAT_MAX_HEALTH ] / 25);
 		}
 	
-		if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] * 1.5 ) //apprently the other one didn't work; copy+paste here - I'VE DONE THIS SOO MANY FKIN TIMES!!! ONLY THIS ONE WORKS [for now]
-		ent->health = client->ps.stats[ STAT_MAX_HEALTH ] * 1.5; //and also not reliable
+		if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH ) //apprently the other one didn't work; copy+paste here - I'VE DONE THIS SOO MANY FKIN TIMES!!! ONLY THIS ONE WORKS [for now]
+		ent->health = client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH; //and also not reliable
 
       ent->client->pers.statscounters.timealive++;
       level.humanStatsCounters.timealive++;
