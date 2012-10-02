@@ -2015,8 +2015,8 @@ classAttributes_t bg_classList[ ] =
     "default",                                      //char    *skinname;
     1.0f,                                           //float   shadowScale;
     "alien_general_hud",                                    //char    *hudname;
-    ( 1 << S3 ),                                    //int  stages
-    ( 1 << S3 ),                                              //int  nakedStages
+    ( 1 << S2 )|( 1 << S3 ),                                    //int  stages
+    ( 1 << S2 )|( 1 << S3 ),                                              //int  nakedStages
     { -15, -15, -40 },                              //vec3_t  mins;
     { 15, 15, 40 },                                 //vec3_t  maxs;
     { 15, 15, 40 },                                 //vec3_t  crouchmaxs; //38
@@ -3353,14 +3353,14 @@ weaponAttributes_t bg_weapons[ ] =
     SLOT_ARMS,          //int       slots;
     "psaw",               //char      *weaponName;
     "Pain Saw",           //char      *weaponHumanName;
-    800,                    //int       maxAmmo;
-    2,                    //int       maxClips;
+    PAINSAW_FUEL,        //int       maxAmmo;
+    PAINSAW_BATTERIES,    //int       maxClips;
     qfalse,                //int       infiniteAmmo; //qtrue
     qfalse,               //int       usesEnergy;
     PAINSAW_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
-    0,                    //int       reloadTime;
+    PAINSAW_RELOAD,       //int       reloadTime;
     PAINSAW_K_SCALE,      //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;

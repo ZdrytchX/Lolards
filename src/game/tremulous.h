@@ -141,8 +141,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_REGEN_RANGE          200.0f //usually goes unnoticed, left default
 #define LEVEL4_REGEN_MOD            1.5f //2 //Can benifit from booster's x3 healing now
 #define LEVEL4_CHARGE_SPEED         3.0f //2.5 is easier to move with
-#define LEVEL4_CHARGE_TIME          3000 //2000 //This is the time to charge the charge
-#define LEVEL4_CHARGE_CHARGE_TIME   3800 //1500 //This is the duration which you charge
+#define LEVEL4_CHARGE_TIME          3200 //2000 //This is the time to charge the charge
+#define LEVEL4_CHARGE_CHARGE_TIME   3000 //1500 //This is the duration which you charge
 #define LEVEL4_MIN_CHARGE_TIME      750
 #define LEVEL4_CHARGE_CHARGE_RATIO  (LEVEL4_CHARGE_TIME/LEVEL4_CHARGE_CHARGE_TIME)
 #define LEVEL4_CHARGE_REPEAT        1000
@@ -407,6 +407,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PAINSAW_K_SCALE             1.0f
 #define PAINSAW_DAMAGE              HDM(16) //~>250 dmg/s
 #define PAINSAW_RANGE               60.0f //40f //enough to touch below feet of a normal human
+#define PAINSAW_FUEL                800
+#define PAINSAW_BATTERIES           1
+#define PAINSAW_RELOAD              3000
 
 //Super Grenade Throw!
 #define GRENADE_PRICE               600 //200 //mininuke

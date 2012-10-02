@@ -2263,41 +2263,40 @@ void HMGTurret_Think( gentity_t *self )
 	  self->nextthink = level.time + POWER_REFRESH_TIME;
 	  return;
 	}
+     } 
+   if( self->spawned )
+    {
+   //find a dcc for self
+  self->dcced = G_FindDCC( self );
 
-      if( self->spawned )
-	{
-	  //find a dcc for self
-	  self->dcced = G_FindDCC( self );
-
-	  //if the current target is not valid find a new one
-	  if( !HMGTurret_CheckTarget( self, self->enemy, qfalse ) )
-	    {
-	      if( self->enemy )
-		self->enemy->targeted = NULL;
-
-	      HMGTurret_FindEnemy( self );
-	    }
-
-	  //if a new target cannot be found don't do anything
-	  if( !self->enemy )
-	    return;
-
-	  self->enemy->targeted = self;
-
-	  //if we are pointing at our target and we can fire shoot it
-	  if( HMGTurret_TrackEnemy( self ) && ( self->count < level.time ) )
-	    {
-	      //fire at target
-	      FireWeapon( self );
-
-	      self->s.eFlags |= EF_FIRING;
-	      G_AddEvent( self, EV_FIRE_WEAPON, 0 );
-	      G_SetBuildableAnim( self, BANIM_ATTACK1, qfalse );
-
-	      self->count = level.time + firespeed;
-	    }
-	}
+  //if the current target is not valid find a new one
+  if( !HMGTurret_CheckTarget( self, self->enemy, qfalse ) )
+    {
+      if( self->enemy )
+	self->enemy->targeted = NULL;
+      HMGTurret_FindEnemy( self );
     }
+
+  //if a new target cannot be found don't do anything
+  if( !self->enemy )
+    return;
+
+  self->enemy->targeted = self;
+
+  //if we are pointing at our target and we can fire shoot it
+  if( HMGTurret_TrackEnemy( self ) && ( self->count < level.time ) )
+    {
+      //fire at target
+      FireWeapon( self );
+
+      self->s.eFlags |= EF_FIRING;
+      G_AddEvent( self, EV_FIRE_WEAPON, 0 );
+      G_SetBuildableAnim( self, BANIM_ATTACK1, qfalse );
+
+      self->count = level.time + firespeed;
+    }
+	}
+//    }
 }
 
 
@@ -3443,7 +3442,7 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
   G_SetOrigin( built, origin );
   
   // gently nudge the buildable onto the surface :)
-  VectorScale( normal, -50.0f, built->s.pos.trDelta );
+  VectorScale( normal, -10.0f, built->s.pos.trDelta ); //-50
 
   // set turret angles
   VectorCopy( builder->s.angles2, built->s.angles2 );
