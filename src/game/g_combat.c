@@ -1427,7 +1427,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     // and yes, i know - i apply not less then 1 dmg. That is simply in case anyone forget
     // that some weapons are soooooooo weak that setting 5% dmg would really do nothing.
     if ((iTmp < 100) && (damage > 0))
-      damage = 1 + (int)( (float)iTmp * (float)(damage-1) / 100.0f);
+      damage = 0.5 + (int)( (float)iTmp * (float)(damage-1) / 100.0f); //Really? Again?
   }
 // end of applying structures/players dmg mod
 
