@@ -118,7 +118,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_CLAW_U_K_SCALE       0.8f
 #define LEVEL3_POUNCE_DMG           ADM(115) //default 100 // Unvanquished play proves that 5 hit kills is still alright. Decreased from 180 -> 135 // -> 115 (bsuits take the same damage as laroured)
 #define LEVEL3_POUNCE_RANGE         42.0f //default 72. Remember 0 is at the centre, it won't hit anything. Want 36, but can't hit because it still isn't long enough :( Gpp's value is probably 48, cause thats what it says in TremX's source code.// 48 -> 42
-#define LEVEL3_POUNCE_WIDTH         28.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 32 for a more 'realistic' pounce so adv goons can get humans without aiming down. Works almost perfectly at this setting. It is basically the width of the goon/2. //32->28 because it hits stuff before you pounce-launch
+#define LEVEL3_POUNCE_WIDTH         25.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 32 for a more 'realistic' pounce so adv goons can get humans without aiming down. Works almost perfectly at this setting. It is basically the width of the goon/2. //32->28 because it hits stuff before you pounce-launch
 #define LEVEL3_POUNCE_SPEED         700 //pounce speed usually 700
 #define LEVEL3_POUNCE_UPG_SPEED     800 //pounce speed for adv goon usually 800
 #define LEVEL3_POUNCE_SPEED_MOD     0.75f //speed when charging pounce default 0.75
