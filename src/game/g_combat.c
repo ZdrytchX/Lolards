@@ -1550,7 +1550,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     if( targ->s.eType == ET_BUILDABLE && attacker->client &&
         targ->biteam == attacker->client->pers.teamSelection )
     {
-      if(mod == MOD_LEVEL4_CHARGE || mod == MOD_LEVEL3_POUNCE ) 
+      if(mod == MOD_LEVEL4_CHARGE || mod == MOD_LEVEL3_POUNCE ) //Allow dretches to teamkill structures.
       {
          if(g_friendlyFireMovementAttacks.value <= 0)
            return;
@@ -1635,11 +1635,12 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
         attacker->client->pers.statscounters.repairspoisons++;
         level.alienStatsCounters.repairspoisons++;
       }
-/*
+//Test burn
+///*
 	//testing another add-onn burn effect
       if( targ->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
           !( targ->client->ps.stats[ STAT_STATE ] & SS_POISONED ) &&
-          mod = MOD_FLAMER && targ->client->poisonImmunityTime < level.time )//"poison" burn through direct flame hit
+          mod == MOD_FLAMER && targ->client->poisonImmunityTime < level.time )//"poison" burn through direct flame hit
       {
         targ->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
         targ->client->lastPoisonTime = level.time;
@@ -1647,32 +1648,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
         attacker->client->pers.statscounters.repairspoisons++;
         level.humanStatsCounters.repairspoisons++;//not sure if this will work
       }
-*/
-//pass the radiation/burn on through firing lcannon, flamer or anything not listed here:
-//but remember, if this works, change the cg_event.c for poison kill.
-//Does not work.
-/*
-	if ( attacker->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
-	mod != MOD_LCANNON_SPLASH && //has to be direct hit
-	mod != MOD_BLASTER &&
-	mod != MOD_MACHINEGUN &&
-	mod != MOD_CHAINGUN &&
-	mod != MOD_SHOTGUN &&
-	mod != MOD_PRIFLE &&
-	mod != MOD_MDRIVER &&
-	mod != MOD_LASGUN &&
-	mod != MOD_GRENADE &&
-	mod != MOD_SLOWBLOB &&
-	mod != MOD_MGTURRET &&
-          targ->client->poisonImmunityTime < level.time )
-	{
-        targ->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
-        targ->client->lastPoisonTime = level.time;
-        targ->client->lastPoisonClient = attacker;
-        attacker->client->pers.statscounters.repairspoisons++;
-        level.humanStatsCounters.repairspoisons++;
-	}
-*/
+//*/
 //    if ( attacker->client && attacker->client->ps.stats[ STAT_WEAP ] = WP_LCANNON; ) //not defined, but this is a reminder on what i was gonna do
 // I was gonna make lcannon 'bleed' aliens with its 'dangerous radiation'
     }

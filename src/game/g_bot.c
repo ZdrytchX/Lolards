@@ -760,9 +760,9 @@ void G_BotReactToEnemy(gentity_t *self, usercmd_t *botCmdBuffer) {
  */
 void G_BotDodge(gentity_t *self, usercmd_t *botCmdBuffer) {
     if(self->client->time1000 >= 800) //>= 500
-        botCmdBuffer->rightmove = 150; //127
+        botCmdBuffer->rightmove = 127; //127
     else
-        botCmdBuffer->rightmove = -150; //-127
+        botCmdBuffer->rightmove = -127; //-127
     
     if((self->client->time10000 % 2000) < 1000)
         botCmdBuffer->rightmove *= -1;
