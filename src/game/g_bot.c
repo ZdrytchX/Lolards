@@ -606,10 +606,10 @@ void G_BotBuy(gentity_t *self, usercmd_t *botCmdBuffer) {
                 G_ForceWeaponChange( self, WP_NONE );
         }
         //try to buy helmet/lightarmour //not bsuit because humans glitch //UP_BATTLESUIT - retry
-        if( !G_BotBuyUpgrade( self, UP_BATTLESUIT) ){
+//        if( !G_BotBuyUpgrade( self, UP_BATTLESUIT) ){
         G_BotBuyUpgrade( self, UP_HELMET);
         G_BotBuyUpgrade( self, UP_LIGHTARMOUR);
-	}
+//	}
         
         // buy most expensive first, then one cheaper, etc, dirty but working way
       if( !G_BotBuyWeapon( self, WP_LOCKBLOB_LAUNCHER ) )
@@ -760,9 +760,9 @@ void G_BotReactToEnemy(gentity_t *self, usercmd_t *botCmdBuffer) {
  */
 void G_BotDodge(gentity_t *self, usercmd_t *botCmdBuffer) {
     if(self->client->time1000 >= 800) //>= 500
-        botCmdBuffer->rightmove = 127;
+        botCmdBuffer->rightmove = 150; //127
     else
-        botCmdBuffer->rightmove = -127;
+        botCmdBuffer->rightmove = -150; //-127
     
     if((self->client->time10000 % 2000) < 1000)
         botCmdBuffer->rightmove *= -1;
@@ -811,9 +811,10 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
     myMax = VectorLengthSquared(myMaxs);
     
 //note: Grangers do not spawn. If you want them to spawn, put them on the bot spawn menu.
+//It's on the spawn menu.
     switch(self->s.weapon) {
         case WP_ABUILD:
-//            range = ABUILDER_CLAW_RANGE; //poor granger :( //Granger now has swipe
+            range = ABUILDER_CLAW_RANGE; //poor granger :( //Granger now has swipe
             secondaryRange = 0;
             break;
         case WP_ABUILD2:
@@ -939,6 +940,9 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
     if( self->client->ps.stats[STAT_PTEAM] == PTE_ALIENS ) {
         switch(self->client->ps.stats[STAT_PCLASS]) {
             case PCL_ALIEN_BUILDER0:
+                if(distance < Square(ABUILDER_CLAW_RANGE))
+                    botCmdBuffer->buttons |= BUTTON_ATTACK2; //Attack!
+                else
                 botCmdBuffer->buttons |= BUTTON_GESTURE; //poor  grangie; taunt like you mean it!
                 break;
             case PCL_ALIEN_BUILDER0_UPG:
@@ -1207,6 +1211,8 @@ void G_BotSpectatorThink( gentity_t *self ) {
         } else if( teamnum == PTE_ALIENS) {
             self->client->pers.classSelection = PCL_ALIEN_LEVEL0;//PCL_ALIEN_LEVEL0
             self->client->ps.stats[STAT_PCLASS] = PCL_ALIEN_LEVEL0; //PCL_ALIEN_LEVEL0 then PCL_ALIEN_BUILDER0_UPG for grangie
+            self->client->pers.classSelection = PCL_ALIEN_BUILDER0_UPG;//
+            self->client->ps.stats[STAT_PCLASS] = PCL_ALIEN_BUILDER0_UPG; //spawn granger if s2/3
             G_PushSpawnQueue( &level.alienSpawnQueue, clientNum );
         }
     }

@@ -82,7 +82,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define LEVEL2_CLAW_DMG             ADM(42)
 #define LEVEL2_CLAW_RANGE           128.0f //96 //longest range, since mar is glass cannon
-#define LEVEL2_CLAW_WIDTH           7.0f //18f //helps againts walls //3 -> 7 (too hard to hit)
+#define LEVEL2_CLAW_WIDTH           9.0f //18f //helps againts walls //3 -> 9 (too hard to hit)
 #define LEVEL2_CLAW_REPEAT          400 //normal marauder is still a glass cannon, just weaker in health.
 #define LEVEL2_CLAW_K_SCALE         -1.0f//1
 #define LEVEL2_CLAW_U_REPEAT        333 //Okay, i admit, it is overpowered. So i decided to change it back to before. (original Lolards qvm had 250 here and 333 in normal mar)
@@ -100,7 +100,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_WALLJUMP_MAXSPEED    90000.0f //1290.0f //idk, don't really want a max
 */
 //Note: I've changed default sv_fps to 80 so zap should have some difference between larmour and bsuit
-#define LEVEL2_AREAZAP_DMG          ADM(60) //gpp default, who cares.
+#define LEVEL2_AREAZAP_DMG          ADM(100) //use '60' when the zap width is large. Use '100' if the zap width is small. Be warned it gets overpowered.
 #define LEVEL2_AREAZAP_RANGE        300.0f //360[lolards default] -> 300
 #define LEVEL2_AREAZAP_WIDTH        1.0f //be able to zap humans in vents
 #define LEVEL2_AREAZAP_REPEAT       750 //
@@ -130,7 +130,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_BOUNCEBALL_AMMO      3
 #define LEVEL3_BOUNCEBALL_REPEAT    600 //default 1000 //deal with long range turrets quicker as a upside to the barb using player's inertia
 #define LEVEL3_BOUNCEBALL_SPEED     1000.0f
-#define LEVEL3_BOUNCEBALL_SPLASH_DMG  75 //Explosion dmg. //Halved so base killing isn't that fast since human turrets take up 10 bp //56 -> 75
+#define LEVEL3_BOUNCEBALL_SPLASH_DMG  100 //Explosion dmg. //Halved so base killing isn't that fast since human turrets take up 10 bp //56 -> 75 //75->100 because it is hard to 3-hit kill 2 turrets.
 #define LEVEL3_BOUNCEBALL_SPLASH_RADIUS 92 //Splash radius. Helps with sniping. //Rememeber that reload time is 10 seconds. You don't want it overpowered.
 
 #define LEVEL4_CLAW_DMG             ADM(110)

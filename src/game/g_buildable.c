@@ -1502,7 +1502,7 @@ void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
     client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED;	
     return; }
 
-  //only allow boostage once every 3 seconds
+  //only allow boostage once every 30 seconds
   if( client->lastBoostedTime + BOOSTER_INTERVAL > level.time )
     return;
 
