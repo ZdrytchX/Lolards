@@ -1765,7 +1765,7 @@ void FireWeapon2( gentity_t *ent )
       meleeAttack( ent, BLASTER_MELEE_RANGE, 1, BLASTER_MELEE, MOD_BLASTER );
       break;
     case WP_SHOTGUN:
-      meleeAttack( ent, SHOTGUN_BLAST_RANGE, 1 SHOTGUN_BLAST, MOD_SHOTGUN ); //acts like a forward explosion for knockback
+      meleeAttack( ent, SHOTGUN_BLAST_RANGE, 1, SHOTGUN_BLAST, MOD_SHOTGUN ); //acts like a forward explosion for knockback
 
       bulletFire( ent, SHOTGUN_BLAST_SPREAD/3, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); //6 for 6 pellets per clip
       bulletFire( ent, SHOTGUN_BLAST_SPREAD/2, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); 
