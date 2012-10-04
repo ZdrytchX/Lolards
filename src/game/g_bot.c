@@ -459,7 +459,7 @@ void G_BotGoto(gentity_t *self, botTarget_t target, usercmd_t *botCmdBuffer) {
     botAimAtLocation(self, tmpVec, botCmdBuffer);
     
     //humans should not move if they are targetting, and can hit, a building
-    if(botTargetInAttackRange(self, target) && getTargetType(target) == ET_BUILDABLE && self->client->ps.stats[STAT_PTEAM] == PTE_HUMANS && getTargetTeam(target) == PTE_ALIENS)
+    if(botTargetInAttackRange(self, target) && getTargetType(target) == ET_BUILDABLE && self->client->ps.stats[STAT_PTEAM] == PTE_HUMANS && getTargetTeam(target) == PTE_ALIENS && self->s.weapon == !WP_PAIN_SAW )
         return;
     
     //move forward
@@ -618,8 +618,8 @@ void G_BotBuy(gentity_t *self, usercmd_t *botCmdBuffer) {
                 if( !G_BotBuyWeapon( self, WP_FLAMER ) )
                       if( !G_BotBuyWeapon( self, WP_CHAINGUN ) ) //Shifted back
                  	  if( !G_BotBuyWeapon( self, WP_MASS_DRIVER ) )
-                            if( !G_BotBuyWeapon( self, WP_SHOTGUN ) )
-                                if( !G_BotBuyWeapon( self, WP_LAS_GUN ) )
+                            if( !G_BotBuyWeapon( self, WP_LAS_GUN ) )
+                                if( !G_BotBuyWeapon( self, WP_SHOTGUN ) )
                                     if( !G_BotBuyWeapon( self, WP_PAIN_SAW ) )
                                         G_BotBuyWeapon( self, WP_MACHINEGUN );
                                     
@@ -1211,8 +1211,8 @@ void G_BotSpectatorThink( gentity_t *self ) {
         } else if( teamnum == PTE_ALIENS) {
             self->client->pers.classSelection = PCL_ALIEN_LEVEL0;//PCL_ALIEN_LEVEL0
             self->client->ps.stats[STAT_PCLASS] = PCL_ALIEN_LEVEL0; //PCL_ALIEN_LEVEL0 then PCL_ALIEN_BUILDER0_UPG for grangie
-            self->client->pers.classSelection = PCL_ALIEN_BUILDER0_UPG;//
-            self->client->ps.stats[STAT_PCLASS] = PCL_ALIEN_BUILDER0_UPG; //spawn granger if s2/3
+            self->client->pers.classSelection = PCL_ALIEN_BUILDER0;//
+            self->client->ps.stats[STAT_PCLASS] = PCL_ALIEN_BUILDER0; //spawn granger if s2/3
             G_PushSpawnQueue( &level.alienSpawnQueue, clientNum );
         }
     }
@@ -1381,7 +1381,7 @@ int botFindClosestEnemy( gentity_t *self, qboolean includeTeam ) {
             if( (self->client->ps.stats[STAT_PTEAM] == PTE_ALIENS ) || botTargetInRange(self, botTarget, MASK_SHOT) ){
                 
                 //if the entity is a building and we can attack structures and we are not a normal granger
-                if(target->s.eType == ET_BUILDABLE && g_bot_attackStruct.integer && self->client->ps.stats[STAT_PCLASS] != PCL_ALIEN_BUILDER0) {
+                if(target->s.eType == ET_BUILDABLE && g_bot_attackStruct.integer /*&& self->client->ps.stats[STAT_PCLASS] != PCL_ALIEN_BUILDER0*/) {
                     
                     //if the building is not on our team (unless we can attack teamates)
                     if( target->biteam != self->client->ps.stats[STAT_PTEAM] || includeTeam ) {

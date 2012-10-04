@@ -1065,7 +1065,7 @@ qboolean CheckVenomAttack( gentity_t *ent )
   if( !traceEnt->client && !traceEnt->s.eType == ET_BUILDABLE )
     return qfalse;
 
-  //allow bites to work against defensive buildables only
+  //allow level0 bites to work against these buildables only
   if( traceEnt->s.eType == ET_BUILDABLE )
   {
     if( traceEnt->s.modelindex != BA_H_DCC &&
@@ -1697,20 +1697,22 @@ void FireWeapon3( gentity_t *ent )
 
 //    case WP_ALEVEL4:
 //      lockBlobLauncherFire( ent ); //thats right bitch, i'll trap you!
-//N/B: Trap as in trap, not males dressing up as women.
-      break;
+//    break;
 /*
     case WP_HBUILD2:
       bulletFire( ent, 300, 1, MOD_TRIGGER_HURT );
       bulletFire( ent, 300, 1, MOD_TRIGGER_HURT );
       bulletFire( ent, 300, 1, MOD_TRIGGER_HURT );
       break;
-	
 */
     case WP_LOCKBLOB_LAUNCHER:
-      bulletFire( ent, 300, 10, MOD_MACHINEGUN );
-      bulletFire( ent, 300, 5, MOD_MACHINEGUN );
-      bulletFire( ent, 300, 3, MOD_MACHINEGUN );
+      bulletFire( ent, 30, AUTOSHOTTY_PELLET1, MOD_MACHINEGUN );
+      bulletFire( ent, 100, AUTOSHOTTY_PELLET2, MOD_MACHINEGUN );
+      bulletFire( ent, 200, AUTOSHOTTY_PELLET2, MOD_MACHINEGUN );
+      bulletFire( ent, 300, AUTOSHOTTY_PELLET3, MOD_MACHINEGUN );
+      bulletFire( ent, 300, AUTOSHOTTY_PELLET3, MOD_MACHINEGUN );
+      bulletFire( ent, 300, AUTOSHOTTY_PELLET3, MOD_MACHINEGUN );
+      bulletFire( ent, 500, 1AUTOSHOTTY_PELLET3 MOD_MACHINEGUN );
       break;
 
     default:
@@ -1763,7 +1765,14 @@ void FireWeapon2( gentity_t *ent )
       meleeAttack( ent, BLASTER_MELEE_RANGE, 1, BLASTER_MELEE, MOD_BLASTER );
       break;
     case WP_SHOTGUN:
-      meleeAttack( ent, SHOTGUN_BLAST_RANGE, 10, SHOTGUN_BLAST, MOD_SHOTGUN ); //acts like a forward explosion
+      meleeAttack( ent, SHOTGUN_BLAST_RANGE, 1 SHOTGUN_BLAST, MOD_SHOTGUN ); //acts like a forward explosion for knockback
+
+      bulletFire( ent, SHOTGUN_BLAST_SPREAD/3, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); //6 for 6 pellets per clip
+      bulletFire( ent, SHOTGUN_BLAST_SPREAD/2, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); 
+      bulletFire( ent, SHOTGUN_BLAST_SPREAD/2, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); 
+      bulletFire( ent, SHOTGUN_BLAST_SPREAD, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); 
+      bulletFire( ent, SHOTGUN_BLAST_SPREAD, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); 
+      bulletFire( ent, SHOTGUN_BLAST_SPREAD, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); 
       break;
     case WP_PULSE_RIFLE:
       lasGunFire( ent, LASGUN_SPREAD*2 );

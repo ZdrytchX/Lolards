@@ -1638,8 +1638,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 //Test burn
 ///*
 	//testing another add-onn burn effect
-      if( targ->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
-          !( targ->client->ps.stats[ STAT_STATE ] & SS_POISONED ) &&
+      if( !( targ->client->ps.stats[ STAT_STATE ] & SS_POISONED ) &&
           mod == MOD_FLAMER && targ->client->poisonImmunityTime < level.time )//"poison" burn through direct flame hit
       {
         targ->client->ps.stats[ STAT_STATE ] |= SS_POISONED;

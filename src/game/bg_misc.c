@@ -1986,7 +1986,7 @@ classAttributes_t bg_classList[ ] =
     26, 12,                                         //int     viewheight, crouchviewheight;
     100,                                            //int     health;
     6.0f,                                           //float   fallDamage;
-    0,                                              //int     regenRate;
+    1,                                              //int     regenRate;
     SCA_TAKESFALLDAMAGE|
       SCA_CANUSELADDERS,                            //int     abilities;
     WP_NONE, //special-cased in g_client.c          //weapon_t  startWeapon
@@ -3717,13 +3717,13 @@ weaponAttributes_t bg_weapons[ ] =
     SLOT_WEAPON,          //int       slots;
     "lockblob",           //char      *weaponName;
     "Lock Blob",          //char      *weaponHumanName;
-    12,                    //int       maxAmmo;
-    9,                    //int       maxClips;
+    LOCKBLOB_CLIP,         //int       maxAmmo;
+    LOCKBLOB_MAXCLIPS,    //int       maxClips;
     qfalse,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
     TRAPPER_REPEAT,                  //int       repeatRate1;
-    2500,                  //int       repeatRate2; //nader so keep it low!
-    150,                  //int       repeatRate3;
+    LOCKBLOB_NUKE_REPEAT, //int       repeatRate2; //nader so keep it low!
+    AUTOSHOTTY_REPEAT,    //int       repeatRate3;
     2000,                    //int       reloadTime;
     LOCKBLOB_K_SCALE,     //float     knockbackScale;
     qtrue,               //qboolean  hasAltMode;

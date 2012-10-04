@@ -60,8 +60,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_BITE_WIDTH           6.0f
 #define LEVEL0_BITE_REPEAT          333 //500 //333 makes stronger againts stationary camptards
 #define LEVEL0_BITE_K_SCALE         1.0f
-#define LEVEL0_SCRATCH_DMG          3 //dispite this, it is actually almost overpowered. //Changed to match dmg/s from normal bite on buildables
-#define LEVEL0_SCRATCH_REPEAT       56 //Main pupous of this attack is to drain health slowly and gain it just like mara zap. //Changed to match dmg/s from normal bite on buildables
+#define LEVEL0_SCRATCH_DMG          6 //dispite this, it is actually almost overpowered. //Changed to match dmg/s from normal bite on buildables //Use '3' with vampire mode.
+#define LEVEL0_SCRATCH_REPEAT       50 //Main pupous of this attack is to drain health slowly and gain it just like mara zap. //Changed to match dmg/s from normal bite on buildables //use 50 on vampire
 #define LEVEL0_SCRATCH_RANGE        120
 #define LEVEL0_SCRATCH_WIDTH        3
 
@@ -84,9 +84,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_CLAW_RANGE           128.0f //96 //longest range, since mar is glass cannon
 #define LEVEL2_CLAW_WIDTH           9.0f //18f //helps againts walls //3 -> 9 (too hard to hit)
 #define LEVEL2_CLAW_REPEAT          400 //normal marauder is still a glass cannon, just weaker in health.
-#define LEVEL2_CLAW_K_SCALE         -1.0f//1
+#define LEVEL2_CLAW_K_SCALE         -2.0f//1
 #define LEVEL2_CLAW_U_REPEAT        333 //Okay, i admit, it is overpowered. So i decided to change it back to before. (original Lolards qvm had 250 here and 333 in normal mar)
-#define LEVEL2_CLAW_U_K_SCALE       -1.0f//1
+#define LEVEL2_CLAW_U_K_SCALE       -2.0f//1
 
 /*
 //Note: On any armoured human, the zap does 20dmg/s always if the sv_fps is default.
@@ -100,7 +100,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_WALLJUMP_MAXSPEED    90000.0f //1290.0f //idk, don't really want a max
 */
 //Note: I've changed default sv_fps to 80 so zap should have some difference between larmour and bsuit
-#define LEVEL2_AREAZAP_DMG          ADM(100) //use '60' when the zap width is large. Use '100' if the zap width is small. Be warned it gets overpowered.
+#define LEVEL2_AREAZAP_DMG          ADM(60) //use '60' when the zap width is large. Use '100' if the zap width is small. Be warned it gets overpowered.
 #define LEVEL2_AREAZAP_RANGE        300.0f //360[lolards default] -> 300
 #define LEVEL2_AREAZAP_WIDTH        1.0f //be able to zap humans in vents
 #define LEVEL2_AREAZAP_REPEAT       750 //
@@ -137,7 +137,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_CLAW_RANGE           111.0f //128
 #define LEVEL4_CLAW_WIDTH           18.0f //20f
 #define LEVEL4_CLAW_REPEAT          750 //750
-#define LEVEL4_CLAW_K_SCALE         0.8f //i don't mind the knockback
+#define LEVEL4_CLAW_K_SCALE         0.8f //i don't mind the knockback, but can get annoying
 #define LEVEL4_REGEN_RANGE          200.0f //usually goes unnoticed, left default
 #define LEVEL4_REGEN_MOD            1.5f //2 //Can benifit from booster's x3 healing now
 #define LEVEL4_CHARGE_SPEED         3.0f //2.5 is easier to move with
@@ -232,7 +232,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SPY_HEALTH                  300 //still OP unless you happen to get head-shotted by a luci
 #define SPY_VALUE                   720
 #define SPY_COST                    5
-#define SPY_REGEN                   1
+#define SPY_REGEN                   9
 
 /*
  * ALIEN buildables
@@ -429,9 +429,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_RELOAD              ( SHOTGUN_SHELLS * 500 + 1000 ) //real life reloading is annoying right? Two shells/second
 #define SHOTGUN_SPREAD              1320 //900 //1320=spray of defeat on goons, but useless middle-long range especially againts dretches
 #define SHOTGUN_DMG                 HDM(6) //spray of defeat - 6 //90dmg/s
-#define SHOTGUN_BLAST               90 //damage for secondary. Highest instant dmg weapon.
+//Following is for the knockback part
+#define SHOTGUN_BLAST               48 //damage for secondary.
 #define SHOTGUN_BLAST_RANGE         350
 #define SHOTGUN_BLAST_REPEAT        2500 //keep high, not too high 2000 -> 2500 because it instant kills marauders
+//Following is the blast-blast part
+//#define SHOTGUN_BLAST_PELLETS       SHOTGUN_SHELLS  //Number of shells per clip, since if i use shells * pellets, the client would fk up
+#define SHOTGUN_BLAST_PELLET_DMG    7 //heavy
+#define SHOTGUN_BLAST_SPREAD        1200 //Fkwhat, more accurate? :D
 
 #define LASGUN_PRICE                300 //increase, but you need a weapon that can be bought from just one kill //reswap back prices of lasgun-shotgun back to normal
 #define LASGUN_AMMO                 370 //its not like people run out
@@ -523,6 +528,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_MAXCLIPS	      1 //give some hopes for a human who fired his shots till his battery couldn't handle anymore
 //(below 70, the maxcharge lessens.)
 #define LCANNON_BATTERY_DECAY       70 //The value by which the luci starts struggling to power a full shot
+#define LCANNON_TAKE                30.0f //Maximum ammo that can be eaten by one bullet
+
+//Lockblob Launcher
+#define LOCKBLOB_AMMO               12
+#define LOCKBLOB_MAXCLIPS           9
+#define LOCKBLOB_NUKE_REPEAT        2500 //Primary is declared in the alien buildable section for trapper
+#define AUTOSHOTTY_REPEAT           200
+#define AUTOSHOTTY_PELLET1          5   //Dmg for pellet '1', most accurate
+#define AUTOSHOTTY_PELLET2          3   //Dmg for pellet '2', inaccurate accurate
+#define AUTOSHOTTY_PELLET3          1   //Dmg for pellet '1', most inaccurate accurate
 
 #define HBUILD_PRICE                0
 #define HBUILD_REPEAT               1000 //1000

@@ -854,18 +854,24 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
       {
         boostEntity = &g_entities[ entityList[ i ] ];
 
-        if( boostEntity->s.eType == ET_BUILDABLE &&
+        if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
+            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
+        {
+          modifier = LEVEL4_REGEN_MOD;
+          break;
+        }
+        else if( boostEntity->s.eType == ET_BUILDABLE &&
             boostEntity->s.modelindex == BA_A_BOOSTER &&
             boostEntity->spawned && boostEntity->health > 0 )
         {
           modifier = BOOSTER_REGEN_MOD;
           break;
         }
-        else if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
-            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
-        {
-          modifier = LEVEL4_REGEN_MOD;
-          break;
+//        else if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&\
+            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )\
+        {\
+          modifier = LEVEL4_REGEN_MOD;\
+          break;\
         }
       }
 	}
@@ -915,7 +921,8 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
 		}
 		if ( ent->health > client->ps.stats[STAT_MAX_HEALTH])
 		{
-		ent->health -= (client->ps.stats[ STAT_MAX_HEALTH ] / 25);
+//		ent->health -= (client->ps.stats[ STAT_MAX_HEALTH ] / 25);
+                ent->health -= ((client->ps.stats[ STAT_HEALTH ] - (client->ps.stats[ STAT_MAX_HEALTH ] ) )/ VAMP_TAKE  + 0.5 );
 		}
 	
 		if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH ) //apprently the other one didn't work; copy+paste here - I'VE DONE THIS SOO MANY FKIN TIMES!!! ONLY THIS ONE WORKS [for now]
