@@ -3717,7 +3717,7 @@ weaponAttributes_t bg_weapons[ ] =
     SLOT_WEAPON,          //int       slots;
     "lockblob",           //char      *weaponName;
     "Lock Blob",          //char      *weaponHumanName;
-    LOCKBLOB_CLIP,         //int       maxAmmo;
+    LOCKBLOB_AMMO,         //int       maxAmmo;
     LOCKBLOB_MAXCLIPS,    //int       maxClips;
     qfalse,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
