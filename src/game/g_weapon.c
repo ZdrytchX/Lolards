@@ -1712,7 +1712,7 @@ void FireWeapon3( gentity_t *ent )
       bulletFire( ent, 300, AUTOSHOTTY_PELLET3, MOD_MACHINEGUN );
       bulletFire( ent, 300, AUTOSHOTTY_PELLET3, MOD_MACHINEGUN );
       bulletFire( ent, 300, AUTOSHOTTY_PELLET3, MOD_MACHINEGUN );
-      bulletFire( ent, 500, AUTOSHOTTY_PELLET3 MOD_MACHINEGUN );
+      bulletFire( ent, 500, AUTOSHOTTY_PELLET3, MOD_MACHINEGUN );
       break;
 
     default:
