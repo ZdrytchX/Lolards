@@ -193,13 +193,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //head on fighting 1.1 advbasi! Note that human killing one of these will get a lot more credits than normal
 #define LEVEL1_UPG_SPEED            1.2f
 #define LEVEL1_UPG_VALUE            AVM(475) //275
-#define LEVEL1_UPG_HEALTH           AHM(125)
+#define LEVEL1_UPG_HEALTH           AHM(100)
 #define LEVEL1_UPG_REGEN            4
 #define LEVEL1_UPG_COST             2
 
 #define LEVEL2_SPEED                1.2f
 #define LEVEL2_VALUE                AVM(380) //Marauder is chineese cheap. Asians should be able to use this a pwn with it though, while others would waste. So here's the refund. For a massdriver that is.
-#define LEVEL2_HEALTH               AHM(100) //Marauder is a glass cannon.
+#define LEVEL2_HEALTH               AHM(125) //Marauder is a glass cannon.
 #define LEVEL2_REGEN                3
 #define LEVEL2_COST                 1
 

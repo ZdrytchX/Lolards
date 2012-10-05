@@ -68,7 +68,7 @@ void G_BotAdd( char *name, int team, int skill ) {
     bot->botMind->enemyLastSeen = 0;
     bot->botMind->command = BOT_AUTO;
     bot->botMind->botTeam = team;
-    bot->botMind->spawnItem = WP_HBUILD;
+    bot->botMind->spawnItem = WP_HBUILD; //WP_MACHINEGUN;
     bot->botMind->state = FINDNEWNODE;
     bot->botMind->timeFoundEnemy = 0;
     bot->botMind->followingRoute = qfalse;
@@ -81,7 +81,7 @@ void G_BotAdd( char *name, int team, int skill ) {
     userinfo[0] = '\0';
     Info_SetValueForKey( userinfo, "name", name );
     Info_SetValueForKey( userinfo, "rate", "25000" );
-    Info_SetValueForKey( userinfo, "snaps", "20" );
+    Info_SetValueForKey( userinfo, "snaps", "40" );
     
     //so we can connect if server is password protected
     if(g_needpass.integer == 1)
@@ -882,14 +882,14 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             secondaryRange = 650; //nade!
             break;
         case WP_CHAINGUN:
-            range = 600;
+            range = 300;
 //            range = 100; //100 for bot inaccuracy reasons, don't waste ammo
             secondaryRange = (100 * 8192)/CHAINGUN_SPREAD; //secondary
 	    break;
 //the following does NOT wor obviously, but i want to you get an idea of what i want. Basically, i need the secondary range to shoow the primary and primary to shoot secondary.
 /*
         case WP_LUCIFER_CANNON:
-            secondaryRange = 150; //suprise?!? :D - shoots primary as it loses its charge then shoots a secondary straight after- a combo attack
+            secondaryRange = 150; //shoots primary as it loses its charge then shoots a secondary straight after- a combo attack
             range = (100 * 8192)/CHAINGUN_SPREAD; //not too far
             break;
 */
@@ -1211,8 +1211,10 @@ void G_BotSpectatorThink( gentity_t *self ) {
         } else if( teamnum == PTE_ALIENS) {
             self->client->pers.classSelection = PCL_ALIEN_LEVEL0;//PCL_ALIEN_LEVEL0
             self->client->ps.stats[STAT_PCLASS] = PCL_ALIEN_LEVEL0; //PCL_ALIEN_LEVEL0 then PCL_ALIEN_BUILDER0_UPG for grangie
+/*
             self->client->pers.classSelection = PCL_ALIEN_BUILDER0;//
             self->client->ps.stats[STAT_PCLASS] = PCL_ALIEN_BUILDER0; //spawn granger if s2/3
+*/
             G_PushSpawnQueue( &level.alienSpawnQueue, clientNum );
         }
     }
