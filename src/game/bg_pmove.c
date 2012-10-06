@@ -3156,7 +3156,7 @@ static void PM_Weapon( void )
       pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 0.7 ) - 0.125 ) * ( 30 / (float)addTime ) );
       pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 0.5 ) - 0.25 ) * ( 30.0 / (float)addTime ) );
     }
-    else if (BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, pm->ps->stats ) && (BG_InventoryContainsUpgrade( UP_HELMET, pm->ps->stats )))
+    else if (BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, pm->ps->stats )/* && (BG_InventoryContainsUpgrade( UP_HELMET, pm->ps->stats ))*/)
     {
       pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 3 ) - 0.25 ) * ( 30.0 / (float)addTime ) );
       pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 3 ) - 1.5 ) * ( 30.0 / (float)addTime ) );
