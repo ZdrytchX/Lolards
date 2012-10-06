@@ -56,7 +56,7 @@ g_admin_cmd_t g_admin_cmds[ ] =
     },
     
     {"allready", G_admin_allready, "y",
-      "makes everyone ready in intermission",
+      "assumes everyone ready in intermission",
       ""
     },
 
@@ -123,13 +123,13 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "[^3name|slot#^7]"
     },
     
-    {"devmap", G_admin_devmap, "L",
+    {"devmap", G_admin_devmap, "j",
       "load a map with cheats (and optionally force layout)",
       "[^3mapname^7] (^5layout^7)"
     },
     
     {"drawnodes", G_drawnodes, "L",
-      "show or hide nodes",
+      "show or hide path nodes",
       ""
     },
     
@@ -143,7 +143,7 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "(^5command^7)"
     },
 
-    {"info", G_admin_info, "H",
+    {"info", G_admin_info, "h",
       "display the contents of server info files",
       "(^5subject^7)"
     },
@@ -178,7 +178,7 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "(^5name|start admin#^7) (^5minimum level to display^7)"
     },
     
-    {"listlayouts", G_admin_listlayouts, "L",
+    {"listlayouts", G_admin_listlayouts, "i",
       "display a list of all available layouts for a map",
       "(^5mapname^7)"
     },
@@ -188,7 +188,7 @@ g_admin_cmd_t g_admin_cmds[ ] =
       ""
     },
     
-    {"listmaps", G_admin_listmaps, "j",
+    {"listmaps", G_admin_listmaps, "i", //"j"
       "display a list of available maps on the server",
       "(^5map name^7)"
     },
@@ -285,7 +285,7 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "\n ^3Example:^7 '!revert x5 h' reverts the last 5 events affecting human buildables"
     },
 
-    {"rotation", G_admin_listrotation, "j",
+    {"rotation", G_admin_listrotation, "i",
        "display a list of maps that are in the rotation",
        "(^5rotation name^7)"
     },
