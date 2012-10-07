@@ -3122,11 +3122,9 @@ static void PM_Weapon( void )
         pm->ps->weaponTime = 0;
         pm->ps->generic1 = WPM_NOTFIRING; } }
     else if( pm->ps->weapon == WP_SHOTGUN && !attack3 && attack2 && !attack1 ) {
-//	if (ammo == 10) {
-	if (clips >= 1 ) {
-	clips--;
+	if (ammo >= 2 ) { //clips >= 1
+	ammo -= 2; //clips --;
 	}
-//	}
 	else {
         pm->ps->weaponTime = 0;
         pm->ps->generic1 = WPM_NOTFIRING; } }

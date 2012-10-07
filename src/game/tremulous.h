@@ -60,7 +60,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_BITE_WIDTH           6.0f
 #define LEVEL0_BITE_REPEAT          333 //500 //333 makes stronger againts stationary camptards
 #define LEVEL0_BITE_K_SCALE         1.0f
-#define LEVEL0_SCRATCH_DMG          6 //dispite this, it is actually almost overpowered. //Changed to match dmg/s from normal bite on buildables //Use '3' with vampire mode.
+#define LEVEL0_SCRATCH_DMG          ADM(6 + (VAMP_ON * -3)) //dispite this, it is actually almost overpowered.
 #define LEVEL0_SCRATCH_REPEAT       50 //Main pupous of this attack is to drain health slowly and gain it just like mara zap. //Changed to match dmg/s from normal bite on buildables //use 50 on vampire
 #define LEVEL0_SCRATCH_RANGE        120
 #define LEVEL0_SCRATCH_WIDTH        3
@@ -116,7 +116,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_CLAW_K_SCALE         0.8f //0.4 //Was at 0.4 because it Might effect the pounce.
 #define LEVEL3_CLAW_U_REPEAT        600 //usuaully 600 //800 ^^what i said
 #define LEVEL3_CLAW_U_K_SCALE       0.8f
-#define LEVEL3_POUNCE_DMG           ADM(115) //default 100 // Unvanquished play proves that 5 hit kills is still alright. Decreased from 180 -> 135 // -> 115 (bsuits take the same damage as laroured)
+#define LEVEL3_POUNCE_DMG           ADM(115 + (VAMP_ON * 10)) //default 100 // Unvanquished play proves that 5 hit kills is still alright. Decreased from 180 -> 135 // -> 115 (bsuits take the same damage as laroured)
 #define LEVEL3_POUNCE_RANGE         42.0f //default 72. Remember 0 is at the centre, it won't hit anything. Want 36, but can't hit because it still isn't long enough :( Gpp's value is probably 48, cause thats what it says in TremX's source code.// 48 -> 42
 #define LEVEL3_POUNCE_WIDTH         27.0f //default 16. Also remember that the attacking stuff is in a form of a boundry box Any wider will cause it to hit the sides first. 32 for a more 'realistic' pounce so adv goons can get humans without aiming down. Works almost perfectly at this setting. It is basically the width of the goon/2. //32->28 because it hits stuff before you pounce-launch
 #define LEVEL3_POUNCE_SPEED         700 //pounce speed usually 700
@@ -232,7 +232,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SPY_HEALTH                  300 //still OP unless you happen to get head-shotted by a luci
 #define SPY_VALUE                   720
 #define SPY_COST                    5
-#define SPY_REGEN                   9
+#define SPY_REGEN                   (9 + + (VAMP_ON * -6)) //only regen 3 hp/s with vampire mode on
 
 /*
  * ALIEN buildables
@@ -432,8 +432,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Following is for the knockback part
 #define SHOTGUN_BLAST               48 //damage for secondary.
 #define SHOTGUN_BLAST_RANGE         350
-#define SHOTGUN_BLAST_REPEAT        2500 //keep high, not too high 2000 -> 2500 because it instant kills marauders
-//Following is the blast-blast part
+#define SHOTGUN_BLAST_REPEAT        1500 //keep high, not too high 2000 -> 2500 because it instant kills marauders //Truth is, nothing special. Reduced.
 //#define SHOTGUN_BLAST_PELLETS       SHOTGUN_SHELLS  //Number of shells per clip, since if i use shells * pellets, the client would fk up
 #define SHOTGUN_BLAST_PELLET_DMG    7 //heavy
 #define SHOTGUN_BLAST_SPREAD        1200 //Fkwhat, more accurate? :D
@@ -768,8 +767,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Here's the new one:
 //(( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / ( VAMP_ENEMY_INIT_MAX_HP * 2 )) / VAMP_DIVIDE + 0.5)
 
+#define VAMP_ON                     1 //Used to balance some things above. Does not effect vampire code.
+
 #define VAMP_EXTRA                  50 //50
-#define VAMP_DIVIDE                 5   //2 is too low, human vs human doing 5 dmg gains 4.25 hp back, so make it smaller by increasing. //Adjusted to '5', i recommend you to not change it.
+#define VAMP_TAKE_MULTIPLIER        (1/600) //See g_combat.c
+#define VAMP_DIVIDE                 10   //
 #define VAMP_TAKE                   6.25 //6.25
                                        //Human max extra health is 50, so it takes 8 hp/s at most...
 #define MAX_MAX_HEALTH              1.5 //Max health for players * this = Max vamped health
@@ -777,8 +779,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 /*
 #define VAMP_EXTRA                  0
 #define VAMP_DIVIDE                 500
-#define VAMP_TAKE                   1 */
-#define MAX_MAX_HEALTH              1.5 //Max health for players * this = Max vamped health
+#define VAMP_TAKE                   1
+#define MAX_MAX_HEALTH              1.0 //Max health for players * this = Max vamped health
+*/
 
 // g_suddenDeathMode settings
 #define SDMODE_BP                   29 // This is why gpp sudden death sucks, you can't build an armoury. Here, you can build a maximum of one armoury,a reactor and medi, dcc and repeater. 
