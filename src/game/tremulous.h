@@ -647,8 +647,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_SPLASHRADIUS       100
 #define MGTURRET_ANGULARSPEED       5  //degrees/think 8 ~= 200deg/sec //3 //now 5 because of added MGTURRET_FIRE_SPEED
 #define MGTURRET_ACCURACYTOLERANCE  MGTURRET_ANGULARSPEED / 1.5f //1.5 angular difference for turret to fire
-#define MGTURRET_VERTICALCAP        30  // +/- maximum pitch //45
-#define MGTURRET_DROOPSCALE         0.125     //droop rate when unpowered //0.25
+#define MGTURRET_VERTICALCAP        30  // -ve minimum pitch //45
+#define MGTURRET_DROOPSCALE         0.25     //droop rate when unpowered //0.25
 #define MGTURRET_DROOPRATE          50 //x/1000 = droops per second, as well as a repacement for power refreshment time
 #define MGTURRET_REPEAT             79 //100
 #define MGTURRET_K_SCALE            1.0f
@@ -767,7 +767,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define VAMP_ON                     0 //Used to balance some things above. Does not effect vampire code.
 
 #define VAMP_EXTRA                  50 //50
-#define VAMP_TAKE_MULTIPLIER        (1*(VAMP_ON)/600) //see g_combat.c why it needs to be a small number
+#define VAMP_TAKE_MULTIPLIER        (1.00f*(VAMP_ON)/600) //see g_combat.c why it needs to be a small number
                                     //Do not use floating values when turned off! Use (1.00f*(VAMP_ON)/600) when on.
 #define VAMP_DIVIDE                 10   //
 #define VAMP_TAKE                   6.25 //6.25

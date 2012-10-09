@@ -2299,7 +2299,6 @@ void HMGTurret_Think( gentity_t *self )
       self->count = level.time + firespeed;
     }
 	}
-//    }
 }
 
 
