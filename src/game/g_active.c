@@ -919,11 +919,11 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
 		{
 		ent->health = -9999; //glitchy hack, but works. The higher the number (toward 0 of course) the higher chance of a human glitch-reviving with ghost mode.
 		}
-		if ( ent->health > client->ps.stats[STAT_MAX_HEALTH])
-		{
+//		if ( ent->health > client->ps.stats[STAT_MAX_HEALTH])
+//		{
 //		ent->health -= (client->ps.stats[ STAT_MAX_HEALTH ] / 25);
-                ent->health -= ((client->ps.stats[ STAT_HEALTH ] - (client->ps.stats[ STAT_MAX_HEALTH ] ) )/ VAMP_TAKE  + 0.5 );
-		}
+//                ent->health -= ((client->ps.stats[ STAT_HEALTH ] - (client->ps.stats[ STAT_MAX_HEALTH ] ) )/ VAMP_TAKE  + 0.5 );
+//		}
 	
 		if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH ) //apprently the other one didn't work; copy+paste here - I'VE DONE THIS SOO MANY FKIN TIMES!!! ONLY THIS ONE WORKS [for now]
 		ent->health = client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH; //and also not reliable
@@ -958,6 +958,22 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
     {
       G_Damage( ent, NULL, NULL, NULL, NULL, 5, DAMAGE_NO_ARMOR, MOD_SUICIDE );
     }
+//Start painsaw discharge
+    if( client->ps.weapon == WP_PAIN_SAW )
+    {
+      int ammo, maxAmmo;
+
+      BG_FindAmmoForWeapon( WP_PAIN_SAW, &maxAmmo, NULL );
+      BG_UnpackAmmoArray( WP_PAIN_SAW, client->ps.ammo, client->ps.powerups, &ammo, NULL );
+
+      if( ammo > 0 )
+      {
+        ammo--;
+        BG_PackAmmoArray( WP_PAIN_SAW, client->ps.ammo, client->ps.powerups, ammo, 0 );
+ 
+      }
+    }
+//End painsaw
   }
 
   while( client->time10000 >= 10000 ) //20 sec recharge isn't recognised;changed back to default

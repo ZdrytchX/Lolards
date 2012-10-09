@@ -3142,7 +3142,7 @@ weaponAttributes_t bg_weapons[ ] =
     RIFLE_PRICE,          //int       price;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  nakedStages
-    0,                    //int       slots;
+    SLOT_ARMS,                    //int       slots;
     "rifle",              //char      *weaponName;
     "Rifle",              //char      *weaponHumanName;
     RIFLE_CLIPSIZE,       //int       maxAmmo;
@@ -3350,13 +3350,13 @@ weaponAttributes_t bg_weapons[ ] =
     PAINSAW_PRICE,        //int       price;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
     0,                                   //int nakedStages
-    SLOT_ARMS,          //int       slots;
+    0,          //int       slots;
     "psaw",               //char      *weaponName;
     "Pain Saw",           //char      *weaponHumanName;
     PAINSAW_FUEL,        //int       maxAmmo;
     PAINSAW_BATTERIES,    //int       maxClips;
     qfalse,                //int       infiniteAmmo; //qtrue
-    qfalse,               //int       usesEnergy;
+    qtrue,               //int       usesEnergy; //qfalse
     PAINSAW_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;

@@ -395,7 +395,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define RIFLE_CLIPSIZE              42 //30 //36 //42
 #define RIFLE_MAXCLIPS              9 //6
-#define RIFLE_REPEAT                110 //100 //110 (simulates the rate my rifle fires at in gpp) //revert back to 100 if needed because in KoRx it appears to have not much difference but here it will since rifle has 42 bullets
+#define RIFLE_REPEAT                110 //100 //110 (simulates the rate my rifle fires at in gpp) //revert back to 100 if needed because in KoRx it appears to have not much difference (does 6 dmg per bullet, fires 11 times per second) but here it will since rifle has 42 bullets. The rifle is weak when 1v1 dretches yet strong againts bigger aliens.
 #define RIFLE_K_SCALE               1.0f
 #define RIFLE_RELOAD                1800
 #define RIFLE_PRICE                 0
@@ -407,8 +407,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PAINSAW_K_SCALE             1.0f
 #define PAINSAW_DAMAGE              HDM(16) //~>250 dmg/s
 #define PAINSAW_RANGE               60.0f //40f //enough to touch below feet of a normal human
-#define PAINSAW_FUEL                800
-#define PAINSAW_BATTERIES           1
+#define PAINSAW_FUEL                625 //with battpack, 1000
+#define PAINSAW_BATTERIES           0 //disabled
 #define PAINSAW_RELOAD              3000
 
 //Super Grenade Throw!
@@ -648,7 +648,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_ANGULARSPEED       5  //degrees/think 8 ~= 200deg/sec //3 //now 5 because of added MGTURRET_FIRE_SPEED
 #define MGTURRET_ACCURACYTOLERANCE  MGTURRET_ANGULARSPEED / 1.5f //1.5 angular difference for turret to fire
 #define MGTURRET_VERTICALCAP        30  // +/- maximum pitch //45
-#define MGTURRET_DROOPSCALE 0.25     //droop rate when unpowered
+#define MGTURRET_DROOPSCALE         3.0     //droop rate when unpowered //0.25
 #define MGTURRET_REPEAT             79 //100
 #define MGTURRET_K_SCALE            1.0f
 #define MGTURRET_RANGE              580.0f //default 300, same goes for atube
@@ -761,20 +761,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                                          //do to increment the stage kill counters. Usually 0.5. I had 0.9 but that made humans come up slowly since they like camping. Encourage them to get out giving them s3.
 
 //Vampire mode settings
-//See below for the equation on how much hp is added:
-//(( attacker->[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / (2 * target->[ STAT_MAX_HEALTH ])) / VAMP_DIVIDE + 0.5)
-//edit: That was removed, but i left it here for you to see the old one. It was OP againts dretches.
-//Here's the new one:
-//(( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / ( VAMP_ENEMY_INIT_MAX_HP * 2 )) / VAMP_DIVIDE + 0.5)
+//see g_combat.c for the equation. Search for #define vamp
 
 #define VAMP_ON                     0 //Used to balance some things above. Does not effect vampire code.
 
 #define VAMP_EXTRA                  50 //50
-#define VAMP_TAKE_MULTIPLIER        (1.00f*(VAMP_ON)/600) //see g_combat.c why it needs to be a small number
+#define VAMP_TAKE_MULTIPLIER        (1*(VAMP_ON)/600) //see g_combat.c why it needs to be a small number
+                                    //Do not use floating values when turned off! Use (1.00f*(VAMP_ON)/600) when on.
 #define VAMP_DIVIDE                 10   //
 #define VAMP_TAKE                   6.25 //6.25
                                        //Human max extra health is 50, so it takes 8 hp/s at most...
-#define MAX_MAX_HEALTH              1.5 //Max health for players * this = Max vamped health
+#define MAX_MAX_HEALTH              1.0 //Max health for players * this = Max vamped health, in this case its 1+(if vamp is on/off [1/0]*0.5) = 1.5x normal max health
 
 // g_suddenDeathMode settings
 #define SDMODE_BP                   29 // This is why gpp sudden death sucks, you can't build an armoury. Here, you can build a maximum of one armoury,a reactor and medi, dcc and repeater. 

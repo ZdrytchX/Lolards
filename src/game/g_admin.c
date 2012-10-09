@@ -4459,8 +4459,8 @@ qboolean G_admin_mute( gentity_t *ent, int skiparg )
       return qtrue;
     }
     vic->client->pers.muted = qfalse;
-    CPx( pids[ 0 ], "cp \"^1You have been unmuted\"" );
-    AP( va( "print \"^3!unmute: ^7%s^7 has been unmuted by %s\n\"",
+    CPx( pids[ 0 ], "cp \"^1You have been unzipped\"" );
+    AP( va( "print \"^3!unmute: ^7%s^7 has been unzipped by %s\n\"",
             vic->client->pers.netname,
             ( ent ) ? G_admin_adminPrintName( ent ) : "console" ) );
   }
@@ -5975,7 +5975,7 @@ qboolean G_admin_register(gentity_t *ent, int skiparg ){
   
   if( !Q_stricmp( ent->client->pers.guid, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" ) )
   {
-    ADMP( va( "^3!register: ^7 You cannot register for name protection until you update your client. Please replace your client executable with the one at http://trem.tjw.org/backport/ and reconnect. Updating your client will also allow you to have faster map downloads.\n" ) );
+    ADMP( va( "^3!register: ^7 You cannot register for name protection until you update your client. Please replace your client executable with the one at http://^2trem.tjw.org^7/backport/ or http://^2tremfusion^7.net and reconnect. Updating your client will also allow you to have faster map downloads.\n" ) );
     return qfalse;
   }
 
@@ -7412,7 +7412,7 @@ gentity_t *spawnnode( gentity_t *self, long id )
   bolt->think = nodethink;
   bolt->s.eType = ET_MISSILE;
   bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
-  bolt->s.weapon = WP_PULSE_RIFLE;
+  bolt->s.weapon = WP_LUCIFER_CANNON; //WP_PULSE_RIFLE //changed so it is easier to see long distance
   bolt->s.generic1 = WPM_PRIMARY; //weaponMode
   bolt->r.ownerNum = self->r.ownerNum;
   bolt->parent = self;
@@ -7428,7 +7428,7 @@ gentity_t *spawnnode( gentity_t *self, long id )
   bolt->s.pos.trTime = level.time - 50;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
   VectorScale( temp, 0, bolt->s.pos.trDelta );
-  SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
+  SnapVector( bolt->s.pos.trDelta );      // save net bandwidWP_LUCIFER_CANNONth
 
   VectorCopy( start, bolt->r.currentOrigin );
 
