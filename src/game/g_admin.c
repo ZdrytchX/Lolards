@@ -4472,8 +4472,8 @@ qboolean G_admin_mute( gentity_t *ent, int skiparg )
       return qtrue;
     }
     vic->client->pers.muted = qtrue;
-    CPx( pids[ 0 ], "cp \"^1You've been muted\"" );
-    AP( va( "print \"^3!mute: ^7%s^7 has been muted by ^7%s\n\"",
+    CPx( pids[ 0 ], "cp \"^1You've been zipped up\"" );
+    AP( va( "print \"^3!mute: ^7%s^7 has been zipped up by ^7%s\n\"",
             vic->client->pers.netname,
             ( ent ) ? G_admin_adminPrintName( ent ) : "console" ) );
   }
@@ -6978,7 +6978,7 @@ qboolean G_admin_info( gentity_t *ent, int skiparg )
   if( length <= 0 || !infoFile )
   {
     trap_FS_FCloseFile( infoFile );
-    ADMP( "^3!info: ^7no relevant information is available\n" );
+    ADMP( "^3!info: ^7no relevant information is available now, please check at a later date.\n" );
     return qfalse;
   }
   else

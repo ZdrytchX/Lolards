@@ -978,15 +978,6 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
  
       }
     }
-
-	//REGENERATION/DEGENERATION for humans (slower)
-    if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && ent->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
-   	 {
-		if ( ent->health < client->ps.stats[STAT_MAX_HEALTH])
-		{
-		ent->health += 1; //once every 10 seconds. Lovely. I want it to be 2 seconds though, but i'll have to re-declare it.
-		}
-	 }
   }
 }
 

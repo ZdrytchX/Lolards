@@ -185,7 +185,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_COST                 0
 
 #define LEVEL1_SPEED                1.2f
-#define LEVEL1_VALUE                AVM(280)
+#define LEVEL1_VALUE                AVM(260)
 #define LEVEL1_HEALTH               AHM(80)
 #define LEVEL1_REGEN                2
 #define LEVEL1_COST                 1
@@ -193,13 +193,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //head on fighting 1.1 advbasi! Note that human killing one of these will get a lot more credits than normal
 #define LEVEL1_UPG_SPEED            1.2f
 #define LEVEL1_UPG_VALUE            AVM(475) //275
-#define LEVEL1_UPG_HEALTH           AHM(100)
+#define LEVEL1_UPG_HEALTH           AHM(125)
 #define LEVEL1_UPG_REGEN            4
 #define LEVEL1_UPG_COST             2
 
 #define LEVEL2_SPEED                1.2f
 #define LEVEL2_VALUE                AVM(380) //Marauder is chineese cheap. Asians should be able to use this a pwn with it though, while others would waste. So here's the refund. For a massdriver that is.
-#define LEVEL2_HEALTH               AHM(125) //Marauder is a glass cannon.
+#define LEVEL2_HEALTH               AHM(100) //Marauder is a glass cannon.
 #define LEVEL2_REGEN                3
 #define LEVEL2_COST                 1
 
@@ -767,21 +767,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Here's the new one:
 //(( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / ( VAMP_ENEMY_INIT_MAX_HP * 2 )) / VAMP_DIVIDE + 0.5)
 
-#define VAMP_ON                     1 //Used to balance some things above. Does not effect vampire code.
+#define VAMP_ON                     0 //Used to balance some things above. Does not effect vampire code.
 
 #define VAMP_EXTRA                  50 //50
-#define VAMP_TAKE_MULTIPLIER        (1/600) //See g_combat.c
+#define VAMP_TAKE_MULTIPLIER        (1.00f*(VAMP_ON)/600) //see g_combat.c why it needs to be a small number
 #define VAMP_DIVIDE                 10   //
 #define VAMP_TAKE                   6.25 //6.25
                                        //Human max extra health is 50, so it takes 8 hp/s at most...
 #define MAX_MAX_HEALTH              1.5 //Max health for players * this = Max vamped health
-//To turn vamp off, use these settings:
-/*
-#define VAMP_EXTRA                  0
-#define VAMP_DIVIDE                 500
-#define VAMP_TAKE                   1
-#define MAX_MAX_HEALTH              1.0 //Max health for players * this = Max vamped health
-*/
 
 // g_suddenDeathMode settings
 #define SDMODE_BP                   29 // This is why gpp sudden death sucks, you can't build an armoury. Here, you can build a maximum of one armoury,a reactor and medi, dcc and repeater. 
