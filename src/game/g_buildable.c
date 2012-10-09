@@ -2260,9 +2260,12 @@ void HMGTurret_Think( gentity_t *self )
 	    droop = MGTURRET_VERTICALCAP;
 	  self->s.angles2[ PITCH ] = droop;
 
-	  self->nextthink = level.time + POWER_REFRESH_TIME;
+	  self->nextthink = level.time + MGTURRET_DROOPRATE; //POWER_REFRESH_TIME;
 	  return;
 	}
+      else //Once done, go back to sleep!
+       	  self->nextthink = level.time + POWER_REFRESH_TIME;
+          return;
      } 
    if( self->spawned )
     {
