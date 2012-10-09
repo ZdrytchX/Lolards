@@ -1437,15 +1437,16 @@ void G_UpdateZaps( int msec )
 
           damage = ceil( ( (float)msec / LEVEL2_AREAZAP_TIME ) *
               LEVEL2_AREAZAP_DMG * damageFraction );
-
-/*	//source->client->ps.health -= ( 1 ); // *damageFraction
+//does not work
+	//source->client->ps.health -= ( 1 ); // *damageFraction
 	//try again... this time for health
+/*
 	if( j == 0 ) //repeated from above to make sure its only the marauder gaining health
 	{
-	source->client->ps.stats[ STAT_HEALTH ] += 1; //gain health: vampire mode doesn't seem to work with zap so i added this //still doesn't work
-	}*/
+	source->client->ps.stats[ STAT_HEALTH ] += 1; //gain health
+	}
 //	target->client->ps.stats[ STAT_AMMO ] -= 1; //want to drain energy weapons like KoRx
-
+*/
           // don't let a high msec value inflate the total damage
           if( damage + zap->damageUsed > LEVEL2_AREAZAP_DMG )
             damage = LEVEL2_AREAZAP_DMG - zap->damageUsed;
