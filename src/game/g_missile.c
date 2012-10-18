@@ -728,7 +728,7 @@ gentity_t *fire_lockblob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->damage = LOCKBLOB_DMG;
   bolt->splashDamage = TRAPPER_SPLASHDAMAGE;
   bolt->splashRadius = TRAPPER_SPLASHRADIUS;
-  bolt->methodOfDeath = MOD_TRIGGER_HURT; //changed as it kills
+  bolt->methodOfDeath = MOD_TARGET_LASER; //changed as it kills
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
 /*

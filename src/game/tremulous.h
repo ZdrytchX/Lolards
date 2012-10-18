@@ -49,7 +49,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_BLOB_DMG           ADM(6)//4 -> 6
 #define ABUILDER_BLOB_SPLASH_DMG    ADM(15)//Explosion damage //15
 #define ABUILDER_BLOB_RADIUS        75     //explosion radius //75
-#define ABUILDER_BLOB_REPEAT        800 //500->800
+#define ABUILDER_BLOB_REPEAT        1500 //500->800
 #define ABUILDER_BLOB_SPEED         780.0f //800 -> 780 to match grenade
 #define ABUILDER_BLOB_SPEED_MOD     0.6f
 #define ABUILDER_BLOB_LIFETIME      ABUILDER_BLOB_REPEAT*3.5//Blob lifetime before exploding on its own; default is 5000 seconds, but you dont want a minefield of them because they get OP againts big guys
