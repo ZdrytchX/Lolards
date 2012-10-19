@@ -2015,8 +2015,8 @@ classAttributes_t bg_classList[ ] =
     "default",                                      //char    *skinname;
     1.0f,                                           //float   shadowScale;
     "alien_general_hud",                                    //char    *hudname;
-    ( 1 << S2 )|( 1 << S3 ),                                    //int  stages
-    ( 1 << S2 )|( 1 << S3 ),                                              //int  nakedStages
+    /*( 1 << S2 )|*/( 1 << S3 ),                                    //int  stages
+    /*( 1 << S2 )|*/( 1 << S3 ),                                              //int  nakedStages
     { -15, -15, -40 },                              //vec3_t  mins;
     { 15, 15, 40 },                                 //vec3_t  maxs;
     { 15, 15, 40 },                                 //vec3_t  crouchmaxs; //38
