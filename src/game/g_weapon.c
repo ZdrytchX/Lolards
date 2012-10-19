@@ -1768,12 +1768,12 @@ void FireWeapon2( gentity_t *ent )
     case WP_SHOTGUN:
       meleeAttack( ent, SHOTGUN_BLAST_RANGE, 1, SHOTGUN_BLAST, MOD_SHOTGUN ); //acts like a forward explosion for knockback
 
-      bulletFire( ent, SHOTGUN_BLAST_SPREAD/3, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); //6 for 6 pellets per clip
-      bulletFire( ent, SHOTGUN_BLAST_SPREAD/2, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); 
-      bulletFire( ent, SHOTGUN_BLAST_SPREAD/2, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); 
-      bulletFire( ent, SHOTGUN_BLAST_SPREAD, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); 
-      bulletFire( ent, SHOTGUN_BLAST_SPREAD, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); 
-      bulletFire( ent, SHOTGUN_BLAST_SPREAD, SHOTGUN_BLAST_PELLET_DMG, MOD_CHAINGUN ); 
+      bulletFire( ent, SHOTGUN_BLAST_SPREAD/3, SHOTGUN_BLAST_PELLET_DMG, MOD_SHOTGUN ); //6 for 6 pellets per clip
+      bulletFire( ent, SHOTGUN_BLAST_SPREAD/2, SHOTGUN_BLAST_PELLET_DMG, MOD_SHOTGUN ); 
+      bulletFire( ent, SHOTGUN_BLAST_SPREAD/2, SHOTGUN_BLAST_PELLET_DMG, MOD_SHOTGUN ); 
+      bulletFire( ent, SHOTGUN_BLAST_SPREAD, SHOTGUN_BLAST_PELLET_DMG, MOD_SHOTGUN ); 
+      bulletFire( ent, SHOTGUN_BLAST_SPREAD, SHOTGUN_BLAST_PELLET_DMG, MOD_SHOTGUN ); 
+      bulletFire( ent, SHOTGUN_BLAST_SPREAD, SHOTGUN_BLAST_PELLET_DMG, MOD_SHOTGUN ); 
       break;
     case WP_PULSE_RIFLE:
       lasGunFire( ent, LASGUN_SPREAD*2 );

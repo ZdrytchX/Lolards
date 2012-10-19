@@ -228,7 +228,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_COST                 3
 
 //Basi-Suit (hidden extra, costing 9 evos, or 11 if tyrant. Somehow this is a wasted class as humans don't 'morph' into a battlesuit, so i can use it as a seperate class unlike gpp =D) Values change for bg_misc.c only.
-#define SPY_SPEED                   1.3f //human sprinting speed //1.0 is really hard to get to a human with quietly
+#define SPY_SPEED                   1.0f //human sprinting speed //1.0 is really hard to get to a human with quietly, but 1.3f won't override for client, reverted
 #define SPY_HEALTH                  300 //still OP unless you happen to get head-shotted by a luci
 #define SPY_VALUE                   720
 #define SPY_COST                    5
@@ -434,7 +434,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_BLAST_RANGE         350
 #define SHOTGUN_BLAST_REPEAT        1500 //keep high, not too high 2000 -> 2500 because it instant kills marauders //Truth is, nothing special. Reduced.
 //#define SHOTGUN_BLAST_PELLETS       SHOTGUN_SHELLS  //Number of shells per clip, since if i use shells * pellets, the client would fk up
-#define SHOTGUN_BLAST_PELLET_DMG    7 //heavy
+#define SHOTGUN_BLAST_PELLET_DMG    7 //heavy //6 pellets, excluding blast
 #define SHOTGUN_BLAST_SPREAD        1200 //Fkwhat, more accurate? :D
 
 #define LASGUN_PRICE                300 //increase, but you need a weapon that can be bought from just one kill //reswap back prices of lasgun-shotgun back to normal
@@ -578,6 +578,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define JETPACK_SINK_SPEED          292.0f //down movement speed //192
 #define JETPACK_DISABLE_TIME        1250 //time to disable the jetpack when player damaged //lolards original 600, but knockback from goons only push them up... //Increased to 1250 caus' goon knockback...
 #define JETPACK_DISABLE_CHANCE      0.3f //? - doesn't work
+#define JETPACK_ACCELERATE          2.00f//default 4.0 //Lolards used to have 2.75, but i consider it overpowered in combat
+#define JETPACK_FRICTION            1.8f//old olards used 2.0
 
 #define BSUIT_PRICE                 500
 #define BSUIT_POISON_PROTECTION     5

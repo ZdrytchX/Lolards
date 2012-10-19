@@ -40,12 +40,12 @@ float pm_wadeScale = 0.70f;
 float pm_accelerate = 10.0f;
 float pm_airaccelerate = 1.0f;
 float pm_wateraccelerate = 4.0f;
-float pm_flyaccelerate = 2.75f; //not too high, makes them hard to pounce at
+float pm_flyaccelerate = JETPACK_ACCELERATE; //4.0f not too high, makes them hard to pounce at
 
 float pm_friction = 6.0f;
 float pm_waterfriction = 1.0f;
-float pm_flightfriction = 2.0f;
-float pm_spectatorfriction = 5.0f;
+float pm_flightfriction = JETPACK_FRICTION; //2.0f
+float pm_spectatorfriction = 5.0f; //annoying as hell //5.0f
 
 int   c_pmove = 0;
 
@@ -3121,6 +3121,7 @@ static void PM_Weapon( void )
 	else {
         pm->ps->weaponTime = 0;
         pm->ps->generic1 = WPM_NOTFIRING; } }
+/*
     else if( pm->ps->weapon == WP_SHOTGUN && !attack3 && attack2 && !attack1 ) {
 	if (ammo >= 2 ) { //clips >= 1
 	ammo -= 2; //clips --;
@@ -3128,6 +3129,7 @@ static void PM_Weapon( void )
 	else {
         pm->ps->weaponTime = 0;
         pm->ps->generic1 = WPM_NOTFIRING; } }
+*/
     else
       ammo--;
 
