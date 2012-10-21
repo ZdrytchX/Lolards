@@ -645,7 +645,7 @@ void G_BotEvolve ( gentity_t *self, usercmd_t *botCmdBuffer )
 //Ehem. Remember to re-disable this after LAN-use because it is useless againts humans. Well almost.
     if(!G_BotEvolveToClass(self, "level4", botCmdBuffer))
         if(!G_BotEvolveToClass(self, "level3upg", botCmdBuffer)) {
-            res = (random()>0.9) ? G_BotEvolveToClass(self, "level3", botCmdBuffer) : G_BotEvolveToClass(self, "level2upg", botCmdBuffer);
+            res = (random()>0.4) ? G_BotEvolveToClass(self, "level3", botCmdBuffer) : G_BotEvolveToClass(self, "level2upg", botCmdBuffer);
             if(!res) {
                 res = (random()>0.5) ? G_BotEvolveToClass(self, "level2", botCmdBuffer) : G_BotEvolveToClass(self, "level1upg", botCmdBuffer);
                 if(!res)

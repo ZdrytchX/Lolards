@@ -56,6 +56,7 @@ int G_BotEvolveToClass( gentity_t *ent, char *classname, usercmd_t *botCmdBuffer
                 return 0;
             break;
         case PCL_ALIEN_LEVEL1_UPG:
+        case PCL_HUMAN_BSUIT:
             if(g_bot_advbasi.integer == 0)
                 return 0;
             break;
