@@ -3108,6 +3108,10 @@ static void PM_Weapon( void )
 		{
 	clips -= 1;
 		}
+	else if (ammo >= 1 )
+        	{
+	ammo = 0; //ammo -= ammo is stupid....
+		}
 	else
 		{
         pm->ps->weaponTime = 0;
@@ -3115,9 +3119,13 @@ static void PM_Weapon( void )
 		}
 	}
     else if( pm->ps->weapon == WP_MGTURRET && !attack3 && attack2 && !attack1 ) {
-	if (ammo >= 100) {
-	ammo -= 100;
+	if (ammo >= 50) {
+	ammo -= 50;
 	}
+	else if (ammo >= 1 )
+        	{
+	ammo = 0;
+		}
 	else {
         pm->ps->weaponTime = 0;
         pm->ps->generic1 = WPM_NOTFIRING; } }
@@ -3141,12 +3149,14 @@ static void PM_Weapon( void )
     ammo--;
     BG_PackAmmoArray( pm->ps->weapon, pm->ps->ammo, pm->ps->powerups, ammo, clips );
   }
+//Level4 Acid Spit disabled
+/*
   else if( pm->ps->weapon == WP_ALEVEL4 && attack3 )
   {
     ammo--;
     BG_PackAmmoArray( pm->ps->weapon, pm->ps->ammo, pm->ps->powerups, ammo, clips );
   }
-
+*/
   //FIXME: predicted angles miss a problem??
   if( pm->ps->weapon == WP_CHAINGUN )
   {
