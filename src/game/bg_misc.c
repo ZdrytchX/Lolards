@@ -2029,7 +2029,7 @@ classAttributes_t bg_classList[ ] =
     SPY_REGEN,                                              //int     regenRate;
     SCA_TAKESFALLDAMAGE|SCA_FOVWARPS|SCA_WALLJUMPER|
       SCA_CANUSELADDERS|SCA_ALIENSENSE,                            //int     abilities;
-    WP_ALEVEL1_UPG, //special-cased in g_client.c          //weapon_t  startWeapon
+    WP_ALEVEL1_UPG, //special-cased in g_client.c          //weapon_t  startWeapon //Testing something
     110.0f,                                         //float   buildDist;
     92,                                             //int     fov;
     0.003f,                                         //float   bob;

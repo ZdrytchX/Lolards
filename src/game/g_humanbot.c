@@ -101,6 +101,7 @@ int G_BotBuyWeapon ( gentity_t *ent, int weapon )
                 return 0;
             break;
         case WP_LAS_GUN:
+        case WP_LOCKBLOB_LAUNCHER:
             if(g_bot_las.integer == 0)
                 return 0;
             break;
@@ -117,7 +118,6 @@ int G_BotBuyWeapon ( gentity_t *ent, int weapon )
                 return 0;
             break;
         case WP_FLAMER:
-        case WP_LOCKBLOB_LAUNCHER:
             if(g_bot_flamer.integer == 0)
                 return 0;
             break;
