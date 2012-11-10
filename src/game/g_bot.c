@@ -500,10 +500,9 @@ void G_BotGoto(gentity_t *self, botTarget_t target, usercmd_t *botCmdBuffer) {
         {
             botCmdBuffer->forwardmove = -100; //-100
         }
-
+/* //TODO: dunno whats wrong
 	else if(self->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
-DistanceSquared(self->s.pos.trBase,tmpVec) < Square(300) && self->s.weapon = WP_FLAMER
-        && getTargetTeam(target) == PTE_ALIENS)
+DistanceSquared(self->s.pos.trBase,tmpVec) < Square(300) && self->s.weapon = WP_FLAMER && botTargetInAttackRange(self, target) && getTargetTeam(target) == PTE_ALIENS)
 	{
         	if (DistanceSquared(self->s.pos.trBase,tmpVec) > Square(200) && botTargetInAttackRange(self, target))
         	{
@@ -518,7 +517,7 @@ DistanceSquared(self->s.pos.trBase,tmpVec) < Square(300) && self->s.weapon = WP_
             botCmdBuffer->forwardmove = -100; //Backup!
         	}
 	}
-
+*/
         else if(self->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS && 
         DistanceSquared(self->s.pos.trBase,tmpVec) > Square(100) && botTargetInAttackRange(self, target) && self->s.weapon != WP_PAIN_SAW
         && getTargetTeam(target) == PTE_ALIENS)
