@@ -501,6 +501,24 @@ void G_BotGoto(gentity_t *self, botTarget_t target, usercmd_t *botCmdBuffer) {
             botCmdBuffer->forwardmove = -100; //-100
         }
 
+	else if(self->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
+DistanceSquared(self->s.pos.trBase,tmpVec) < Square(300) && self->s.weapon = WP_FLAMER
+        && getTargetTeam(target) == PTE_ALIENS)
+	{
+        	if (DistanceSquared(self->s.pos.trBase,tmpVec) > Square(200) && botTargetInAttackRange(self, target))
+        	{
+            botCmdBuffer->forwardmove = 50; //Approach slowly
+        	}
+        	else if (DistanceSquared(self->s.pos.trBase,tmpVec) > Square(130) && botTargetInAttackRange(self, target))
+        	{
+            botCmdBuffer->forwardmove = 0; //Do nothing
+        	}
+        	else
+        	{
+            botCmdBuffer->forwardmove = -100; //Backup!
+        	}
+	}
+
         else if(self->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS && 
         DistanceSquared(self->s.pos.trBase,tmpVec) > Square(100) && botTargetInAttackRange(self, target) && self->s.weapon != WP_PAIN_SAW
         && getTargetTeam(target) == PTE_ALIENS)
@@ -811,7 +829,6 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
     myMax = VectorLengthSquared(myMaxs);
     
 //note: Grangers do not spawn. If you want them to spawn, put them on the bot spawn menu.
-//It's on the spawn menu.
     switch(self->s.weapon) {
         case WP_ABUILD:
             range = ABUILDER_CLAW_RANGE; //poor granger :( //Granger now has swipe
@@ -819,18 +836,18 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             break;
         case WP_ABUILD2:
             range = ABUILDER_CLAW_RANGE;
-            secondaryRange = 350; //An arbitrary value for the blob launcher, has nothing to do with actual range
+            secondaryRange = 550; //An arbitrary value for the blob launcher, has nothing to do with actual range
             break;
         case WP_ALEVEL0:
             range = LEVEL0_BITE_RANGE;
-            secondaryRange = 0;
+            secondaryRange = LEVEL0_SCRATCH_RANGE;
             break;
         case WP_ALEVEL1:
             range = LEVEL1_CLAW_RANGE;
             secondaryRange = 0;
             break;
         case WP_ALEVEL1_UPG:
-            range = LEVEL1_CLAW_RANGE * 3;
+            range = LEVEL1_CLAW_RANGE * 2; //Prevent using the secondary up close
             secondaryRange = LEVEL1_PCLOUD_RANGE;
             break;
         case WP_ALEVEL2:
@@ -838,8 +855,8 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             secondaryRange = 0;
             break;
         case WP_ALEVEL2_UPG:
-            range = LEVEL2_CLAW_RANGE*1.5; //Get it to miss occasionally
-            secondaryRange = LEVEL2_AREAZAP_RANGE*2;
+            range = LEVEL2_CLAW_RANGE*1.0; //Get it to miss occasionally by changing this to 1.5
+            secondaryRange = LEVEL2_AREAZAP_RANGE*1.0; //etc. was 2.0
             break;
         case WP_ALEVEL3:
             range = LEVEL3_CLAW_RANGE;
@@ -883,8 +900,7 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             break;
         case WP_CHAINGUN:
             range = 300;
-//            range = 100; //100 for bot inaccuracy reasons, don't waste ammo
-            secondaryRange = (100 * 8192)/CHAINGUN_SPREAD; //secondary
+            secondaryRange = (100 * 8192)/CHAINGUN_SPREAD; //secondary uses less ammo, yet inaccruate. Bot shake makes it worse, so stick with it.
 	    break;
 //the following does NOT wor obviously, but i want to you get an idea of what i want. Basically, i need the secondary range to shoow the primary and primary to shoot secondary.
 /*
@@ -894,7 +910,7 @@ qboolean botTargetInAttackRange(gentity_t *self, botTarget_t target) {
             break;
 */
         case WP_LUCIFER_CANNON:
-            secondaryRange = 150;
+            secondaryRange = 2000;
             range = 1000; //not too far
             break;
         default:
@@ -992,22 +1008,22 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
             case PCL_ALIEN_LEVEL3:
                 if(distance > Square(LEVEL3_CLAW_RANGE + LEVEL3_CLAW_RANGE/2) && 
                     self->client->ps.stats[ STAT_MISC ] < LEVEL3_POUNCE_SPEED) {
-                    botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 6 - self->client->ps.delta_angles[PITCH]; //look up a bit more //*10 too high
+                    botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 5.8 - self->client->ps.delta_angles[PITCH]; //look up a bit more //*10 too high
                     botCmdBuffer->buttons |= BUTTON_ATTACK2; //pounce
                 } else
                     botCmdBuffer->buttons |= BUTTON_ATTACK;
                 break;
             case PCL_ALIEN_LEVEL3_UPG:
                 if(self->client->ps.ammo[WP_ALEVEL3_UPG] > 0 && 
-                    distance > Square(LEVEL3_CLAW_RANGE) ) {
+                    distance > Square(LEVEL3_CLAW_RANGE + LEVEL3_CLAW_RANGE/2) ) { //idiot, dont try to pounce up close. You'll waste time.
                     botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 5.5 - self->client->ps.delta_angles[PITCH]; //look up a bit more
                     botCmdBuffer->buttons |= BUTTON_USE_HOLDABLE; //barb
-		    botCmdBuffer->forwardmove = 0; //stop moving forward
+		   // botCmdBuffer->forwardmove = 0; //stop moving forward
 		    botCmdBuffer->rightmove = 0; //stop dodging because snipe uses inertia
                 } else {       
                     if(distance > Square(LEVEL3_CLAW_RANGE + LEVEL3_CLAW_RANGE/2) && 
                     self->client->ps.stats[ STAT_MISC ] < LEVEL3_POUNCE_UPG_SPEED) {
-                        botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 7 - self->client->ps.delta_angles[PITCH];; //not as high because uses current velocity
+                        botCmdBuffer->angles[PITCH] -= Distance(self->s.pos.trBase,targetPos) * 6 - self->client->ps.delta_angles[PITCH];; //not as high because uses current velocity
                         botCmdBuffer->buttons |= BUTTON_ATTACK2; //pounce
                     }else
                         botCmdBuffer->buttons |= BUTTON_ATTACK;
@@ -1031,9 +1047,6 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
             if( self->client->time10000 % 2700 ) {
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
                 self->botMind->isFireing = qtrue;
-			/*else if(self->client->ps.ammo[WP_LUCIFER_CANNON] < 30){
-			botCmdBuffer->buttons |= BUTTON_ATTACK2; } //use secondary when low on ammo //TODO when i can compile freely
-         	    */
             }
         } else if(self->client->ps.weapon == WP_HBUILD || self->client->ps.weapon == WP_HBUILD2) {
             botCmdBuffer->buttons |= BUTTON_ATTACK2;
@@ -1689,8 +1702,8 @@ void setSkill(gentity_t *self, int skill) {
     self->botMind->botSkill.level = skill;
     //different aim for different teams
     if(self->botMind->botTeam == PTE_HUMANS) {
-        self->botMind->botSkill.aimSlowness = (float) (skill * 3) / 60;
-        self->botMind->botSkill.aimShake = (int) (20 - (skill * 2) );
+        self->botMind->botSkill.aimSlowness = (float) (skill * 7) / 50; //* 3) / 60;
+        self->botMind->botSkill.aimShake = (int) (10 - (skill * 1) );
     } else {
         self->botMind->botSkill.aimSlowness = (float) ( skill * 3 ) / 30;
         self->botMind->botSkill.aimShake = (int) (20 - skill * 2);
