@@ -123,4 +123,5 @@ int G_BotBuyWeapon(gentity_t *ent, int weapon);
 //When the "The Overmind is under Attack!" message appears, the alien bots will head back to the base to defend it, if they are at least this close to it.
 #define A_ROUTETO_BASE_RANGE 5000.0f
 
-
+//ZdrytchX: New variables here by me.
+#define BUILDABE_REPAIR_HEALTH 0.8 //How much minimum health a buildable must have before it is to be healed

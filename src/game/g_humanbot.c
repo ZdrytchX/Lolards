@@ -210,7 +210,7 @@ qboolean botStructureIsDamaged(int team)
         inspectedBuilding = BG_FindBuildNumForEntityName( target->classname );
         if(target->s.eType == ET_BUILDABLE &&
             target->biteam == team &&
-            target->health <  BG_FindHealthForBuildable( inspectedBuilding ) &&
+            ( target->health * ( 1 / BUILDABE_REPAIR_HEALTH ) ) <  BG_FindHealthForBuildable( inspectedBuilding ) &&
             target->health > 0 && target->spawned) {
             return qtrue;
         }

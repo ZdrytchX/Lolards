@@ -1282,17 +1282,25 @@ void G_BotIntermissionThink( gclient_t *client )
 {
     client->readyToExit = qtrue;
 }
+
 void botGetAimLocation( botTarget_t target, vec3_t *aimLocation) {
     //get the position of the enemy
     getTargetPos(target, aimLocation);
     //gentity_t *targetEnt = &g_entities[getTargetEntityNumber(target)];
     
     if(getTargetType(target) != ET_BUILDABLE && getTargetTeam(target) == PTE_HUMANS && getTargetEntityNumber(target) != ENTITYNUM_NONE)
+	{
         (*aimLocation)[2] += g_entities[getTargetEntityNumber(target)].r.maxs[2] * 0.85;
+   //make lucifer cannons aim ahead based on the target's velocity TODO
+/*       if(self->s.weapon == WP_LUCIFER_CANNON) {
+            VectorMA(*aimLocation, Distance(self->s.pos.trBase, *aimLocation) / LCANNON_SPEED, target.ent->s.pos.trDelta, *aimLocation);
+       }*/
+	}
     if(getTargetType(target) == ET_BUILDABLE) {
         VectorCopy( g_entities[getTargetEntityNumber(target)].s.origin, *aimLocation );
     }
 }
+
 
 void botAimAtLocation( gentity_t *self, vec3_t target, usercmd_t *rAngles)
 {
@@ -1701,11 +1709,11 @@ void setSkill(gentity_t *self, int skill) {
     self->botMind->botSkill.level = skill;
     //different aim for different teams
     if(self->botMind->botTeam == PTE_HUMANS) {
-        self->botMind->botSkill.aimSlowness = (float) (skill * 7) / 50; //* 3) / 60;
-        self->botMind->botSkill.aimShake = (int) (10 - (skill * 1) );
+        self->botMind->botSkill.aimSlowness = (float) (0.5 + (skill * 3) / 60); //* 3) / 60;
+        self->botMind->botSkill.aimShake = (int) (20 - (skill * 2) );
     } else {
-        self->botMind->botSkill.aimSlowness = (float) ( skill * 3 ) / 30;
-        self->botMind->botSkill.aimShake = (int) (20 - skill * 2);
+        self->botMind->botSkill.aimSlowness = (float) ( skill * 2 ) / 20;
+        self->botMind->botSkill.aimShake = (int) (30 - skill * 3);
     }
 }
     
