@@ -351,7 +351,8 @@ gentity_t *fire_flamer( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -12.5f;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 12.5f;
 
-  bolt->s.pos.trType = TR_LINEAR;
+  bolt->s.pos.trType = TR_GRAVITY; //TR_LINEAR
+  bolt->s.eFlags |= EF_BOUNCE_HALF; //It's now a liquid and bounces.
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
   VectorScale( self->client->ps.velocity, FLAMER_LAG, pvel );

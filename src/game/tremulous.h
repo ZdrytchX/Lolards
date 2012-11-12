@@ -457,7 +457,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_RELOAD              4000
 
 //Chaingun actually fires faster
-#define CHAINGUN_PRICE              520 //increased, bots do not buy it and its actually OP
+#define CHAINGUN_PRICE              500 //increased, bots do not buy it and its actually OP
 #define CHAINGUN_BULLETS            300
 #define CHAINGUN_MAXCLIPS           2
 #define CHAINGUN_RELOAD             5000
@@ -501,7 +501,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FLAMER_K_SCALE              0.5f //1f
 #define FLAMER_DMG                  HDM(11) //20 //2 dmg increase only because we have vampire
 #define FLAMER_RADIUS               80 //splash radius //50
-#define FLAMER_LIFETIME             800.0f
+#define FLAMER_LIFETIME             800.0f //800.0f
 #define FLAMER_SPEED                400.0f //300
 #define FLAMER_LAG                  0.65f  //the amount of player velocity that is added to the fireball
 

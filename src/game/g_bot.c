@@ -1291,7 +1291,8 @@ void botGetAimLocation( botTarget_t target, vec3_t *aimLocation) {
     if(getTargetType(target) != ET_BUILDABLE && getTargetTeam(target) == PTE_HUMANS && getTargetEntityNumber(target) != ENTITYNUM_NONE)
 	{
         (*aimLocation)[2] += g_entities[getTargetEntityNumber(target)].r.maxs[2] * 0.85;
-   //make lucifer cannons aim ahead based on the target's velocity TODO
+//TODO: Update botGetAimLocation function first
+   //make lucifer cannons aim ahead based on the target's velocity
 /*       if(self->s.weapon == WP_LUCIFER_CANNON) {
             VectorMA(*aimLocation, Distance(self->s.pos.trBase, *aimLocation) / LCANNON_SPEED, target.ent->s.pos.trDelta, *aimLocation);
        }*/
@@ -1709,7 +1710,7 @@ void setSkill(gentity_t *self, int skill) {
     self->botMind->botSkill.level = skill;
     //different aim for different teams
     if(self->botMind->botTeam == PTE_HUMANS) {
-        self->botMind->botSkill.aimSlowness = (float) (0.5 + (skill * 3) / 60); //* 3) / 60;
+        self->botMind->botSkill.aimSlowness = (float) (0.3 + (skill * 3.5) / 50); //* 3) / 60;
         self->botMind->botSkill.aimShake = (int) (20 - (skill * 2) );
     } else {
         self->botMind->botSkill.aimSlowness = (float) ( skill * 2 ) / 20;
