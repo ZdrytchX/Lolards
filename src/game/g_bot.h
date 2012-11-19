@@ -105,17 +105,13 @@ int G_BotBuyWeapon(gentity_t *ent, int weapon);
 #define BOT_LOW_AMMO 0.30f //0.50f
 
 //when human bots reach this health or below (and no medkit/enemy) they will head back to the base to heal when in range of medi as defined by BOT_MEDI_RANGE
-#define BOT_LOW_HP 60 //100 - now 60 because of slow autoregen + vamp
+#define BOT_LOW_HP 30 //100 - now 60 because of slow autoregen + vamp //removed vamp
 
 //TODO: implement the rest of these, currently they do nothing :)
 
 //when the bots get closer than this distance to an enemy Egg/Node, they will head toward it (killing stuff in the way if need be) instead of roaming randomly
 //Line of sight to the egg/node does not matter
 #define ROUTETO_SPAWN_RANGE 2000.0f 
-
-
-
-
 
 //If the "The base is under attack" message appears, the bots will head back to the base to defend it, if they are at least this close to the base (and no enemy in range).
 #define H_ROUTETO_BASE_RANGE 5000.0f
@@ -124,4 +120,4 @@ int G_BotBuyWeapon(gentity_t *ent, int weapon);
 #define A_ROUTETO_BASE_RANGE 5000.0f
 
 //ZdrytchX: New variables here by me.
-#define BUILDABE_REPAIR_HEALTH 0.8 //How much minimum health a buildable must have before it is to be healed
+#define BUILDABE_REPAIR_HEALTH 0.5 //How much minimum health a buildable must have before it is to be healed
