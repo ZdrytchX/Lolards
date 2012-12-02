@@ -591,7 +591,7 @@ void pulseRifleFire( gentity_t *ent )
 
   m = fire_pulseRifle( ent, muzzle, forward );
 
-  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics
+//  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics
 }
 
 /*
@@ -1405,7 +1405,7 @@ void G_UpdateZaps( int msec )
           source = zap->targets[ j - 1 ];
 
         if( target->health <= 0 || !target->inuse || //early out
-            Distance( source->s.origin, target->s.origin ) > LEVEL2_AREAZAP_RANGE )
+            Distance( source->s.origin, target->s.origin ) > LEVEL2_AREAZAP_RANGE_SUSTAIN )
         {
           target = zap->targets[ j ] = G_FindNewZapTarget( source );
 
@@ -1415,7 +1415,7 @@ void G_UpdateZaps( int msec )
             zap->numTargets = j;
 
 /*		 zap->used = qfalse;		//we don't have to aim anymore:
-        G_FreeEntity( zap->effectChannel );	//ripped from below (when target dies and zap transfers to something else //reminder: below, there's added coding for gaining health.//Damn! Doesn't work X(*/
+        G_FreeEntity( zap->effectChannel );	//ripped from below (when target dies and zap transfers to something else*/
 		}
         }
       }
@@ -1427,7 +1427,8 @@ void G_UpdateZaps( int msec )
           gentity_t *source;
           gentity_t *target = zap->targets[ j ];
           float     r = 1.0f / zap->numTargets;
-          float     damageFraction = 2 * r - 2 * j * r * r - r * r;
+          float     damageFraction = 2 * r - 2 * j * r * r - r * r; //2r-2jrr-rr i.e. two targets: 2*0.5-2*2*2-2*2 =
+
           vec3_t    forward;
 
           if( j == 0 )
@@ -1436,20 +1437,12 @@ void G_UpdateZaps( int msec )
             source = zap->targets[ j - 1 ];
 
           damage = ceil( ( (float)msec / LEVEL2_AREAZAP_TIME ) *
-              LEVEL2_AREAZAP_DMG * damageFraction );
-//does not work
-	//source->client->ps.health -= ( 1 ); // *damageFraction
-	//try again... this time for health
-/*
-	if( j == 0 ) //repeated from above to make sure its only the marauder gaining health
-	{
-	source->client->ps.stats[ STAT_HEALTH ] += 1; //gain health
-	}
-//	target->client->ps.stats[ STAT_AMMO ] -= 1; //want to drain energy weapons like KoRx
-*/
+              LEVEL2_AREAZAP_DMG * damageFraction);
+//idea:
+//want to drain energy weapons like KoRx
           // don't let a high msec value inflate the total damage
           if( damage + zap->damageUsed > LEVEL2_AREAZAP_DMG )
-            damage = LEVEL2_AREAZAP_DMG - zap->damageUsed;
+            damage = LEVEL2_AREAZAP_DMG - zap->damageUsed + 0.5;
 
           VectorSubtract( target->s.origin, source->s.origin, forward );
           VectorNormalize( forward );
@@ -1459,6 +1452,8 @@ void G_UpdateZaps( int msec )
           {
             G_Damage( target, source, zap->creator, forward, target->s.origin,
                     damage, DAMAGE_NO_KNOCKBACK | DAMAGE_NO_LOCDAMAGE, MOD_LEVEL2_ZAP );
+//AHAHAHA failed attempt
+//            G_Damage( source, source, zap->creator, forward, target->s.origin, 0 - damage, DAMAGE_NO_KNOCKBACK | DAMAGE_NO_LOCDAMAGE, MOD_LEVEL2_ZAP );
             zap->damageUsed += damage;
           }
         }
@@ -1468,7 +1463,7 @@ void G_UpdateZaps( int msec )
 
       zap->timeToLive -= msec;
 
-      if( zap->timeToLive <= 0 || zap->numTargets == 0 || zap->creator->health <= 0 )
+      if( zap->timeToLive <= 0 || zap->numTargets == 0 /*|| zap->creator->health <= 0*/ ) //Continue to live while the player dies
       {
         zap->used = qfalse;
         G_FreeEntity( zap->effectChannel );
@@ -1594,7 +1589,7 @@ void bounceBallFire( gentity_t *ent )
 
   m = fire_bounceBall( ent, muzzle, forward );
 
-  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics by adding ur inertia - gets annoying
+  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  //add inertia from pounces for extreme ranges
 }
 
 
@@ -1615,6 +1610,7 @@ void ChargeAttack( gentity_t *ent, gentity_t *victim )
 {
   gentity_t *tent;
   int       damage;
+//  gentity_t *traceEnt;
   vec3_t    forward, normal;
 
   if( level.time < victim->chargeRepeat )
@@ -1637,10 +1633,16 @@ void ChargeAttack( gentity_t *ent, gentity_t *victim )
 
   if( !victim->takedamage )
     return;
-
-//  damage = (int)( ( (float)ent->client->ps.stats[ STAT_MISC ] / (float)LEVEL4_CHARGE_TIME ) * LEVEL4_CHARGE_DMG );
-  damage = LEVEL4_CHARGE_DMG * ent->client->ps.stats[ STAT_MISC ] /
-           LEVEL4_CHARGE_TIME;
+//  damage = LEVEL4_CHARGE_DMG * ent->client->ps.stats[ STAT_MISC ] /
+//           LEVEL4_CHARGE_TIME;
+  damage = LEVEL4_CHARGE_DMG * (float)ent->client->ps.stats[ STAT_MISC ] /
+           LEVEL4_CHARGE_TIME + LEVEL4_CHARGE_EXTRA;
+  //allow level4 charge to do only little damage to buildables so it isn't overpowered like hell
+  if( victim->s.eType == ET_BUILDABLE )
+  {
+    //hackery
+    damage *= LEVEL4_TRAMPLE_DMG_B;
+  }
 
   G_Damage( victim, ent, ent, forward, victim->s.origin, damage, 0|DAMAGE_NO_LOCDAMAGE, MOD_LEVEL4_CHARGE );
 
@@ -1849,7 +1851,7 @@ void FireWeapon( gentity_t *ent )
       meleeAttack( ent, LEVEL2_CLAW_RANGE, LEVEL2_CLAW_WIDTH, LEVEL2_CLAW_DMG, MOD_LEVEL2_CLAW );
       break;
     case WP_ALEVEL2_UPG:
-      meleeAttack( ent, LEVEL2_CLAW_RANGE, LEVEL2_CLAW_WIDTH, LEVEL2_CLAW_DMG, MOD_LEVEL2_CLAW );
+      meleeAttack( ent, LEVEL2_CLAW_RANGE, LEVEL2_CLAW_U_WIDTH, LEVEL2_CLAW_DMG, MOD_LEVEL2_CLAW );
       break;
     case WP_ALEVEL4:
       meleeAttack( ent, LEVEL4_CLAW_RANGE, LEVEL4_CLAW_WIDTH, LEVEL4_CLAW_DMG, MOD_LEVEL4_CLAW );

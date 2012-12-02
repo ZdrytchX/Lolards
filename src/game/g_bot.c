@@ -1403,7 +1403,7 @@ int botFindClosestEnemy( gentity_t *self, qboolean includeTeam ) {
             //if we can see the entity OR we are on aliens (who dont care about LOS because they have radar)
             if( (self->client->ps.stats[STAT_PTEAM] == PTE_ALIENS ) || botTargetInRange(self, botTarget, MASK_SHOT) ){
                 
-                //if the entity is a building and we can attack structures and we are not a normal granger
+                //if the entity is a building and we can attack structures even we are a normal granger
                 if(target->s.eType == ET_BUILDABLE && g_bot_attackStruct.integer /*&& self->client->ps.stats[STAT_PCLASS] != PCL_ALIEN_BUILDER0*/) {
                     
                     //if the building is not on our team (unless we can attack teamates)
@@ -1535,7 +1535,7 @@ void doLastNodeAction(gentity_t *self, usercmd_t *botCmdBuffer) {
         case BOT_JUMP:  
             
             if( self->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS && 
-                self->client->ps.stats[ STAT_STAMINA ] < 0 )
+                self->client->ps.stats[ STAT_STAMINA ] < ( 0 - 500 ) )
             {break;}
             if( !BG_ClassHasAbility( self->client->ps.stats[ STAT_PCLASS ], SCA_WALLCLIMBER ) )
                 
@@ -1710,10 +1710,10 @@ void setSkill(gentity_t *self, int skill) {
     self->botMind->botSkill.level = skill;
     //different aim for different teams
     if(self->botMind->botTeam == PTE_HUMANS) {
-        self->botMind->botSkill.aimSlowness = (float) ((skill * 5) / 50); //* 3) / 60;
-        self->botMind->botSkill.aimShake = (int) (30 - (skill * 3) );
+        self->botMind->botSkill.aimSlowness = (float) (skill * 3) / 50; //* 3) / 60;
+        self->botMind->botSkill.aimShake = (int) (20 - (skill * 2) );
     } else {
-        self->botMind->botSkill.aimSlowness = (float) ( skill * 2 ) / 20;
+        self->botMind->botSkill.aimSlowness = (float) ( 25 / ( skill / 2 ) ^ 2);//( skill * 2) / 20;
         self->botMind->botSkill.aimShake = (int) (30 - skill * 3);
     }
 }

@@ -664,7 +664,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
           if( client->ps.stats[ STAT_MISC ] <= 0 )
             G_AddEvent( ent, EV_LEV4_CHARGE_PREPARE, 0 );
 */
-          client->ps.stats[ STAT_MISC ] += (int)( 100 * (float)LEVEL4_CHARGE_CHARGE_RATIO );
+          client->ps.stats[ STAT_MISC ] += (int)( LEVEL4_TRAMPLE_CHARGE * (float)LEVEL4_CHARGE_CHARGE_RATIO );
 
           if( client->ps.stats[ STAT_MISC ] > LEVEL4_CHARGE_TIME )
             client->ps.stats[ STAT_MISC ] = LEVEL4_CHARGE_TIME;
@@ -764,7 +764,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
 
       if( remainingStartupTime < 0 )
       {
-        if( ent->health < ent->client->ps.stats[ STAT_MAX_HEALTH ] &&
+        if( ent->health < ( ent->client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH ) &&
             ent->client->medKitHealthToRestore &&
             ent->client->ps.pm_type != PM_DEAD )
         {
@@ -801,9 +801,19 @@ void ClientTimerActions( gentity_t *ent, int msec )
     client->time1000 -= 1000;
 
     //client is poison clouded
+	//Copy + Paste from poison stats
     if( client->ps.stats[ STAT_STATE ] & SS_POISONCLOUDED )
+	{
+	int damage = LEVEL1_PCLOUD_DMG;
+
+      if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
+        damage -= 0;
+      if( BG_InventoryContainsUpgrade( UP_HELMET, client->ps.stats ) )
+        damage -= ( HELMET_POISON_PROTECTION + LIGHTARMOUR_POISON_PROTECTION );
+
       G_Damage( ent, client->lastPoisonCloudedClient, client->lastPoisonCloudedClient, NULL, NULL,
-                LEVEL1_PCLOUD_DMG, 0, MOD_LEVEL1_PCLOUD );
+                damage, 0, MOD_LEVEL1_PCLOUD );
+	}
 
     //client is poisoned
     if( client->ps.stats[ STAT_STATE ] & SS_POISONED )
@@ -853,20 +863,25 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
       for( i = 0; i < num; i++ )
       {
         boostEntity = &g_entities[ entityList[ i ] ];
-
-        if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
+        if( boostEntity->s.eType == ET_BUILDABLE &&
+            boostEntity->s.modelindex == BA_A_BOOSTER &&
+            boostEntity->spawned && boostEntity->health > 0 )
+        {
+	//hacky fix
+	  if ( client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
+	  {	
+            modifier = BOOSTER_REGEN_MOD;
+	  }
+          modifier = BOOSTER_REGEN_MOD;
+          break;
+        }
+        else if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
             boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
         {
           modifier = LEVEL4_REGEN_MOD;
           break;
         }
-        else if( boostEntity->s.eType == ET_BUILDABLE &&
-            boostEntity->s.modelindex == BA_A_BOOSTER &&
-            boostEntity->spawned && boostEntity->health > 0 )
-        {
-          modifier = BOOSTER_REGEN_MOD;
-          break;
-        }
+
 //        else if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&\
             boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )\
         {\
@@ -1576,7 +1591,7 @@ void ClientThink_real( gentity_t *ent )
   {
     //if currently using a medkit or have no need for a medkit now
     if( client->ps.stats[ STAT_STATE ] & SS_MEDKIT_ACTIVE ||
-        ( client->ps.stats[ STAT_HEALTH ] == client->ps.stats[ STAT_MAX_HEALTH ] &&
+        ( client->ps.stats[ STAT_HEALTH ] >= ( client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH ) &&
           !( client->ps.stats[ STAT_STATE ] & SS_POISONED ) ) )
     {
       BG_DeactivateUpgrade( UP_MEDKIT, client->ps.stats );
@@ -1593,7 +1608,7 @@ void ClientThink_real( gentity_t *ent )
       client->ps.stats[ STAT_STATE ] |= SS_MEDKIT_ACTIVE;
       client->lastMedKitTime = level.time;
       client->medKitHealthToRestore =
-        client->ps.stats[ STAT_MAX_HEALTH ] + 100 - client->ps.stats[ STAT_HEALTH ];
+        ( client->ps.stats[ STAT_MAX_HEALTH ] * ( MAX_MAX_HEALTH * MEDKIT_OVERHEAL ) )  + MEDKIT_EXTRA - client->ps.stats[ STAT_HEALTH ];
       client->medKitIncrementTime = level.time +
         ( MEDKIT_STARTUP_TIME / MEDKIT_STARTUP_SPEED );
 

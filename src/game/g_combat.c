@@ -1751,7 +1751,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 //#define VAMP (( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / ( targ->client->ps.stats[ STAT_MAX_HEALTH ] * 2 )) / VAMP_DIVIDE + 0.5) // supports health gain that is less than 1 value and the '+50' means proportionate to (health + 50). Its also to help dretches and small ones gain health. Now also proportionate to the enemy's health.
 
 //backup - only works for aliens vs naked humans
-#define VAMP (( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * take * VAMP_TAKE_MULTIPLIER + 0.5); // supports health gain that is less than 1 value and the '+50' means porportionate to health + 50. Its also to help dretches and small ones gain health.
+#define VAMP (( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * take * VAMP_TAKE_MULTIPLIER + 0.6); // supports health gain that is less than 1 value and the '+50' means porportionate to health + 50. Its also to help dretches and small ones gain health.
 /* //cancel
 #define VAMP_ENEMY_INIT_MAX_HP targ->client->ps.stats[ STAT_MAX_HEALTH ];
 	if( VAMP_ENEMY_INIT_MAX_HP < 100 )
@@ -1800,9 +1800,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	else
 		{
           attacker->health = attacker->health + VAMP; //gain according to the player's health ratio so a dretch doesn't become invincable.//Also, they gain porportional according to their max health (+ 50).
-          if (attacker->health > attacker->client->ps.stats[ STAT_MAX_HEALTH ] * 1.5) 
+          if (attacker->health > attacker->client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH) 
           {
-                  attacker->health = attacker->client->ps.stats[ STAT_MAX_HEALTH ] * 1.5;
+                  attacker->health = attacker->client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH;
           }
          // end Vampire
           //to make sure they STAY DEAD >={D) (no glitchy revives):

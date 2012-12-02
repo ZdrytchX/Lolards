@@ -3208,8 +3208,8 @@ static void PM_Weapon( void )
     }
     else if (BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, pm->ps->stats ))
     {
-      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 3.0 ) - 1.0 ) * ( 30.0 / (float)addTime ) );
-      pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 2.0 ) - 1.0 ) * ( 30.0 / (float)addTime ) );
+      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 1.5 ) - 0.5 ) * ( 30.0 / (float)addTime ) );
+      pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 1.0 ) - 0.5 ) * ( 30.0 / (float)addTime ) );
     }
     else
     {

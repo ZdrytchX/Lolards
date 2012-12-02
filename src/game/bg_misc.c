@@ -1797,7 +1797,7 @@ classAttributes_t bg_classList[ ] =
     80,                                             //int     steptime;
     LEVEL2_SPEED,                                   //float   speed;
     10.0f,                                          //float   acceleration;
-    2.0f,                                           //float   airAcceleration;
+    3.0f,                                           //float   airAcceleration;
     6.0f,                                           //float   friction;
     100.0f,                                         //float   stopSpeed;
     400.0f,                                         //float   jumpMagnitude;
@@ -1837,7 +1837,7 @@ classAttributes_t bg_classList[ ] =
     80,                                             //int     steptime;
     LEVEL2_UPG_SPEED,                               //float   speed;
     10.0f,                                          //float   acceleration;
-    2.0f,                                           //float   airAcceleration;
+    3.0f,                                           //float   airAcceleration;
     6.0f,                                           //float   friction;
     100.0f,                                         //float   stopSpeed;
     400.0f,                                         //float   jumpMagnitude;
@@ -1986,7 +1986,7 @@ classAttributes_t bg_classList[ ] =
     26, 12,                                         //int     viewheight, crouchviewheight;
     100,                                            //int     health;
     6.0f,                                           //float   fallDamage;
-    1,                                              //int     regenRate;
+    HUMAN_REGEN,                                    //int     regenRate;
     SCA_TAKESFALLDAMAGE|
       SCA_CANUSELADDERS,                            //int     abilities;
     WP_NONE, //special-cased in g_client.c          //weapon_t  startWeapon
@@ -2029,9 +2029,9 @@ classAttributes_t bg_classList[ ] =
     SPY_REGEN,                                              //int     regenRate;
     SCA_TAKESFALLDAMAGE|SCA_FOVWARPS|SCA_WALLJUMPER|
       SCA_CANUSELADDERS|SCA_ALIENSENSE,                            //int     abilities;
-    WP_ALEVEL1_UPG, //special-cased in g_client.c          //weapon_t  startWeapon //Testing something
+    WP_ALEVEL2_UPG, //special-cased in g_client.c          //weapon_t  startWeapon //Testing something //Changed to mara's
     110.0f,                                         //float   buildDist;
-    92,                                             //int     fov;
+    100,                                             //int     fov;
     0.003f,                                         //float   bob;
     1.0f,                                           //float   bobCycle;
     100,                                            //int     steptime;

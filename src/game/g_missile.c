@@ -389,8 +389,8 @@ gentity_t *fire_blaster( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = BLASTER_DMG;
-  bolt->splashDamage = 8;
-  bolt->splashRadius = 35;
+  bolt->splashDamage = BLASTER_SPLASH;
+  bolt->splashRadius = BLASTER_RADIUS;
   bolt->methodOfDeath = MOD_BLASTER;
   bolt->splashMethodOfDeath = MOD_BLASTER;
   bolt->clipmask = MASK_SHOT;
@@ -491,16 +491,15 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int da
     bolt->nextthink = level.time + 100000;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -2.0f;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 2.0f;
-  VectorScale( dir, (LCANNON_SPEED * 9), bolt->s.pos.trDelta ); //tiny ball of DEATH! Also extremely fast. //*8->*9 because primary actually becomes faster)
+  VectorScale( dir, (LCANNON_SECONDARY_SPEED), bolt->s.pos.trDelta ); //speedy ball
 	}
-  else //to make sure it doesn't go bonkers, and makes it stand out so the glitch can be reported if happens:
+  else //backup: kill self
 	{
-    bolt->nextthink = level.time + 100000;
+    bolt->nextthink = level.time + 1;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -2.0f;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 2.0f;
   VectorScale( dir, 0, bolt->s.pos.trDelta ); //prove there's an error: make it stationary
 	}
-#define LCANNON_SPEED_CHANGE   ((1 - ((localDamage - LCANNON_TOTAL_CHARGE) / 200)) * LCANNON_SPEED), bolt->s.pos.trDelta ) //maybe used later
 
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
@@ -523,7 +522,6 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int da
   SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
 
   VectorCopy( start, bolt->r.currentOrigin );
-#define LCANNON_SPRITE_SCALE localDamage //useless shit here, but i declared it here for possible future use in cgame because localdamage can't be recalled that easily... i havn't learned how to call a specific line from a file so yeah
 
   return bolt;
 }
@@ -551,7 +549,7 @@ gentity_t *launch_grenade( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->s.generic1 = WPM_PRIMARY; //weaponMode
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
-  bolt->damage = GRENADE_DAMAGE;
+  bolt->damage = GRENADE_DAMAGE * GRENADE_BUFF; //Buff it up if inside something
   bolt->splashDamage = GRENADE_DAMAGE;
   bolt->splashRadius = GRENADE_RANGE;
   bolt->methodOfDeath = MOD_GRENADE;
@@ -605,7 +603,7 @@ void AHive_ReturnToHive( gentity_t *self )
     self->s.pos.trTime = level.time;
 
     self->think = G_ExplodeMissile;
-    self->nextthink = level.time + 2000;
+    self->nextthink = level.time + HIVE_HIVE_STUN;
     self->parent->active = qfalse; //allow the parent to start again
   }
   else
