@@ -793,8 +793,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MAX_MAX_HEALTH              1.0f //Max health for players * this = Max vamped health, in this case its 1+(if vamp is on/off [1/0]*0.5) = 1.5x normal max health
                                          //ALWAYS ABOVE ZERO, and use a float value if not 1.0
 //medkit extras
-#define MEDKIT_OVERHEAL             1.0f //yes = >1.0f no = 1.0f little = 1.2f
-#define MEDKIT_EXTRA                20 //Extra health added to medkit //Lolards original = 80
+#define MEDKIT_OVERHEAL             1.0f //yes = >1.0f no = 1.0f little = 1.2f //Note: Has to be under MAX_MAX_HEALTH, else it only heals the extra as you're damaged
+#define MEDKIT_EXTRA                20 //Extra raw health added to medkit //Lolards original = 80
 
 // g_suddenDeathMode settings
 #define SDMODE_BP                   ( REPEATER_BP + ARMOURY_BP + DC_BP + MEDISTAT_BP ) // This is why gpp sudden death sucks, you can't build an armoury. Here, you can build a maximum of one armoury,a reactor and medi, dcc and repeater. 
