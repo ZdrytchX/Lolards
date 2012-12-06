@@ -1043,7 +1043,7 @@ void botFireWeapon(gentity_t *self, usercmd_t *botCmdBuffer) {
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
             
         } else if( self->client->ps.weapon == WP_LUCIFER_CANNON ) {
-            if( self->client->time10000 % 2700 ) {
+            if( self->client->time10000 % ( LCANNON_CHARGE_TIME - 100 ) ) {
                 botCmdBuffer->buttons |= BUTTON_ATTACK;
                 self->botMind->isFireing = qtrue;
             }
@@ -1710,7 +1710,7 @@ void setSkill(gentity_t *self, int skill) {
     self->botMind->botSkill.level = skill;
     //different aim for different teams
     if(self->botMind->botTeam == PTE_HUMANS) {
-        self->botMind->botSkill.aimSlowness = (float) (skill * 3) / 60;
+        self->botMind->botSkill.aimSlowness = (float) (skill * 2) / 60;
         self->botMind->botSkill.aimShake = (int) (20 - (skill * 2) );
     } else {
         self->botMind->botSkill.aimSlowness = (float) ( skill * 2) / 20;

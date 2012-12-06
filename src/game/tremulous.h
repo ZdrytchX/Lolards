@@ -270,7 +270,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ASPAWN_BP                   10
 #define ASPAWN_BT                   12000
-#define ASPAWN_HEALTH               ABHM(275) //250 //has to be killed by one luci shot or egg
+#define ASPAWN_HEALTH               ABHM(275) //250 //has to be killed by one luci shot
 #define ASPAWN_REGEN                8
 #define ASPAWN_SPLASHDAMAGE         60
 #define ASPAWN_SPLASHRADIUS         50
@@ -344,7 +344,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define OVERMIND_BP                 0
 #define OVERMIND_BT                 20000
-#define OVERMIND_HEALTH             ABHM(920)
+#define OVERMIND_HEALTH             ABHM(970)
 #define OVERMIND_REGEN              24 //16 //32 too high, get in between
 #define OVERMIND_SPLASHDAMAGE       18 //18 //36
 #define OVERMIND_SPLASHRADIUS       300
@@ -407,9 +407,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BLASTER_MELLEE_REPEAT       800 //mellee rate
 #define BLASTER_MELEE_RANGE         80 //enough for combat
 
-#define RIFLE_CLIPSIZE              42 //30 //36 //42
+//Rifle is a slow damage dealer, but does a whopping 272 dmg per clip. It is also hard to use without armour support.
+#define RIFLE_CLIPSIZE              42
 #define RIFLE_MAXCLIPS              9 //6
-#define RIFLE_REPEAT                110 //100 //110 (simulates the rate my rifle fires at in gpp) //revert back to 100 if needed because in KoRx it appears to have not much difference (does 6 dmg per bullet, fires 11 times per second) but here it will since rifle has 42 bullets. The rifle is weak when 1v1 dretches yet strong againts bigger aliens.
+#define RIFLE_REPEAT                110 //100 //120 (simulates the rate my rifle fires at in gpp)
 #define RIFLE_K_SCALE               1.0f
 #define RIFLE_RELOAD                1800
 #define RIFLE_PRICE                 0
@@ -422,42 +423,42 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PAINSAW_DAMAGE              HDM(16) //~>250 dmg/s
 #define PAINSAW_RANGE               60.0f //40f //enough to touch below feet of a normal human
 #define PAINSAW_FUEL                625 //with battpack, 1000
-#define PAINSAW_BATTERIES           0 //disabled
+#define PAINSAW_BATTERIES           0 //disabled, rather decay code disallows it from doing anything
 #define PAINSAW_RELOAD              3000
 
 //Super Grenade Throw!
-#define GRENADE_PRICE               600 //200 //mininuke
-#define GRENADE_REPEAT              0 //Default 0. Surely doesn't stop nade spams. (because you're discarding the weapon/upgrade as you use it, duh!)
+#define GRENADE_PRICE               600
+#define GRENADE_REPEAT              0
 #define GRENADE_K_SCALE             1.0f
-#define GRENADE_DAMAGE              HDM(300) //210 //strong enough to kill egg or anything weaker.
-#define GRENADE_BUFF                1.50f//If it is caught inside someone, buff it up
-#define GRENADE_RANGE               332.0f //192 //mininuke == 500
+#define GRENADE_DAMAGE              HDM(300)//strong enough to kill egg or anything weaker.
+#define GRENADE_BUFF                1.50f//If it is caught inside someone, buff it up so the person gibs instantly
+#define GRENADE_RANGE               332.0f //192
 #define GRENADE_SPEED               780.0f //Throwing speed. Default 400
 
-//reverse pump shotgun "semi-semi-auto" (~80dmg/s)
-#define SHOTGUN_PRICE               180 //reswap back prices of lasgun-shotgun back to normal
-#define SHOTGUN_SHELLS              6 //10 -> 6 because it is able to kill om quickly, making it worth more than psaw. //Now a 'energy weapon' and therefore can hold 10 caps per clip. Disable this through bg_misc.c
-#define SHOTGUN_PELLETS             12 //used to sync server and client side //14 -> 12 [bots are OP] [105dmg/s -> 90dmg/s]
-#define SHOTGUN_MAXCLIPS            5 //default 3
-#define SHOTGUN_REPEAT              700 //1000 //lowered from 800-> 700 because now underpowered... :/
+//reverse pump shotgun
+#define SHOTGUN_PRICE               180
+#define SHOTGUN_SHELLS              6 
+#define SHOTGUN_PELLETS             12
+#define SHOTGUN_MAXCLIPS            5
+#define SHOTGUN_REPEAT              700
 #define SHOTGUN_K_SCALE             2.0f
-#define SHOTGUN_RELOAD              ( SHOTGUN_SHELLS * 500 + 1000 ) //real life reloading is annoying right? Two shells/second
-#define SHOTGUN_SPREAD              1320 //900 //1320=spray of defeat on goons, but useless middle-long range especially againts dretches
-#define SHOTGUN_DMG                 HDM(6) //spray of defeat - 6 //90dmg/s
-//Following is for the knockback part
-#define SHOTGUN_BLAST               48 //damage for secondary.
+#define SHOTGUN_RELOAD              ( SHOTGUN_SHELLS * 400 + 800 )
+#define SHOTGUN_SPREAD              1320
+#define SHOTGUN_DMG                 HDM(6) //spray of defeat - 90dmg/s
+
+#define SHOTGUN_BLAST               48 //damage for secondary blast only.
 #define SHOTGUN_BLAST_RANGE         350
-#define SHOTGUN_BLAST_REPEAT        1500 //keep high, not too high 2000 -> 2500 because it instant kills marauders //Truth is, nothing special. Reduced.
+#define SHOTGUN_BLAST_REPEAT        1500
 //#define SHOTGUN_BLAST_PELLETS       SHOTGUN_SHELLS  //Number of shells per clip, since if i use shells * pellets, the client would fk up
 #define SHOTGUN_BLAST_PELLET_DMG    7 //heavy //6 pellets, excluding blast
-#define SHOTGUN_BLAST_SPREAD        1200 //Fkwhat, more accurate? :D
+#define SHOTGUN_BLAST_SPREAD        800 //Blast more accurate
 
-#define LASGUN_PRICE                300 //increase, but you need a weapon that can be bought from just one kill //reswap back prices of lasgun-shotgun back to normal
-#define LASGUN_AMMO                 370 //its not like people run out
-#define LASGUN_REPEAT               180 //200
-#define LASGUN_MAXCLIPS             1 //oh wtf might as well... not much difference
-#define LASGUN_K_SCALE              2.0f //2f
-#define LASGUN_RELOAD               4000 //rise it higher... changing batteries is a pain right? erm...
+#define LASGUN_PRICE                300 
+#define LASGUN_AMMO                 370
+#define LASGUN_REPEAT               180 
+#define LASGUN_MAXCLIPS             1
+#define LASGUN_K_SCALE              2.0f
+#define LASGUN_RELOAD               4000
 #define LASGUN_SPREAD               100 //works now =P (ripped from mgun)
 #define LASGUN_DAMAGE               HDM(10) //9 //60dmg/s, original trem 45dmg/s
 
@@ -465,48 +466,34 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_PRICE               380
 #define MDRIVER_CLIPSIZE            5
 #define MDRIVER_MAXCLIPS            7
-#define MDRIVER_DMG                 HDM(62) //72 -> 62 //remember there are some good mass drivers in this world
+#define MDRIVER_DMG                 HDM(62)
 #define MDRIVER_RADIUS              100    
-#define MDRIVER_REPEAT              1375 //2000 makes it useless, but remember there are some good mass drivers in this world
+#define MDRIVER_REPEAT              1375
 #define MDRIVER_K_SCALE             3.0f
 #define MDRIVER_RELOAD              4000
 
 //Chaingun actually fires faster
-#define CHAINGUN_PRICE              500 //increased, bots do not buy it and its actually OP
+#define CHAINGUN_PRICE              500
 #define CHAINGUN_BULLETS            300
 #define CHAINGUN_MAXCLIPS           2
 #define CHAINGUN_RELOAD             5000
-//with speedy barrel function -70 //100dmg/s
-//without speedy barrel function: -90 //78dmg/s //marauder's worst enemy //"removed" because OP againts goons
 #define CHAINGUN_REPEAT             70 //Single barrel shots
-#define CHAINGUN_REPEAT2            90 //tripple barrel shots, total damage stays the same
+#define CHAINGUN_REPEAT2            90 //tripple barrel shots, total damage per shot stays the same
 #define CHAINGUN_K_SCALE            1.0f
-#define CHAINGUN_SPREAD             500 //700
-#define CHAINGUN_SPREAD2            800
-#define CHAINGUN_DMG                HDM(6) //6 //7 is too powerful-revert
+#define CHAINGUN_SPREAD             700
+#define CHAINGUN_SPREAD2            1000
+#define CHAINGUN_DMG                HDM(7) //6 //7 is too powerful-revert
 
-//Prifle - slow spam, doing max 112 dmg/s
+//Prifle - slow spam, doing max 104 dmg/s
 
 #define PRIFLE_PRICE                580 //cost much? Its like a really strong lasgun in my opinion.
-#define PRIFLE_CLIPS                40 //old beloved' lolards classic: 58 (too overpowered vs goons though)
+#define PRIFLE_CLIPS                40 //lolards classic: 58 (too overpowered vs goons though)
 #define PRIFLE_MAXCLIPS             5
 #define PRIFLE_REPEAT               125
 #define PRIFLE_K_SCALE              1.0f
 #define PRIFLE_RELOAD               2000
-#define PRIFLE_DMG                  HDM(13) //104dmg/s
-#define PRIFLE_SPEED                2000 //1000 //3000 -> 2500 because it uses the current player's speed
-//#define PRIFLE_SPREAD               300 //cancelled - usage deleted
-
-//pulse rifle from movie 'alien'
-/*#define PRIFLE_PRICE                880
-#define PRIFLE_CLIPS                70
-#define PRIFLE_MAXCLIPS             0
-#define PRIFLE_REPEAT               180
-#define PRIFLE_K_SCALE              1.0f
-#define PRIFLE_RELOAD               2000
-#define PRIFLE_DMG                  HDM(38)
-#define PRIFLE_SPEED                6000
-*/
+#define PRIFLE_DMG                  HDM(13)
+#define PRIFLE_SPEED                2000
 
 //Flamer has a realistic shot by halving the repeat rate (2x speed) and halving the dmg
 #define FLAMER_PRICE                520
@@ -537,13 +524,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *What you put here is the MINIMUM speed, and max speed is roughly... uhh lets say around 2.6x this value.
 */
 
-#define LCANNON_CHARGE_TIME         2800 //2000
+#define LCANNON_CHARGE_TIME         2300 //2000 //dislike long charge times
 #define LCANNON_TOTAL_CHARGE        285 //255 //im having trouble with the difference between this and LCANNON_DMG
 #define LCANNON_MIN_CHARGE          36 //50 //mincharge dmg value
 #define LCANNON_MAXCLIPS	    1 //give some hopes for a human who fired his shots till his battery couldn't handle anymore
 //(below 70, the maxcharge lessens.)
-#define LCANNON_BATTERY_DECAY       70 //The value by which the luci starts struggling to power a full shot
-#define LCANNON_TAKE                30.0f //Maximum ammo that can be eaten by one bullet
+#define LCANNON_BATTERY_DECAY       50 //The value by which the luci starts struggling to power a full shot //70->50 because almost useless for non-battpackers
+#define LCANNON_TAKE                23.0f //Maximum ammo that can be eaten by one bullet //~8.9 full shots, 10 per second
 
 //Lockblob Launcher
 #define LOCKBLOB_AMMO               12
