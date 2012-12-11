@@ -467,10 +467,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_CLIPSIZE            5
 #define MDRIVER_MAXCLIPS            7
 #define MDRIVER_DMG                 HDM(62)
-#define MDRIVER_RADIUS              100    
 #define MDRIVER_REPEAT              1375
 #define MDRIVER_K_SCALE             3.0f
 #define MDRIVER_RELOAD              4000
+
+//false bullet physics test
+#define MDRIVER_SPEED               19200 //Bullet speed 19200 = 600 m/s
+#define MDRIVER_RADIUS              35 //explosion radius
+#define MDRIVER_SPLASH              30 //Splash dmg - Equal to dretch hp else it can instant kill
+#define MDRIVER_LAG                 0.15f //Same effect as Flamer_LAG but not as effective
 
 //Chaingun actually fires faster
 #define CHAINGUN_PRICE              500
@@ -640,10 +645,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //no spinup required!
 //IMPORTANT: You should change MGTURRET_FIRE_SPEED and MGTURRET_FIRE_DIRECT_SPEED to 1 if you want the turret to be 'normal'.
 //It slows down the turning speed of the turret when it fires.
-#define MGTURRET_FIRE_SPEED         0.5
+#define MGTURRET_FIRE_SPEED         0.35 //too hard with dcc up 0.5 -> 0.35
 // IF it is directly aiming at it, the following speed multiplier will be used instead.
 //It gives a more realistic feel.
-#define MGTURRET_FIRE_DIRECT_SPEED  0.2
+#define MGTURRET_FIRE_DIRECT_SPEED  0.1 //too hard with dcc up 0.2 -> 0.1
 
 #define MGTURRET_BP                 8 //8->10 {reverted}
 #define MGTURRET_BT                 10000
@@ -668,7 +673,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //This 'range/spread' is a multiplier for the accuracy tolerance before it fires.
 #define MGTURRET_ACCURACY_SPREAD        8
 //The same thing, but the 'smaller' version of it.
-#define MGTURRET_DIRECT_ACCURACY_SPREAD 5 //3->5 too hard with dcc up
+#define MGTURRET_DIRECT_ACCURACY_SPREAD 3
 //this is a mutliplier for the ratio of how fast the pitch goes compare to normal. "Normal" is the same value as for yaw. Yaw will stay as MGTURRET_ANGULARSPEED or whatever if it is grabbed.
 //For example, normal turning speed is 8 without grab or dcc, therefore:
 //*1 = normal = 8
@@ -735,6 +740,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define STAMINA_LARMOUR_TAKE        12 //It replaces sprint_take when having larmour. According to g_active.c
 
 #define HUMAN_SPAWN_REPEAT_TIME     8000 //spawn timing,default 8000
+#define HUMAN_REGEN                 1 //hp/s
 
 /*
  * Misc

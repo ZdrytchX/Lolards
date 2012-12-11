@@ -395,8 +395,8 @@ gentity_t *fire_blaster( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_BLASTER;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
-  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -1.0f;
-  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 1.0f;\
+//  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -1.0f;
+//  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 1.0f;
   bolt->s.pos.trType = TR_GRAVITY; //TR_LIGHTGRAVITY; //ehem... its too useful againts long distance- buildable killing, dont use linear
 //bolt->s.pos.trType = TR_GRAVITY; //LINEAR is linear, TR_BUOYANCY goes up
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
@@ -877,3 +877,47 @@ gentity_t *fire_bounceBall( gentity_t *self, vec3_t start, vec3_t dir )
   return bolt;
 }
 
+//================================================
+/*
+====================
+mdriverfire
+====================
+*/
+gentity_t *fire_mdriver( gentity_t *self, vec3_t start, vec3_t dir )
+{
+  gentity_t *bolt;
+
+  vec3_t    pvel;
+
+  VectorNormalize (dir);
+
+  bolt = G_Spawn();
+  bolt->classname = "mdriver";
+  bolt->nextthink = level.time + 10000;
+  bolt->think = G_ExplodeMissile;
+  bolt->s.eType = ET_MISSILE;
+  bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
+  bolt->s.weapon = WP_MASS_DRIVER;
+  bolt->s.generic1 = self->s.generic1; //weaponMode
+  bolt->r.ownerNum = self->s.number;
+  bolt->parent = self;
+  bolt->damage = MDRIVER_DMG;
+  bolt->splashDamage = MDRIVER_SPLASH;
+  bolt->splashRadius = MDRIVER_RADIUS;
+  bolt->methodOfDeath = MOD_MDRIVER;
+  bolt->splashMethodOfDeath = MOD_MDRIVER;
+  bolt->clipmask = MASK_SHOT;
+  bolt->target_ent = NULL;
+
+bolt->s.pos.trType = TR_GRAVITY;
+  bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
+  VectorCopy( start, bolt->s.pos.trBase );
+  VectorScale( self->client->ps.velocity, MDRIVER_LAG, pvel );
+  VectorMA( pvel, MDRIVER_SPEED, dir, bolt->s.pos.trDelta );
+//  VectorScale( dir, MDRIVER_SPEED, bolt->s.pos.trDelta ); //19200
+  SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
+
+  VectorCopy( start, bolt->r.currentOrigin );
+
+  return bolt;
+}

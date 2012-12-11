@@ -390,7 +390,7 @@ MASS DRIVER
 ======================================================================
 */
 //sorry about this mess, i fucked up the code. Here's a backup from lakitu7's.
-
+/*
 void massDriverFire( gentity_t *ent )
 {
   trace_t   tr;
@@ -435,96 +435,25 @@ void massDriverFire( gentity_t *ent )
       MDRIVER_DMG, 0, MOD_MDRIVER );
   }
 }
-
-/*void massDriverFire( gentity_t *ent, int count )
-{
-  trace_t   tr;
-  vec3_t    end;
-  gentity_t *tent;
-  gentity_t *traceEnt;
-//  int       unlinked; //going through effect
-//  int       hits;
-//ripped from railgun code
-
-  VectorMA( muzzle, 8192 * 16, forward, end );
-
-  G_UnlaggedOn( ent, muzzle, 8192 * 16 );
-  trap_Trace( &tr, muzzle, NULL, NULL, end, ent->s.number, MASK_SHOT );
-  G_UnlaggedOff( );
-
-  if( tr.surfaceFlags & SURF_NOIMPACT )
-    
-  traceEnt = &g_entities[ tr.entityNum ];
-
-  // snap the endpos to integers, but nudged towards the line
-  SnapVectorTowards( tr.endpos, muzzle );
-
-
-//trace only againts solids so it will go through people
-unlinked = 0;
-hits = 0;
-do	{
-	trap_Trace (&trace, muzzle, NULL, NULL, end, ent->s.number, MASK_SHOT );
-	if ( trace.entityNum >= ENTITYNUM_MAX_NORMAL )
-		{
-		break;
-		}
-		if ( traceEnt->takedamage )
-		{
-			if( LogAccuracyHit( traceEnt, ent ) )
-			{
-				hits++;
-			}
-			G_Damage (traceEnt, ent, ent, forward, trace.endpos, damage, 0, MOD_MDRIVER);
-		}
-		if ( trace.contents & CONTENTS_SOLID ) {
-			break;		// we hit something solid enough to stop the beam
-	}
-
-  // send impact
-//go through people
-
-do	{
-	trap_Trace (&tr, muzzle, NULL, NULL, end, ent->s.number, MASK_SHOT );
-	if ( tr.entityNum >= ENTITYNUM_MAX_NORMAL ) {
-		break;
-		}
-//stop at walls
-	if ( tr.contents & CONTENTS_SOLID ) {
-		break;
-		}	// we hit something solid enough to stop the beam
-	}
-	
-  if( traceEnt->takedamage && traceEnt->client )
-  {
-    tent = G_TempEntity( tr.endpos, EV_MISSILE_HIT );
-//    tent = G_TempEntity( tr.endpos, EV_MISSILE_HIT );
-
-//    tent->s.otherEntityNum = traceEnt->s.number;
-    tent->s.otherEntityNum = traceEnt->s.number;
-//    tent->s.eventParm = DirToByte( tr.plane.normal );
-    tent->s.eventParm = DirToByte( tr.plane.normal );
-    tent->s.weapon = ent->s.weapon;
-    tent->s.generic1 = ent->s.generic1; //weaponMode
-  }
-  else
-  {
-    tent = G_TempEntity( tr.endpos, EV_MISSILE_MISS );
-    tent->s.eventParm = DirToByte( tr.plane.normal );
-    tent->s.weapon = ent->s.weapon;
-    tent->s.generic1 = ent->s.generic1; //weaponMode
-  }
-
-  if( traceEnt->takedamage )
-  {
-    G_Damage( traceEnt, ent, ent, forward, tr.endpos,
-      MDRIVER_DMG, 0, MOD_MDRIVER );
-//original:
-//    G_Damage( traceEnt, ent, ent, forward, tr.endpos,
-//      MDRIVER_DMG, 0, MOD_MDRIVER );
-  }
-}
 */
+
+/*
+======================================================================
+
+MASS DRIVER
+BULLET PHYSICS TEST
+
+======================================================================
+*/
+
+void massDriverFire( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = fire_mdriver( ent, muzzle, forward );
+
+  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );
+}
 
 /*
 ======================================================================
