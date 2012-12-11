@@ -476,6 +476,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_RADIUS              35 //explosion radius
 #define MDRIVER_SPLASH              30 //Splash dmg - Equal to dretch hp else it can instant kill
 #define MDRIVER_LAG                 0.15f //Same effect as Flamer_LAG but not as effective
+#define MDRIVER_LIFETIME            8000 //It's a pretty fast bullet. Doesn't need to be that large. Most extreme maps are only a mere 3 seconds diameter.
 
 //Chaingun actually fires faster
 #define CHAINGUN_PRICE              500

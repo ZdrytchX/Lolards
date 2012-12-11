@@ -452,7 +452,6 @@ void massDriverFire( gentity_t *ent )
 
   m = fire_mdriver( ent, muzzle, forward );
 
-  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );
 }
 
 /*
