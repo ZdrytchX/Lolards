@@ -602,6 +602,8 @@ struct gclient_s
   int                 time100;
   int                 time1000;
   int                 time10000;
+  int                 timeregen; //testing
+  int                 autoregen;//testing
 
   char                *areabits;
 

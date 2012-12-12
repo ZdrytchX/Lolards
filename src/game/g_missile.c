@@ -893,7 +893,7 @@ gentity_t *fire_mdriver( gentity_t *self, vec3_t start, vec3_t dir )
 
   bolt = G_Spawn();
   bolt->classname = "mdriver";
-  bolt->nextthink = level.time + 10000;
+  bolt->nextthink = level.time + MDRIVER_LIFETIME;
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
   bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
@@ -912,9 +912,9 @@ gentity_t *fire_mdriver( gentity_t *self, vec3_t start, vec3_t dir )
 bolt->s.pos.trType = TR_GRAVITY;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
-  VectorScale( self->client->ps.velocity, MDRIVER_LAG, pvel );
-  VectorMA( pvel, MDRIVER_SPEED, dir, bolt->s.pos.trDelta );
-//  VectorScale( dir, MDRIVER_SPEED, bolt->s.pos.trDelta ); //19200
+  VectorScale( self->client->ps.velocity, MDRIVER_LAG, pvel ); //ripped from
+  VectorMA( pvel, MDRIVER_SPEED, dir, bolt->s.pos.trDelta );  //flamer
+//  VectorScale( dir, MDRIVER_SPEED, bolt->s.pos.trDelta );
   SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
 
   VectorCopy( start, bolt->r.currentOrigin );

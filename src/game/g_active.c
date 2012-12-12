@@ -575,6 +575,8 @@ void ClientTimerActions( gentity_t *ent, int msec )
 //  client->time20000 += msec; //this one for barb: its not really 10 secs anymore
 //  client->time3000 += msec; //this one for human healing
   client->time10000 += msec;
+  client->timeregen += msec; //Testing
+  client->autoregen -= msec; //testing
 
 
   if( ent->r.svFlags & SVF_BOT )
@@ -611,8 +613,11 @@ void ClientTimerActions( gentity_t *ent, int msec )
 
     if( ( aForward <= 64 && aForward > 5 ) || ( aRight <= 64 && aRight > 5 ) )
     {
+      if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
+        client->ps.stats[ STAT_STAMINA ] += STAMINA_BSUIT_WALK_RESTORE;
       //restore stamina
-      client->ps.stats[ STAT_STAMINA ] += STAMINA_WALK_RESTORE;
+      else
+        client->ps.stats[ STAT_STAMINA ] += STAMINA_WALK_RESTORE;
 
       if( client->ps.stats[ STAT_STAMINA ] > MAX_STAMINA )
         client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
@@ -620,7 +625,9 @@ void ClientTimerActions( gentity_t *ent, int msec )
     else if( aForward <= 5 && aRight <= 5 )
     {
       //restore stamina faster
-      client->ps.stats[ STAT_STAMINA ] += STAMINA_STOP_RESTORE;
+      if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
+        client->ps.stats[ STAT_STAMINA ] += STAMINA_BSUIT_STOP_RESTORE;
+      else client->ps.stats[ STAT_STAMINA ] += STAMINA_STOP_RESTORE;
 
       if( client->ps.stats[ STAT_STAMINA ] > MAX_STAMINA )
         client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
@@ -830,7 +837,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
       G_Damage( ent, client->lastPoisonClient, client->lastPoisonClient, NULL,
         0, damage, 0, MOD_POISON );
     }
-
+//Copy+pasted later
     //replenish/regenerate alien health //I will add in human regen shortly once i get a linux OS
     if( //client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
       //level.surrenderTeam != PTE_ALIENS
@@ -891,9 +898,11 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
       }
 	}
 //regen
+/*
       if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
           ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
         ent->health += BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) * modifier;
+*/
 //vamp degen settings
       if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] )
 	{ ent->health -= ((client->ps.stats[ STAT_HEALTH ] - (client->ps.stats[ STAT_MAX_HEALTH ] ) )/ VAMP_TAKE  + 0.5 ); } //Degeneration now takes up extrahealth/VAMP_TAKE + 0.5
@@ -964,15 +973,45 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
     if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
       level.surrenderTeam == PTE_ALIENS )
     {
+      G_Damage( ent, NULL, NULL, NULL, NULL, client->ps.stats[ STAT_MAX_HEALTH ] / 25, DAMAGE_NO_ARMOR, MOD_SUICIDE );
+/*
       G_Damage( ent, NULL, NULL, NULL, NULL,
         BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ),
         DAMAGE_NO_ARMOR, MOD_SUICIDE );
+*/
     }
     else if( client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
       level.surrenderTeam == PTE_HUMANS )
     {
-      G_Damage( ent, NULL, NULL, NULL, NULL, 5, DAMAGE_NO_ARMOR, MOD_SUICIDE );
+      G_Damage( ent, NULL, NULL, NULL, NULL, 4, DAMAGE_NO_ARMOR, MOD_SUICIDE ); //5
     }
+  }
+
+  while( client->time10000 >= 15000 )
+  {
+    client->time10000 -= 15000;
+
+    if( client->ps.weapon == WP_ALEVEL3_UPG )
+    {
+      int ammo, maxAmmo;
+
+      BG_FindAmmoForWeapon( WP_ALEVEL3_UPG, &maxAmmo, NULL );
+      BG_UnpackAmmoArray( WP_ALEVEL3_UPG, client->ps.ammo, client->ps.powerups, &ammo, NULL );
+
+      if( ammo < maxAmmo )
+      {
+        ammo++;
+        BG_PackAmmoArray( WP_ALEVEL3_UPG, client->ps.ammo, client->ps.powerups, ammo, 0 );
+      }
+      else if ( ammo == ammo ) //Hacky odd fix
+      {
+        client->time10000 = 5000; //Set only 15-5 = (10) seconds to recharge after shot
+      }
+    }
+  }
+  while( client->timeregen >= 2000 )
+  {
+   client->timeregen -= 2000;
 //Start painsaw discharge
     if( client->ps.weapon == WP_PAIN_SAW )
     {
@@ -990,25 +1029,69 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
     }
 //End painsaw
   }
-
-  while( client->time10000 >= 10000 ) //20 sec recharge isn't recognised;changed back to default
+//rant regeneration test
+//TODO: Add regen modifier
+  while( client->autoregen <= 0 )//(1000 / ( BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) ) ) )
   {
-    client->time10000 -= 10000;
-
-    if( client->ps.weapon == WP_ALEVEL3_UPG )
+      float     modifier = 1.0f;
+    if( //client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
+      //level.surrenderTeam != PTE_ALIENS
+      //&&
+      ( !client->pers.nakedPlayer ||
+        ( BG_FindNakedStagesForClass( client->pers.classSelection, g_alienStage.integer ) &&
+          OverrideNakedStage( BG_FindNameForClassNum( client->pers.classSelection ),
+            g_alienStage.integer) == -1 )
+        ||
+        OverrideNakedStage( BG_FindNameForClassNum( client->pers.classSelection ),
+          g_alienStage.integer ) == 1 )
+      )
     {
-      int ammo, maxAmmo;
+      int       entityList[ MAX_GENTITIES ];
+      vec3_t    range = { LEVEL4_REGEN_RANGE, LEVEL4_REGEN_RANGE, LEVEL4_REGEN_RANGE };
+      vec3_t    mins, maxs;
+      int       i, num;
+      gentity_t *boostEntity;
 
-      BG_FindAmmoForWeapon( WP_ALEVEL3_UPG, &maxAmmo, NULL );
-      BG_UnpackAmmoArray( WP_ALEVEL3_UPG, client->ps.ammo, client->ps.powerups, &ammo, NULL );
-
-      if( ammo < maxAmmo )
+      VectorAdd( client->ps.origin, range, maxs );
+      VectorSubtract( client->ps.origin, range, mins );
+/* This is the alien regen.
+ * I swapped the Booster and tyrant regen priority
+ * so you can use a booster as a tyrant.
+ */
+if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens right?
+	{
+      num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
+      for( i = 0; i < num; i++ )
       {
-        ammo++;
-        BG_PackAmmoArray( WP_ALEVEL3_UPG, client->ps.ammo, client->ps.powerups, ammo, 0 );
- 
+        boostEntity = &g_entities[ entityList[ i ] ];
+        if( boostEntity->s.eType == ET_BUILDABLE &&
+            boostEntity->s.modelindex == BA_A_BOOSTER &&
+            boostEntity->spawned && boostEntity->health > 0 )
+        {
+	//hacky fix
+	  if ( client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
+	  {	
+            modifier = BOOSTER_REGEN_MOD;
+	  }
+          modifier = BOOSTER_REGEN_MOD;
+          break;
+        }
+        else if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
+            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
+        {
+          modifier = LEVEL4_REGEN_MOD;
+          break;
+        }
+        }
       }
+//    client->autoregen += (1000 / ( BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] )  ) ); //*modifier
     }
+    client->autoregen += (1000 / ( BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) *modifier ) );
+//Regenerate!
+
+        if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
+            ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
+          ent->health += 1;
   }
 }
 

@@ -652,7 +652,7 @@ void ASpawn_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   self->think = ASpawn_Blast;
 
   if( self->spawned )
-    self->nextthink = level.time + 5000;
+    self->nextthink = level.time + 3000;
   else
     self->nextthink = level.time; //blast immediately
 
@@ -851,7 +851,7 @@ void AOvermind_Think( gentity_t *self )
     }
 
     //overmind dying
-    if( self->health < ( OVERMIND_HEALTH / 10.0f ) && level.time > self->overmindDyingTimer )
+    if( self->health < ( OVERMIND_HEALTH / 20.0f ) && level.time > self->overmindDyingTimer )
     {
       self->overmindDyingTimer = level.time + OVERMIND_DYING_PERIOD;
       G_BroadcastEvent( EV_OVERMIND_DYING, 0 );
@@ -1001,13 +1001,14 @@ void ABarricade_Think( gentity_t *self )
   //if there is no creep nearby die
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, (BARRICADE_HEALTH*60), 0, MOD_SUICIDE ); //10000 //TODO: slow deaths like KoRx's
     return;
   }
 
+  self->nextthink = level.time + BG_FindNextThinkForBuildable( self->s.modelindex );
+
   G_CreepSlow( self );
 
-  self->nextthink = level.time + BG_FindNextThinkForBuildable( self->s.modelindex );
 }
 
 
@@ -1078,8 +1079,9 @@ void AAcidTube_Think( gentity_t *self )
   //if there is no creep nearby die
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, (ACIDTUBE_HEALTH*60), 0, MOD_SUICIDE );
     return;
+  self->nextthink = 1000;
   }
 
   if( self->spawned && G_FindOvermind( self ) )
@@ -1146,8 +1148,10 @@ void AHive_Think( gentity_t *self )
   //if there is no creep nearby die
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, (HIVE_HEALTH*60), 0, MOD_SUICIDE );
     return;
+
+  self->nextthink = 1000;
   }
 
   if( self->timestamp < level.time )
@@ -1670,8 +1674,10 @@ void ATrapper_Think( gentity_t *self )
   //if there is no creep nearby die
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, (TRAPPER_HEALTH/60), 0, MOD_SUICIDE );
     return;
+
+  self->nextthink = 1000;
   }
 
   if( self->spawned && G_FindOvermind( self ) )

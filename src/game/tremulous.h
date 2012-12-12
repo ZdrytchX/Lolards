@@ -475,8 +475,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_SPEED               19200 //Bullet speed 19200 = 600 m/s
 #define MDRIVER_RADIUS              35 //explosion radius
 #define MDRIVER_SPLASH              30 //Splash dmg - Equal to dretch hp else it can instant kill
-#define MDRIVER_LAG                 0.15f //Same effect as Flamer_LAG but not as effective
-#define MDRIVER_LIFETIME            8000 //It's a pretty fast bullet. Doesn't need to be that large. Most extreme maps are only a mere 3 seconds diameter.
+#define MDRIVER_LAG                 0.35f //Same effect as Flamer_LAG but not as effective
+#define MDRIVER_LIFETIME            8000 //It's a pretty fast bullet. Doesn't need to be that large. Most extreme maps are only a mere 3 seconds diameter. Z-slide is 6 secs across.
 
 //Chaingun actually fires faster
 #define CHAINGUN_PRICE              500
@@ -488,7 +488,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CHAINGUN_K_SCALE            1.0f
 #define CHAINGUN_SPREAD             700
 #define CHAINGUN_SPREAD2            1000
-#define CHAINGUN_DMG                HDM(7) //6 //7 is too powerful-revert
+#define CHAINGUN_DMG                HDM(7)
 
 //Prifle - slow spam, doing max 104 dmg/s
 
@@ -503,15 +503,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 //Flamer has a realistic shot by halving the repeat rate (2x speed) and halving the dmg
 #define FLAMER_PRICE                520
-#define FLAMER_GAS                  280 //150
-#define FLAMER_RELOAD               3000 //baha forgot this =/, added
-#define FLAMER_REPEAT               100 //200
-#define FLAMER_K_SCALE              0.5f //1f
+#define FLAMER_GAS                  280
+#define FLAMER_RELOAD               3000
+#define FLAMER_REPEAT               100
+#define FLAMER_K_SCALE              0.5f
 #define FLAMER_DMG                  HDM(11) //20 //2 dmg increase only because we have vampire
-#define FLAMER_RADIUS               80 //splash radius //50
-#define FLAMER_LIFETIME             800.0f //800.0f
+#define FLAMER_RADIUS               80 //50
+#define FLAMER_LIFETIME             800.0f
 #define FLAMER_SPEED                400.0f //300
-#define FLAMER_LAG                  0.65f  //the amount of player velocity that is added to the fireball
+#define FLAMER_LAG                  0.65f
 
 //Easier to get dretches, and lucijump. Also improved to match tyrant's and other alien's new health.
 #define LCANNON_PRICE               700 //should i increase further?
@@ -739,6 +739,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define STAMINA_WALK_RESTORE        18 //or walking
 #define STAMINA_SPRINT_TAKE         9 //taking stamina away by sprinting //8
 #define STAMINA_LARMOUR_TAKE        12 //It replaces sprint_take when having larmour. According to g_active.c
+#define STAMINA_BSUIT_STOP_RESTORE  40
+#define STAMINA_BSUIT_WALK_RESTORE  20     
 
 #define HUMAN_SPAWN_REPEAT_TIME     8000 //spawn timing,default 8000
 #define HUMAN_REGEN                 1 //hp/s
@@ -756,7 +758,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_MAX_KILLS             15 //max evos //13->15 because human can buy two sets of lucisuits, aliens need to be able to use two ranties
 #define ALIEN_MAX_SINGLE_KILLS      5 //Max evos earned from HUMAN_MAXED i guess... i never looked into this //3->4->5
 
-#define FREEKILL_PERIOD             90000 //msec // free credits recieved after this amount of time. //120000
+#define FREEKILL_PERIOD             60000 //msec //60 secs because things are more costy
 #define FREEKILL_ALIEN              1 // one evo per 120000 miliseconds or whatever FREEKILL_PERIOD is.
 #define FREEKILL_HUMAN              200 // LEVEL0_VALUE is default. 220 is enough for lasgun and larmour, but when it stacks, it gives to much in total, might increase back to 220 in future
 
