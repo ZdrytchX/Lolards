@@ -235,7 +235,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_SPEED                1.1f //1.2f
 #define LEVEL4_VALUE                AVM(980)//If aliens get 5 evos, humans should get 1000 creds right? Well close enough.
 #define LEVEL4_HEALTH               AHM(420)
-#define LEVEL4_REGEN                9
+#define LEVEL4_REGEN                8
 #define LEVEL4_COST                 3
 
 //Basi-Suit (hidden extra, costing 9 evos, or 11 if tyrant. Somehow this is a wasted class as humans don't 'morph' into a battlesuit, so i can use it as a seperate class unlike gpp =D) Values change for bg_misc.c only.

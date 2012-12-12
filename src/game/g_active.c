@@ -864,7 +864,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
  * I swapped the Booster and tyrant regen priority
  * so you can use a booster as a tyrant.
  */
-/*
 if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens right?
 	{
       num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
@@ -889,7 +888,7 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
           modifier = LEVEL4_REGEN_MOD;
           break;
         }
-*/
+
 //        else if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&\
             boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )\
         {\
@@ -1030,11 +1029,14 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
     }
 //End painsaw
   }
-//rant regeneration test
-//TODO: Add regen modifier
+
+//==================================
+//Smooth Regeneration
+//==================================
   while( client->autoregen <= 0 )//(1000 / ( BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) ) ) )
   {
-      float     modifier = 1.0f;
+      float     modifier = 1.0f; //Apparently defining it in a more wider area seems to fix the odd creep-only regeneration [If you're wonderin "huh?" Go try it out yourself. I don't understand it completely, but it's a bug and its removed now :P]
+//Humans regenerate also!
     if( //client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
       //level.surrenderTeam != PTE_ALIENS
       //&&
@@ -1064,6 +1066,13 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
       num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
       for( i = 0; i < num; i++ )
       {
+        if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
+            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
+        {
+          modifier = LEVEL4_REGEN_MOD;
+          break;
+        }
+//==========================
         boostEntity = &g_entities[ entityList[ i ] ];
         if( boostEntity->s.eType == ET_BUILDABLE &&
             boostEntity->s.modelindex == BA_A_BOOSTER &&
@@ -1072,24 +1081,16 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
 	//hacky fix
 	  if ( client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
 	  {	
-            modifier = BOOSTER_REGEN_MOD;
+          modifier = BOOSTER_REGEN_MOD;
 	  }
           modifier = BOOSTER_REGEN_MOD;
           break;
         }
-        else if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
-            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
-        {
-          modifier = LEVEL4_REGEN_MOD;
-          break;
-        }
         }
       }
-//    client->autoregen += (1000 / ( BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] )  ) ); //*modifier
     }
     client->autoregen += (1000 / ( BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) *modifier ) );
 //Regenerate!
-
         if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
             ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
           ent->health += 1;
