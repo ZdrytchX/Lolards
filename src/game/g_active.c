@@ -864,6 +864,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
  * I swapped the Booster and tyrant regen priority
  * so you can use a booster as a tyrant.
  */
+/*
 if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens right?
 	{
       num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
@@ -888,7 +889,7 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
           modifier = LEVEL4_REGEN_MOD;
           break;
         }
-
+*/
 //        else if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&\
             boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )\
         {\
