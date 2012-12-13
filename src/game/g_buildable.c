@@ -3450,7 +3450,7 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
   G_SetOrigin( built, origin );
   
   // gently nudge the buildable onto the surface :)
-  VectorScale( normal, -10.0f, built->s.pos.trDelta ); //-50
+  VectorScale( normal, -50.0f, built->s.pos.trDelta ); //-50
 
   // set turret angles
   VectorCopy( builder->s.angles2, built->s.angles2 );

@@ -239,11 +239,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_COST                 3
 
 //Basi-Suit (hidden extra, costing 9 evos, or 11 if tyrant. Somehow this is a wasted class as humans don't 'morph' into a battlesuit, so i can use it as a seperate class unlike gpp =D) Values change for bg_misc.c only.
-#define SPY_SPEED                   1.0f //human sprinting speed //1.0 is really hard to get to a human with quietly, but 1.3f won't override for client, reverted
+#define SPY_SPEED                   1.0f //leave as '1.0f' as client overriding cannot happen
 #define SPY_HEALTH                  300 //still OP unless you happen to get head-shotted by a luci
 #define SPY_VALUE                   720
 #define SPY_COST                    5
-#define SPY_REGEN                   (9 + + (VAMP_ON * -6)) //only regen 3 hp/s with vampire mode on
+#define SPY_REGEN                   (9 + (VAMP_ON * -6)) //only regen 3 hp/s with vampire mode on
 
 /*
  * ALIEN buildables
