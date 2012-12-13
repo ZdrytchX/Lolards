@@ -320,7 +320,7 @@ static void target_location_linkup( gentity_t *ent )
 /*QUAKED target_location (0 0.5 0) (-8 -8 -8) (8 8 8)
 Set "message" to the name of this location.
 Set "count" to 0-7 for color.
-0:white 1:red 2:green 3:yellow 4:blue 5:cyan 6:magenta 7:white
+0:white 1:red 2:green 3:yellow 4:blue 5:cyan 6:magneta 7:white
 
 Closest target_location in sight used for the location, if none
 in site, closest in distance

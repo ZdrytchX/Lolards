@@ -1081,7 +1081,6 @@ void AAcidTube_Think( gentity_t *self )
   {
     G_Damage( self, NULL, NULL, NULL, NULL, (ACIDTUBE_HEALTH*60), 0, MOD_SUICIDE );
     return;
-  self->nextthink = 1000;
   }
 
   if( self->spawned && G_FindOvermind( self ) )
@@ -1150,8 +1149,6 @@ void AHive_Think( gentity_t *self )
   {
     G_Damage( self, NULL, NULL, NULL, NULL, (HIVE_HEALTH*60), 0, MOD_SUICIDE );
     return;
-
-  self->nextthink = 1000;
   }
 
   if( self->timestamp < level.time )
@@ -1674,10 +1671,8 @@ void ATrapper_Think( gentity_t *self )
   //if there is no creep nearby die
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, (TRAPPER_HEALTH/60), 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, (TRAPPER_HEALTH*60), 0, MOD_SUICIDE );
     return;
-
-  self->nextthink = 1000;
   }
 
   if( self->spawned && G_FindOvermind( self ) )
@@ -3450,7 +3445,7 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
   G_SetOrigin( built, origin );
   
   // gently nudge the buildable onto the surface :)
-  VectorScale( normal, -50.0f, built->s.pos.trDelta ); //-50
+  VectorScale( normal, -50.0f, built->s.pos.trDelta );
 
   // set turret angles
   VectorCopy( builder->s.angles2, built->s.angles2 );
