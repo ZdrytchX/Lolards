@@ -35,6 +35,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ALIEN_WDMG_MODIFIER         1.0f
 #define ADM(d)                      ((int)((float)d*ALIEN_WDMG_MODIFIER))
+#define ALIENREGEN_NOCREEP_MOD      0.7f
 
 #define ABUILDER_BUILD_REPEAT       500
 #define ABUILDER_CLAW_DMG           ADM(26) //20) //still 3 hit kill with new armour system... (head mod = 1.8)
@@ -165,7 +166,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * ALIEN classes
  *
  * _SPEED   - fraction of Q3A run speed the class can move
- * _REGEN   - health per second regained
+ * _REGEN   - health per second regained when in creep
  *
  * ALIEN_HLTH_MODIFIER - overall health modifier for coarse tuning
  *
@@ -213,12 +214,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_HEALTH               AHM(100) //Marauder is a glass cannon.
 #define LEVEL2_REGEN                3
 #define LEVEL2_COST                 1
+#define LEVEL1_REGEN_MOD            2.0f
 
 #define LEVEL2_UPG_SPEED            1.3f
 #define LEVEL2_UPG_VALUE            AVM(730) //Marauder is a broken character.
 #define LEVEL2_UPG_HEALTH           AHM(172) //Previous, 192. Too high, as they steal hp.
 #define LEVEL2_UPG_REGEN            5
 #define LEVEL2_UPG_COST             3
+#define LEVEL1_UPG_REGEN_MOD        3.0f
 
 #define LEVEL3_SPEED                1.1f
 #define LEVEL3_VALUE                AVM(575)
@@ -591,8 +594,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define BSUIT_PRICE                 500
 #define BSUIT_POISON_PROTECTION     5
-//#define HUMAN_REGEN               1 //Redone somewhere else*, this variable is ignored for now
-//*g_active.c: in the '10s' timer (next to adv goon barb regen)
 
 //physical ammo prices, all default 0
 #define MGCLIP_PRICE                0
@@ -743,7 +744,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define STAMINA_BSUIT_WALK_RESTORE  20     
 
 #define HUMAN_SPAWN_REPEAT_TIME     8000 //spawn timing,default 8000
-#define HUMAN_REGEN                 1 //hp/s
+#define HUMAN_REGEN                 1 //hp every two seconds second
 
 /*
  * Misc

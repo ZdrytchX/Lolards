@@ -2462,7 +2462,7 @@ float BG_FindFallDamageForClass( int pclass )
 BG_FindRegenRateForClass
 ==============
 */
-int BG_FindRegenRateForClass( int pclass )
+int BG_FindRegenRateForClass( int pclass ) //int pclass
 {
   int i;
 

@@ -1034,28 +1034,76 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
     {
       int       entityList[ MAX_GENTITIES ];
       vec3_t    range = { LEVEL4_REGEN_RANGE, LEVEL4_REGEN_RANGE, LEVEL4_REGEN_RANGE };
+      vec3_t    creeprange = { CREEP_BASESIZE, CREEP_BASESIZE, CREEP_BASESIZE };
       vec3_t    mins, maxs;
       int       i, num;
       gentity_t *boostEntity;
 
-      VectorAdd( client->ps.origin, range, maxs );
-      VectorSubtract( client->ps.origin, range, mins );
-/* This is the alien regen.
- * I swapped the Booster and tyrant regen priority
- * so you can use a booster as a tyrant.
+/*
+ * TODO: Only excepts whichever applies most of the time it seems
+ * i.e. permanently out of creep, always use level4's regen mod if level4 etc.
  */
+//===============
+//inside Creep
+//==============
 if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens right?
-	{
+      VectorAdd( client->ps.origin, creeprange, maxs );
+      VectorSubtract( client->ps.origin, creeprange, mins );
+	{ //team alien start
       num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
       for( i = 0; i < num; i++ )
       {
         boostEntity = &g_entities[ entityList[ i ] ];
+        if( boostEntity->s.eType == ET_BUILDABLE &&
+            boostEntity->s.modelindex == ( BA_A_OVERMIND | BA_A_SPAWN ) &&
+            boostEntity->spawned && boostEntity->health > 0 )
+        {
+          modifier = 1 / ALIENREGEN_NOCREEP_MOD;
+          break;
+        }
+      }
+        } //team alien end
+//============================
+//Everything Else
+//============================
+if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens right?
+      VectorAdd( client->ps.origin, range, maxs );
+      VectorSubtract( client->ps.origin, range, mins );
+	{ //team alien start
+      num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
+      for( i = 0; i < num; i++ )
+      {
+        boostEntity = &g_entities[ entityList[ i ] ];
+//rant
         if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
             boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
         {
-          modifier = LEVEL4_REGEN_MOD;
+          modifier *= LEVEL4_REGEN_MOD;
           break;
         }
+//basi
+        if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
+            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL1 )
+        {
+          modifier *= LEVEL1_REGEN_MOD;
+          break;
+        }
+//advbasi
+        if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
+            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL1_UPG )
+        {
+          modifier *= LEVEL1_UPG_REGEN_MOD;
+          break;
+        }
+//om
+        if( boostEntity->s.eType == ET_BUILDABLE &&
+            boostEntity->s.modelindex == BA_A_OVERMIND &&
+            boostEntity->spawned && boostEntity->health > 0 )
+        {
+          modifier *= LEVEL4_REGEN_MOD;
+          break;
+        }
+
 //==========================
         if( boostEntity->s.eType == ET_BUILDABLE &&
             boostEntity->s.modelindex == BA_A_BOOSTER &&
@@ -1063,19 +1111,19 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
         {
 	  if ( client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
 	  {	
-          modifier = BOOSTER_REGEN_MOD;
+        //  modifier *= BOOSTER_REGEN_MOD;
 	  }
-          modifier = BOOSTER_REGEN_MOD;
+          modifier *= BOOSTER_REGEN_MOD;
           break;
         }
-        }
       }
+        } //team alien end
     }
-    client->autoregen += (1000 / ( BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) *modifier ) );
+    client->autoregen += (1000 / ( BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) *modifier * ALIENREGEN_NOCREEP_MOD ) );
 //Regenerate!
         if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
             ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
-          ent->health += 1;
+          ent->health ++;
   }
 }
 

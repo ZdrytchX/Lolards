@@ -1187,7 +1187,7 @@ float     BG_FindZOffsetForClass( int pclass );
 void      BG_FindViewheightForClass( int pclass, int *viewheight, int *cViewheight );
 int       BG_FindHealthForClass( int pclass );
 float     BG_FindFallDamageForClass( int pclass );
-int       BG_FindRegenRateForClass( int pclass );
+int       BG_FindRegenRateForClass( int pclass ); //int
 int       BG_FindFovForClass( int pclass );
 float     BG_FindBobForClass( int pclass );
 float     BG_FindBobCycleForClass( int pclass );
