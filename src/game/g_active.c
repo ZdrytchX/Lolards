@@ -575,7 +575,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
 //  client->time20000 += msec; //this one for barb: its not really 10 secs anymore
 //  client->time3000 += msec; //this one for human healing
   client->time10000 += msec;
-  client->timeregen += msec; //Testing
+  client->sawdegen += msec; //Testing
   client->autoregen -= msec; //testing
 
 
@@ -888,13 +888,6 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
           modifier = LEVEL4_REGEN_MOD;
           break;
         }
-
-//        else if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&\
-            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )\
-        {\
-          modifier = LEVEL4_REGEN_MOD;\
-          break;\
-        }
       }
 	}
 //regen
@@ -934,20 +927,10 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
     }
     else if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && ent->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
     {
-	//REGENERATION/DEGENERATION for humans
-/*		if ( ent->health < client->ps.stats[STAT_MAX_HEALTH])
-		{
-		ent->health += 1; //don't need it, we're not aliens.. and also we have vampire mode
-		}*/
 		if ( ent->health < 0)
 		{
 		ent->health = -9999; //glitchy hack, but works. The higher the number (toward 0 of course) the higher chance of a human glitch-reviving with ghost mode.
 		}
-//		if ( ent->health > client->ps.stats[STAT_MAX_HEALTH])
-//		{
-//		ent->health -= (client->ps.stats[ STAT_MAX_HEALTH ] / 25);
-//                ent->health -= ((client->ps.stats[ STAT_HEALTH ] - (client->ps.stats[ STAT_MAX_HEALTH ] ) )/ VAMP_TAKE  + 0.5 );
-//		}
 	
 		if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH ) //apprently the other one didn't work; copy+paste here - I'VE DONE THIS SOO MANY FKIN TIMES!!! ONLY THIS ONE WORKS [for now]
 		ent->health = client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH; //and also not reliable
@@ -1009,9 +992,9 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
       }
     }
   }
-  while( client->timeregen >= 2000 )
+  while( client->sawdegen >= 2000 )
   {
-   client->timeregen -= 2000;
+   client->sawdegen -= 2000;
 //Start painsaw discharge
     if( client->ps.weapon == WP_PAIN_SAW )
     {
@@ -1033,9 +1016,9 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
 //==================================
 //Smooth Regeneration
 //==================================
-  while( client->autoregen <= 0 )//(1000 / ( BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) ) ) )
+  while( client->autoregen <= 0 )
   {
-      float     modifier = 1.0f; //Apparently defining it in a more wider area seems to fix the odd creep-only regeneration [If you're wonderin "huh?" Go try it out yourself. I don't understand it completely, but it's a bug and its removed now :P]
+      float     modifier = 1.0f;
 //Humans regenerate also!
     if( //client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
       //level.surrenderTeam != PTE_ALIENS
@@ -1066,6 +1049,7 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
       num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
       for( i = 0; i < num; i++ )
       {
+        boostEntity = &g_entities[ entityList[ i ] ];
         if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
             boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
         {
@@ -1073,12 +1057,10 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
           break;
         }
 //==========================
-        boostEntity = &g_entities[ entityList[ i ] ];
         if( boostEntity->s.eType == ET_BUILDABLE &&
             boostEntity->s.modelindex == BA_A_BOOSTER &&
             boostEntity->spawned && boostEntity->health > 0 )
         {
-	//hacky fix
 	  if ( client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
 	  {	
           modifier = BOOSTER_REGEN_MOD;
