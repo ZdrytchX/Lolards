@@ -1074,27 +1074,27 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
       for( i = 0; i < num; i++ )
       {
         boostEntity = &g_entities[ entityList[ i ] ];
+        if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
+		{ //start player type
 //rant
-        if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
-            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
+          if ( boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4 )
         {
           modifier *= LEVEL4_REGEN_MOD;
           break;
         }
 //basi
-        if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
-            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL1 )
+        if(  boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL1 )
         {
           modifier *= LEVEL1_REGEN_MOD;
           break;
         }
 //advbasi
-        if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
-            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL1_UPG )
+        if( boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL1_UPG )
         {
           modifier *= LEVEL1_UPG_REGEN_MOD;
           break;
         }
+		}//end player type
 //om
         if( boostEntity->s.eType == ET_BUILDABLE &&
             boostEntity->s.modelindex == BA_A_OVERMIND &&

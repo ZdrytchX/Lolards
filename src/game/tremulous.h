@@ -35,7 +35,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ALIEN_WDMG_MODIFIER         1.0f
 #define ADM(d)                      ((int)((float)d*ALIEN_WDMG_MODIFIER))
-#define ALIENREGEN_NOCREEP_MOD      0.7f
+#define ALIENREGEN_NOCREEP_MOD      0.67f
 
 #define ABUILDER_BUILD_REPEAT       500
 #define ABUILDER_CLAW_DMG           ADM(26) //20) //still 3 hit kill with new armour system... (head mod = 1.8)
@@ -236,7 +236,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_UPG_COST             2
 
 #define LEVEL4_SPEED                1.1f //1.2f
-#define LEVEL4_VALUE                AVM(980)//If aliens get 5 evos, humans should get 1000 creds right? Well close enough.
+#define LEVEL4_VALUE                AVM(1020)//If aliens get 5 evos, humans should get 1000 creds right? Well close enough.
 #define LEVEL4_HEALTH               AHM(420)
 #define LEVEL4_REGEN                8
 #define LEVEL4_COST                 3
@@ -744,7 +744,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define STAMINA_BSUIT_WALK_RESTORE  20     
 
 #define HUMAN_SPAWN_REPEAT_TIME     8000 //spawn timing,default 8000
-#define HUMAN_REGEN                 1 //hp every two seconds second
+#define HUMAN_REGEN                 1 //int (per ALIENREGEN_NOCREEP_MOD) per second
 
 /*
  * Misc
