@@ -441,7 +441,7 @@ void massDriverFire( gentity_t *ent )
 ======================================================================
 
 MASS DRIVER
-BULLET PHYSICS TEST
+BULLET PHYSICS
 
 ======================================================================
 */
@@ -453,6 +453,23 @@ void massDriverFire( gentity_t *ent )
   m = fire_mdriver( ent, muzzle, forward );
 
 }
+/*
+======================================================================
+
+LEVEL4
+ACID BLOB
+
+======================================================================
+*/
+
+void aBlobFire( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = fire_aBlob( ent, muzzle, forward );
+  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  
+}
+
 
 /*
 ======================================================================
@@ -1626,9 +1643,9 @@ void FireWeapon3( gentity_t *ent )
       slowBlobFire( ent );
       break;
 
-//    case WP_ALEVEL4:
-//      lockBlobLauncherFire( ent ); //thats right bitch, i'll trap you!
-//    break;
+    case WP_ALEVEL4:
+      aBlobFire( ent );
+    break;
 /*
     case WP_HBUILD2:
       bulletFire( ent, 300, 1, MOD_TRIGGER_HURT );

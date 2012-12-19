@@ -602,8 +602,9 @@ struct gclient_s
   int                 time100;
   int                 time1000;
   int                 time10000;
-  int                 sawdegen; //testing
-  int                 autoregen;//testing
+  int                 sawdegen;
+  int                 autoregen;
+  int                 ablobregen;
 
   char                *areabits;
 
@@ -1110,7 +1111,7 @@ gentity_t *fire_bounceBall( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_hive( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *launch_grenade( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_mdriver( gentity_t *self, vec3_t start, vec3_t dir );
-
+gentity_t *fire_aBlob( gentity_t *self, vec3_t start, vec3_t dir );
 
 //
 // g_mover.c

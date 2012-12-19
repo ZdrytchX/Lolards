@@ -99,6 +99,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_AREAZAP_TIME         3000 
 #define LEVEL2_AREAZAP_MAX_TARGETS  7 //Helps zapping buildables
 #define LEVEL2_WALLJUMP_MAXSPEED    90000.0f //1290.0f //idk, don't really want a max
+#define LEVEL2_WALLJUMP_REPEAT      200 //time to jump again - default 200
 
 
 //GPP style:
@@ -144,7 +145,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_CLAW_K_SCALE         0.8f //i don't mind the knockback, but can get annoying
 #define LEVEL4_REGEN_RANGE          200.0f //usually goes unnoticed, left default
 #define LEVEL4_REGEN_MOD            1.5f //2 //Can benifit from booster's x3 healing now
-#define LEVEL4_CHARGE_SPEED         3.0f //2.5 is easier to move with
+#define LEVEL4_CHARGE_SPEED         2.5f //2.5 is easier to move with
 
 #define LEVEL4_CHARGE_TIME          4000 //2000 //This is the time to charge the charge
 #define LEVEL4_CHARGE_CHARGE_TIME   4000 //1500 //This is the duration which you charge
@@ -159,7 +160,24 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_CHARGE_TAKE          100 //Charge taken per decasecond. Default is 100.
 #define LEVEL4_TRAMPLE_CHARGE       200//Charging Charge per decasecond. Default 100. 
 #define LEVEL4_TRAMPLE_DMG_B        0.35f //Dmg to buildables 
-//Removed tyrant spit bomb.
+//rant spit bomb
+#define LEVEL4_ABLOB_DMG            LEVEL3_BOUNCEBALL_DMG
+#define LEVEL4_ABLOB_RADIUS         300
+#define LEVEL4_ABLOB_SPEED          500
+#define LEVEL4_ABLOB_STUNTIME       1200
+
+
+//Adv Rant experiment
+//It worked, but i can't get my client to work. So i undid everything.
+/*
+#define LEVEL4_UPG_ABLOB_STUNTIME       1500
+#define LEVEL4_UPG_ABLOB_DMG            ADM(110)
+#define LEVEL4_UPG_ABLOB_RADIUS         200
+#define LEVEL4_UPG_ABLOB_SPEED          400
+#define LEVEL4_UPG_CHARGE_DMG           ADM(86) //100 (to help with armoured)
+#define LEVEL4_UPG_CHARGE_SPEED         2.5f //2.5 is easier to move with
+#define LEVEL4_UPG_REGEN_MOD            1.5f //Disabled
+*/
 
 
 /*
@@ -241,11 +259,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_REGEN                8
 #define LEVEL4_COST                 3
 
+#define LEVEL4_UPG_SPEED                1.1f //1.2f
+#define LEVEL4_UPG_VALUE                AVM(1200)//If aliens get 5 evos, humans should get 1000 creds right? Well close enough.
+#define LEVEL4_UPG_HEALTH               AHM(480)
+#define LEVEL4_UPG_REGEN                9
+#define LEVEL4_UPG_COST                 5 //9 evos
+
 //Basi-Suit (hidden extra, costing 9 evos, or 11 if tyrant. Somehow this is a wasted class as humans don't 'morph' into a battlesuit, so i can use it as a seperate class unlike gpp =D) Values change for bg_misc.c only.
 #define SPY_SPEED                   1.0f //leave as '1.0f' as client overriding cannot happen
 #define SPY_HEALTH                  300 //still OP unless you happen to get head-shotted by a luci
 #define SPY_VALUE                   720
-#define SPY_COST                    5
+#define SPY_COST                    1
 #define SPY_REGEN                   (9 + (VAMP_ON * -6)) //only regen 3 hp/s with vampire mode on
 
 /*

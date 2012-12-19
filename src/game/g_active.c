@@ -572,11 +572,10 @@ void ClientTimerActions( gentity_t *ent, int msec )
   client = ent->client;
   client->time100 += msec;
   client->time1000 += msec;
-//  client->time20000 += msec; //this one for barb: its not really 10 secs anymore
-//  client->time3000 += msec; //this one for human healing
-  client->time10000 += msec;
-  client->sawdegen += msec; //Testing
-  client->autoregen -= msec; //testing
+  client->time10000 += msec; //actually it is variable but what the hell, who cares...
+  client->sawdegen += msec;
+  client->autoregen -= msec;
+  client->ablobregen += msec;
 
 
   if( ent->r.svFlags & SVF_BOT )
@@ -992,6 +991,29 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
       }
     }
   }
+  while( client->ablobregen >= 60000 )
+  {
+    client->ablobregen -= 60000;
+
+    if( client->ps.weapon == WP_ALEVEL4 )
+    {
+      int ammo, maxAmmo;
+
+      BG_FindAmmoForWeapon( WP_ALEVEL4, &maxAmmo, NULL );
+      BG_UnpackAmmoArray( WP_ALEVEL4, client->ps.ammo, client->ps.powerups, &ammo, NULL );
+
+      if( ammo < maxAmmo )
+      {
+        ammo++;
+        BG_PackAmmoArray( WP_ALEVEL4, client->ps.ammo, client->ps.powerups, ammo, 0 );
+      }
+      else if ( ammo == ammo ) //Hacky odd fix
+      {
+        client->ablobregen = 60000; //No cheap quick reloads
+      }
+    }
+  }
+
   while( client->sawdegen >= 2000 )
   {
    client->sawdegen -= 2000;

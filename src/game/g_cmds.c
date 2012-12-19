@@ -438,7 +438,7 @@ void Cmd_Give_f( gentity_t *ent )
     int maxAmmo, maxClips;
     gclient_t *client = ent->client;
 
-    if( client->ps.weapon != WP_ALEVEL3_UPG &&
+    if( ( client->ps.weapon != WP_ALEVEL3_UPG || client->ps.weapon != WP_ALEVEL4 ) &&
         BG_FindInfinteAmmoForWeapon( client->ps.weapon ) )
       return;
 

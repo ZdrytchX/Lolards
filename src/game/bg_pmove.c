@@ -598,7 +598,7 @@ static qboolean PM_CheckWallJump( void )
   }
 
   pm->ps->pm_flags |= PMF_TIME_WALLJUMP;
-  pm->ps->pm_time = 200;
+  pm->ps->pm_time = LEVEL2_WALLJUMP_REPEAT;
 
   pml.groundPlane = qfalse;   // jumping away
   pml.walking = qfalse;
@@ -2973,8 +2973,8 @@ static void PM_Weapon( void )
   {
     if( BG_WeaponHasThirdMode( pm->ps->weapon ) )
     {
-      //hacky special case for slowblob
-      if( pm->ps->weapon == WP_ALEVEL3_UPG && !ammo )
+      //hacky special case for bounceball and ablob
+      if( ( pm->ps->weapon == WP_ALEVEL3_UPG || pm->ps->weapon == WP_ALEVEL4 ) && !ammo )
       {
         PM_AddEvent( EV_NOAMMO );
         pm->ps->weaponTime += 200;
@@ -3143,9 +3143,9 @@ static void PM_Weapon( void )
 
     BG_PackAmmoArray( pm->ps->weapon, pm->ps->ammo, pm->ps->powerups, ammo, clips );
   }
-  else if( pm->ps->weapon == WP_ALEVEL3_UPG && attack3 )
+  else if( ( pm->ps->weapon == WP_ALEVEL3_UPG || pm->ps->weapon == WP_ALEVEL4 ) && attack3 )
   {
-    //special case for slowblob
+    //special case for bounceball and ablob
     ammo--;
     BG_PackAmmoArray( pm->ps->weapon, pm->ps->ammo, pm->ps->powerups, ammo, clips );
   }
