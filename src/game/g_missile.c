@@ -166,6 +166,7 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       AngleVectors( other->client->ps.viewangles, dir, NULL, NULL );
       other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
     }
+/*
 //Credits go to the KoRx dev team
     if( other->s.eType == ET_BUILDABLE && other->spawned && 
       ( other->buildableTeam == TEAM_ALIENS ) && other->health > 0 )
@@ -176,6 +177,7 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
         other->health = bHealth;
       nodamage = qtrue;
     }
+*/
   }
 /* //This following is a whole load of bullcrap. It doesn't work. Worth a try though.
   else if( !strcmp( ent->classname, "lcannon" ) )

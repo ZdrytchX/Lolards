@@ -1621,6 +1621,11 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     damagemodifier = G_CalcDamageModifier( point, targ, attacker, client->ps.stats[ STAT_PCLASS ], dflags );
     take = (int)( (float)take * damagemodifier );
 
+//hacky fix for ablob
+    if( targ->s.eType == ET_BUILDABLE && attacker->client && 
+        take == LEVEL4_ABLOB_DMG )  {
+        take = (int)( LEVEL4_ABLOB_DMG_B ); }
+
     //if boosted poison every attack
     if( attacker->client && attacker->client->ps.stats[ STAT_STATE ] & SS_BOOSTED )
     {
@@ -1727,10 +1732,6 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
           level.humanStatsCounters.dmgdone+=takeNoOverkill;
         }
       }
-//hacky fix for ablob
-    if( targ->s.eType == ET_BUILDABLE && attacker->client && 
-        damage = LEVEL4_ABLOB_DMG
-        damage = (int)( LEVEL4_ABLOB_DMG_B );
     }
 
     
