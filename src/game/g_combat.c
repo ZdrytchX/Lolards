@@ -1727,6 +1727,10 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
           level.humanStatsCounters.dmgdone+=takeNoOverkill;
         }
       }
+//hacky fix for ablob
+    if( targ->s.eType == ET_BUILDABLE && attacker->client && 
+        damage = LEVEL4_ABLOB_DMG
+        damage = (int)( LEVEL4_ABLOB_DMG_B );
     }
 
     

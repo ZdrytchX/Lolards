@@ -55,6 +55,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_BLOB_SPEED_MOD     0.6f
 #define ABUILDER_BLOB_LIFETIME      ABUILDER_BLOB_REPEAT*3.5//Blob lifetime before exploding on its own; default is 5000 seconds, but you dont want a minefield of them because they get OP againts big guys
 #define ABUILDER_BLOB_TIME          8000 //5000 how long a guy gets slowed down //5000 -> 8000
+//Ripped from KoRx
+//buildable regen = ABUILDER_BLOB_HEAL + ABUILDER_BLOB_HEAL_REGENMOD * buildable regen
+#define ABUILDER_BLOB_HEAL          8
+#define ABUILDER_BLOB_HEAL_REGENMOD 2.0f          
 
 #define LEVEL0_BITE_DMG             ADM(36)
 #define LEVEL0_BITE_RANGE           64.0f
@@ -161,8 +165,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_TRAMPLE_CHARGE       200//Charging Charge per decasecond. Default 100. 
 #define LEVEL4_TRAMPLE_DMG_B        0.35f //Dmg to buildables 
 //rant spit bomb
-#define LEVEL4_ABLOB_DMG            LEVEL3_BOUNCEBALL_DMG
-#define LEVEL4_ABLOB_RADIUS         300
+#define LEVEL4_ABLOB_DMG            201 //Must not equal to anything else!
+#define LEVEL4_ABLOB_DMG_B          LEVEL3_BOUNCEBALL_DMG //because if damage = previous variable, it is replaced with this one. //TODO: Fix this for buildables [g_combat.c ctrl+F ->hacky fix for ablob]
+#define LEVEL4_ABLOB_RADIUS         200 //200 is more than enough to annoy campers
 #define LEVEL4_ABLOB_SPEED          500
 #define LEVEL4_ABLOB_STUNTIME       1200
 
