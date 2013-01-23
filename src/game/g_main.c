@@ -255,14 +255,19 @@ vmCvar_t  g_strip_StructDmgPrcnt;
 vmCvar_t  g_strip_StructDmgPrcnt_def;
 vmCvar_t  g_connectedStripPrcnt;
 
+//ZdrytchX
+vmCvar_t  g_vampiremode;
+vmCvar_t  g_bot_extras;
+
+
 static cvarTable_t   gameCvarTable[ ] =
 {
-  // don't override the cheat state set by the system
-  { &g_cheats, "sv_cheats", "", 0, 0, qfalse },
+  // don't override the cheat state set by the system// Nope, I will.
+  { &g_cheats, "sv_cheats", "", CVAR_SERVERINFO | CVAR_LATCH, 0, qfalse },
 
   // noset vars
   { NULL, "gamename", GAME_VERSION , CVAR_SERVERINFO | CVAR_ROM, 0, qfalse  },
-  { NULL, "gamedate", __DATE__ , CVAR_ROM, 0, qfalse  },
+  { NULL, "gamedate", __DATE__ , CVAR_SERVERINFO | CVAR_ROM, 0, qfalse  },
   { &g_restarted, "g_restarted", "0", CVAR_ROM, 0, qfalse  },
   { &g_lockTeamsAtStart, "g_lockTeamsAtStart", "0", CVAR_ROM, 0, qfalse  },
   { NULL, "sv_mapname", "", CVAR_SERVERINFO | CVAR_ROM, 0, qfalse  },
@@ -284,11 +289,11 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_synchronousClients, "g_synchronousClients", "0", CVAR_SYSTEMINFO, 0, qfalse  },
 
   { &g_friendlyFire, "g_friendlyFire", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue  },
-  { &g_friendlyFireAliens, "g_friendlyFireAliens", "0", CVAR_ARCHIVE, 0, qtrue  },
-  { &g_friendlyFireHumans, "g_friendlyFireHumans", "0", CVAR_ARCHIVE, 0, qtrue  },
-  { &g_retribution, "g_retribution", "0", CVAR_ARCHIVE, 0, qtrue  },
+  { &g_friendlyFireAliens, "g_friendlyFireAliens", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue  },
+  { &g_friendlyFireHumans, "g_friendlyFireHumans", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue  },
+  { &g_retribution, "g_retribution", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue  },
   { &g_friendlyBuildableFire, "g_friendlyBuildableFire", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue  },
-  { &g_friendlyFireMovementAttacks, "g_friendlyFireMovementAttacks", "1", CVAR_ARCHIVE, 0, qtrue  },
+  { &g_friendlyFireMovementAttacks, "g_friendlyFireMovementAttacks", "1", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue  },
   { &g_devmapNoGod, "g_devmapNoGod", "0", CVAR_ARCHIVE, 0, qtrue  },
   { &g_devmapNoStructDmg, "g_devmapNoStructDmg", "0", CVAR_ARCHIVE, 0, qtrue  },
 
@@ -453,8 +458,8 @@ static cvarTable_t   gameCvarTable[ ] =
   // misc bot cvars
   { &g_bot_attackStruct, "g_bot_attackStruct", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   { &g_bot_roam, "g_bot_roam", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
-  { &g_bot_infinite_funds, "g_bot_infinite_funds", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
-  { &g_bot_survival, "g_bot_survival", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_infinite_funds, "g_bot_infinite_funds", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_survival, "g_bot_survival", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   { &g_bot_wave_interval, "g_bot_wave_interval", "120", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   
   // </bot stuff>
@@ -497,6 +502,10 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_strip_StructDmgPrcnt,     "g_strip_StructDmgPrcnt",       "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART,   0, qtrue },
   { &g_strip_StructDmgPrcnt_def, "g_strip_StructDmgPrcnt_def",   "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART,   0, qtrue },
   { &g_connectedStripPrcnt,      "g_connectedStripPrcnt",       "50", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART,  50, qtrue },
+
+//ZdrytchX
+  { &g_vampiremode,      "g_vampiremode",       "0", CVAR_SERVERINFO | CVAR_ARCHIVE,  0, qfalse },
+  { &g_bot_extras,      "g_bot_extras",       "0", CVAR_ARCHIVE,  0, qfalse },
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );

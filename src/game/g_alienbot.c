@@ -56,7 +56,6 @@ int G_BotEvolveToClass( gentity_t *ent, char *classname, usercmd_t *botCmdBuffer
                 return 0;
             break;
         case PCL_ALIEN_LEVEL1_UPG:
-        case PCL_HUMAN_BSUIT:
             if(g_bot_advbasi.integer == 0)
                 return 0;
             break;
@@ -78,6 +77,10 @@ int G_BotEvolveToClass( gentity_t *ent, char *classname, usercmd_t *botCmdBuffer
             break;
         case PCL_ALIEN_LEVEL4:
             if(g_bot_tyrant.integer == 0)
+                return 0;
+            break;
+        case PCL_HUMAN_BSUIT:
+            if(g_bot_extras.integer == 0)
                 return 0;
             break;
         default:
@@ -125,8 +128,8 @@ int G_BotEvolveToClass( gentity_t *ent, char *classname, usercmd_t *botCmdBuffer
 
                 if( ent->client->pers.evolveHealthFraction < 0.0f )
                     ent->client->pers.evolveHealthFraction = 0.0f;
-                else if( ent->client->pers.evolveHealthFraction > 1.5f )
-                    ent->client->pers.evolveHealthFraction = 1.5f;
+                else if( ent->client->pers.evolveHealthFraction > MAX_MAX_HEALTH )
+                    ent->client->pers.evolveHealthFraction = MAX_MAX_HEALTH;
 
                 //remove credit
                 G_AddCreditToClient( ent->client, -(short)numLevels, qtrue );

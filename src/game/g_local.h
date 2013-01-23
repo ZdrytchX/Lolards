@@ -1581,6 +1581,10 @@ extern  vmCvar_t  g_strip_StructDmgPrcnt;
 extern  vmCvar_t  g_strip_StructDmgPrcnt_def;
 extern  vmCvar_t  g_connectedStripPrcnt;
 
+//ZdrytchX
+extern  vmCvar_t  g_vampiremode;
+extern  vmCvar_t  g_bot_extras;
+
 void      trap_Printf( const char *fmt );
 void      trap_Error( const char *fmt );
 int       trap_Milliseconds( void );

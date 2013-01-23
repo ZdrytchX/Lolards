@@ -819,6 +819,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //see g_combat.c for the equation. Search for #define vamp
 
 #define VAMP_ON                     0 //Used to balance some things above. Does not effect vampire code.
+//TODO: Change into CVAR
+//Test
+/*
+int vampireon 0;
+if( g_vampiremode.integer == 1 )
+{
+vampireon = 1;
+}
+#define VAMP_ON vampireon
+*/	
+//Endtest
 
 #define VAMP_EXTRA                  50 //50
 #define VAMP_TAKE_MULTIPLIER        (1.00f*(VAMP_ON)/600) //see g_combat.c why it needs to be a small number
