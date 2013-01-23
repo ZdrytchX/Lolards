@@ -165,11 +165,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_TRAMPLE_CHARGE       200//Charging Charge per decasecond. Default 100. 
 #define LEVEL4_TRAMPLE_DMG_B        0.35f //Dmg to buildables 
 //rant spit bomb
-#define LEVEL4_ABLOB_DMG            201 //Must not equal to anything else!
-#define LEVEL4_ABLOB_DMG_B          LEVEL3_BOUNCEBALL_DMG //because if damage = previous variable, it is replaced with this one. //TODO: Fix this for buildables [g_combat.c ctrl+F ->hacky fix for ablob]
+#define LEVEL4_ABLOB_DMG            ADM(201) //Must not equal to anything else!
+#define LEVEL4_ABLOB_DMG_B          ADM(120) //because if damage = previous variable, it is replaced with this one. //TODO: Fix this for buildables [g_combat.c ctrl+F ->hacky fix for ablob]
 #define LEVEL4_ABLOB_RADIUS         200 //200 is more than enough to annoy campers
 #define LEVEL4_ABLOB_SPEED          500
-#define LEVEL4_ABLOB_STUNTIME       1200
+#define LEVEL4_ABLOB_STUNTIME       1200 //Prevents self from attacking
+#define LEVEL4_ABLOB_LIFETIME       10000 //spitbomb lifetime
 
 
 //Adv Rant experiment
@@ -430,9 +431,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BLASTER_K_SCALE             5.0f //knockback now very noticable
 #define BLASTER_SPREAD              200 //doesn't work, soon to be fixed
 #define BLASTER_SPEED               1400 //1400 //2400
-#define BLASTER_DMG                 HDM(12)
+#define BLASTER_DMG                 HDM(120)
+#define BLASTER_DMG_MOD             0.1f //Modifier for damage, upper one is used for knockback
 #define BLASTER_RADIUS              35
-#define BLASTER_SPLASH              12
+#define BLASTER_SPLASH              HDM(120)
 #define BLASTER_CLIPSIZE            6 //disabled
 #define BLASTER_MAXCLIPS            9 //disabled
 #define BLASTER_MELEE               18 //not too high because it would be overpowered
@@ -448,6 +450,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define RIFLE_PRICE                 0
 #define RIFLE_SPREAD                170
 #define RIFLE_DMG                   HDM(6) //5 //6
+//#define RIFLE_SPEED                 9600 //300 m/s
 
 #define PAINSAW_PRICE               100
 #define PAINSAW_REPEAT              65 
@@ -530,7 +533,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PRIFLE_REPEAT               125
 #define PRIFLE_K_SCALE              1.0f
 #define PRIFLE_RELOAD               2000
-#define PRIFLE_DMG                  HDM(13)
+#define PRIFLE_DMG                  HDM(52)
+#define PRIFLE_DMG_MOD              0.25f//Same deal as blaster, this one allows wall climbing.
+#define PRIFLE_SPLASH               HDM(52)
+#define PRIFLE_RADIUS               16
 #define PRIFLE_SPEED                2000
 
 //Flamer has a realistic shot by halving the repeat rate (2x speed) and halving the dmg
@@ -539,7 +545,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FLAMER_RELOAD               3000
 #define FLAMER_REPEAT               100
 #define FLAMER_K_SCALE              0.5f
-#define FLAMER_DMG                  HDM(11) //20 //2 dmg increase only because we have vampire
+#define FLAMER_DMG_MIN              HDM(3)//Default = FLAMER_DMG
+#define FLAMER_DMG                  HDM(11 - FLAMER_DMG_MIN) //20 //2 dmg increase only because we have vampire
+#define FLAMER_RADIUS_MOD           1.0f //Radius damage mod
 #define FLAMER_RADIUS               80 //50
 #define FLAMER_LIFETIME             800.0f
 #define FLAMER_SPEED                400.0f //300
@@ -688,7 +696,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_SPLASHRADIUS       100
 #define MGTURRET_ANGULARSPEED       5  //degrees/think 8 ~= 200deg/sec //3 //now 5 because of added MGTURRET_FIRE_SPEED
 #define MGTURRET_ACCURACYTOLERANCE  MGTURRET_ANGULARSPEED / 1.5f //1.5 angular difference for turret to fire
-#define MGTURRET_VERTICALCAP        30  // -ve minimum pitch //45
+#define MGTURRET_VERTICALCAP        45  // -ve minimum pitch //45
 #define MGTURRET_DROOPSCALE         0.25     //droop rate when unpowered //0.25
 #define MGTURRET_DROOPRATE          50 //x/1000 = droops per second, as well as a repacement for power refreshment time
 #define MGTURRET_REPEAT             79 //100
@@ -712,6 +720,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //*2 = Fast rise = 16
 //*0 = no rise -> erm...
 #define MGTURRET_ACCURACY_PITCH         0.8f
+//GPP spinup
+//#define MGTURRET_SPINUP_TIME        750 // time between target sighted and fire
 
 
 #define TESLAGEN_BP                 10

@@ -547,7 +547,7 @@ static void S_AL_ScaleGain(src_t *chksrc, vec3_t origin)
 		
 		scaleFactor *= chksrc->curGain;
 		
-		if(chksrc->scaleGain != scaleFactor);
+		if(chksrc->scaleGain != scaleFactor)
 		{
 			chksrc->scaleGain = scaleFactor;
 			// if(scaleFactor > 0.0f)

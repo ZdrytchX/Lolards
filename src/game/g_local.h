@@ -212,6 +212,7 @@ struct gentity_s
   char              *message;
 
   int               timestamp;      // body queue sinking, etc
+//  int               startTime; // currently for the diminishing missile damage
 
   float             angle;          // set in editor, -1 = up, -2 = down
   char              *target;
@@ -315,6 +316,7 @@ struct gentity_s
 
   gentity_t         *targeted;          // true if the player is currently a valid target of a turret
   vec3_t            turretAim;          // aim vector for turrets
+  int               turretSpinupTime;   // spinup delay for norfenturrets
 
   vec4_t            animation;          // animated map objects
 
@@ -1112,6 +1114,7 @@ gentity_t *fire_hive( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *launch_grenade( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_mdriver( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_aBlob( gentity_t *self, vec3_t start, vec3_t dir );
+//gentity_t *fire_rifle( gentity_t *self, vec3_t start, vec3_t dir );
 
 //
 // g_mover.c

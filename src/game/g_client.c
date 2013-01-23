@@ -1035,7 +1035,7 @@ void ClientUserinfoChanged( int clientNum )
   char      c1[ MAX_INFO_STRING ];
   char      c2[ MAX_INFO_STRING ];
   char      userinfo[ MAX_INFO_STRING ];
-  team_t    team;
+  pTeam_t   team;
 
   int l = 0;
   int isBot = 0;

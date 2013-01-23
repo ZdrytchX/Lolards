@@ -714,7 +714,7 @@ static qboolean PM_CheckJump( void )
 
   //TA: take some stamina off
   if( pm->ps->stats[ STAT_PTEAM ] == PTE_HUMANS )
-    pm->ps->stats[ STAT_STAMINA ] -= 300;
+    pm->ps->stats[ STAT_STAMINA ] -= 100; //-300
 
   pm->ps->groundEntityNum = ENTITYNUM_NONE;
 
@@ -3203,8 +3203,8 @@ static void PM_Weapon( void )
     if( pm->ps->pm_flags & PMF_DUCKED ||
         BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
     {
-      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 0.0 ) - 0.0 ) * ( 30.0 / (float)addTime ) );
-      pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 0.0 ) - 0.00 ) * ( 30.0 / (float)addTime ) );
+      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 0.6 ) - 0.3 ) * ( 30.0 / (float)addTime ) );
+      pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 0.6 ) - 0.3 ) * ( 30.0 / (float)addTime ) );
     }
     else if (BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, pm->ps->stats ))
     {

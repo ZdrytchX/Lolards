@@ -639,7 +639,7 @@ typedef struct centity_s
   buildableAnimNumber_t oldBuildableAnim; //to detect when new anims are set
   particleSystem_t      *buildablePS;
   buildableStatus_t     buildableStatus;
-  float                 lastBuildableHealthScale;
+  int                   lastBuildableHealth;
   int                   lastBuildableDamageSoundTime;
 
   lightFlareStatus_t    lfs;

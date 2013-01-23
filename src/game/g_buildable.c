@@ -2253,10 +2253,12 @@ void HMGTurret_Think( gentity_t *self )
     {
       // unpowered turret barrel falls to bottom of range
       float droop;
+      float droopaccel;
       droop = AngleNormalize180( self->s.angles2[ PITCH ] );
       if( droop < MGTURRET_VERTICALCAP )
 	{
-	  droop +=  MGTURRET_DROOPSCALE;
+          droopaccel += 0.05;
+	  droop +=  MGTURRET_DROOPSCALE + droopaccel;
 	  if( droop > MGTURRET_VERTICALCAP )
 	    droop = MGTURRET_VERTICALCAP;
 	  self->s.angles2[ PITCH ] = droop;
@@ -2266,6 +2268,7 @@ void HMGTurret_Think( gentity_t *self )
 	}
       else //Once done, go back to sleep!
        	  self->nextthink = level.time + POWER_REFRESH_TIME;
+          droopaccel = 0.00;
           return;
      } 
    if( self->spawned )

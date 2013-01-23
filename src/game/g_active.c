@@ -985,7 +985,7 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
         ammo++;
         BG_PackAmmoArray( WP_ALEVEL3_UPG, client->ps.ammo, client->ps.powerups, ammo, 0 );
       }
-      else if ( ammo == ammo ) //Hacky odd fix
+      else if ( ammo == maxAmmo ) //Hacky odd fix
       {
         client->time10000 = 5000; //Set only 15-5 = (10) seconds to recharge after shot
       }
@@ -1007,7 +1007,7 @@ if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) //only applies for aliens rig
         ammo++;
         BG_PackAmmoArray( WP_ALEVEL4, client->ps.ammo, client->ps.powerups, ammo, 0 );
       }
-      else if ( ammo == ammo ) //Hacky odd fix
+      else if ( ammo == maxAmmo ) //Hacky odd fix
       {
         client->ablobregen = 60000; //No cheap quick reloads
       }

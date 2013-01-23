@@ -469,8 +469,23 @@ void aBlobFire( gentity_t *ent )
   m = fire_aBlob( ent, muzzle, forward );
   VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  
 }
+/*
+======================================================================
 
+RIFLE
+BULLET PHYSICS
 
+======================================================================
+*/
+/*
+void rifleFire( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = fire_Rifle( ent, muzzle, forward );
+
+}
+*/
 /*
 ======================================================================
 
@@ -1807,6 +1822,7 @@ void FireWeapon( gentity_t *ent )
       break;
     case WP_MACHINEGUN:
       bulletFire( ent, RIFLE_SPREAD, RIFLE_DMG, MOD_MACHINEGUN );
+//      rifleFire( ent );
       break;
     case WP_SHOTGUN:
       shotgunFire( ent );

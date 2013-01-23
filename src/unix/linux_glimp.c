@@ -70,7 +70,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <X11/cursorfont.h>
 
 #if !defined(__sun)
-#include <X11/extensions/xf86dga.h>
+#include <X11/extensions/Xxf86dga.h>
 #include <X11/extensions/xf86vmode.h>
 #endif
 
@@ -200,8 +200,8 @@ static const char *Q_stristr( const char *s, const char *find)
 
 static char *XLateKey(XKeyEvent *ev, int *key)
 {
-  static unsigned char buf[64];
-  static unsigned char bufnomod[2];
+  static char buf[64];
+  static char bufnomod[2];
   KeySym keysym;
   int XLookupRet;
 
@@ -354,7 +354,7 @@ static char *XLateKey(XKeyEvent *ev, int *key)
     {
       // XK_* tests failed, but XLookupString got a buffer, so let's try it
       if (in_shiftedKeys->integer) {
-        *key = *(unsigned char *)buf;
+        *key = (unsigned char)*buf;
         if (*key >= 'A' && *key <= 'Z')
           *key = *key - 'A' + 'a';
         // if ctrl is pressed, the keys are not between 'A' and 'Z', for instance ctrl-z == 26 ^Z ^C etc.
@@ -362,7 +362,7 @@ static char *XLateKey(XKeyEvent *ev, int *key)
         else if (*key >= 1 && *key <= 26)
           *key = *key + 'a' - 1;
       } else {
-        *key = bufnomod[0];
+        *key = (unsigned char)bufnomod[0];
       }
     }
     break;

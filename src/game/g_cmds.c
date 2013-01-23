@@ -3390,7 +3390,8 @@ void Cmd_Buy_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, va( "print \"This item is currently denied to stripped players\n\"" ) );
       return;
     }
-
+    if( oldWeapon != -1 )
+     {
     // a stripped player buying ammo for a stripped weapon
     // consider overrides first
     iNakedStageOvr = OverrideNakedStage( BG_FindNameForWeapon( oldWeapon ), g_humanStage.integer );
@@ -3403,7 +3404,7 @@ void Cmd_Buy_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, va( "print \"Because of strip you are not allowed to use this weapon anymore\n\"" ) );
       return;
     }
-
+     }
 
     if( upgrade == UP_BATTLESUIT && ent->client->ps.pm_flags & PMF_DUCKED )
     {

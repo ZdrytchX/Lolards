@@ -1398,7 +1398,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     return;
   }
 
-  if( attacker->client->pers.nakedPlayer && targ->s.eType == ET_BUILDABLE )
+  if( attacker->client && attacker->client->pers.nakedPlayer && targ->s.eType == ET_BUILDABLE )
   //  return;
   // cicho-sza add on:
   {
@@ -1415,7 +1415,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       damage = 0.5 + (int)( (float)iTmp * (float)(damage-1) / 100.0f); //Fixed 'extra 1 dmg' bug
   }
 
-  if( attacker->client->pers.nakedPlayer && targ->s.eType != ET_BUILDABLE )
+ if( attacker->client && attacker->client->pers.nakedPlayer && targ->s.eType != ET_BUILDABLE )
   {
     // instead of dealing no damage at all, let's check modifier
     if (g_strip_PlayerDmgPrcnt.integer < 1) return; // no more checking if no dmg to players
@@ -1495,6 +1495,14 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       targ->client->ps.pm_flags |= PMF_TIME_KNOCKBACK;
     }
   }
+
+  if ( mod == MOD_BLASTER ) {
+		damage *= BLASTER_DMG_MOD;
+	}
+  if ( mod == MOD_PRIFLE ) {
+		damage *= PRIFLE_DMG_MOD;
+	}
+
 
   // check for completely getting out of the damage
   if( !( dflags & DAMAGE_NO_PROTECTION ) )
@@ -1783,18 +1791,19 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       targ->pain( targ, attacker, take );
           // Vampire mod
 		//stop buildable invincability in vampire
-	if ((attacker->s.eType == ET_BUILDABLE ) )
+	if (attacker->s.eType == ET_BUILDABLE)
 		{
+                int maxHP = BG_FindHealthForBuildable( attacker->s.modelindex );
 			attacker->health = attacker->health + ( take / 2 ); //don't want a multiplier for max health; becomes too strong and invincable
 //Make sure they don't go over 100% hp due to visual issues
-        		  if (attacker->health > attacker->client->ps.stats[ STAT_MAX_HEALTH ] * 1.0) 
+        		  if (attacker->health > maxHP) 
         		  {
-            		      attacker->health = attacker->client->ps.stats[ STAT_MAX_HEALTH ] * 1.0;
+            		      attacker->health = maxHP;
     		      }
 		}
 	else
 	{
-		if ((targ->s.eType == ET_BUILDABLE ) )
+		if (targ->s.eType == ET_BUILDABLE)
 	return; //take too strong and humans don't die when invading alien base.
 /*{
 	attacker->health = attacker->health + ( take / 4 ); //no matter what buildable's health is
@@ -1802,7 +1811,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 //TODO: If attacker has flamer - deny vamp gain abilities.
 //TODO: If Victim is a tyrant, reward half.
 //TODO: If victim is armoured, use the inverse of that modifier.
-	else
+	else if(attacker->client)
 		{
           attacker->health = attacker->health + VAMP; //gain according to the player's health ratio so a dretch doesn't become invincable.//Also, they gain porportional according to their max health (+ 50).
           if (attacker->health > attacker->client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH) 

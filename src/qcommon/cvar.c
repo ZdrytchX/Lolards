@@ -802,7 +802,7 @@ void Cvar_Restart_f( void ) {
 			}
 			// clear the var completely, since we
 			// can't remove the index from the list
-			Com_Memset( var, 0, sizeof( var ) );
+			Com_Memset( var, 0, sizeof( *var ) );
 			continue;
 		}
 

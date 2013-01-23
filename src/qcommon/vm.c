@@ -331,7 +331,7 @@ Dlls will call this directly
 ============
 */
 intptr_t QDECL VM_DllSyscall( intptr_t arg, ... ) {
-#if !id386
+#if !id386 || defined __clang__
   // rcg010206 - see commentary above
   intptr_t args[16];
   int i;

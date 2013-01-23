@@ -167,8 +167,8 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
     }
 /*
-//Credits go to the KoRx dev team
-    if( other->s.eType == ET_BUILDABLE && other->spawned && 
+//Credits go to the KoRx dev team //Undeclared "->" problem
+    if( other->s.eType == ET_BUILDABLE && 
       ( other->buildableTeam == TEAM_ALIENS ) && other->health > 0 )
     {
       int bHealth = BG_FindHealthForBuildable( other->s.modelindex );
@@ -341,11 +341,17 @@ gentity_t *fire_flamer( gentity_t *self, vec3_t start, vec3_t dir )
   gentity_t *bolt;
   vec3_t    pvel;
 
+//  float f;
+
   VectorNormalize (dir);
 
   bolt = G_Spawn();
   bolt->classname = "flame";
   bolt->nextthink = level.time + FLAMER_LIFETIME;
+//  bolt->startTime = level.time;
+
+//  f = (( level.time - self->startTime ) / (FLAMER_LIFETIME * 10)) * 1.00f;
+
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
   bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
@@ -353,8 +359,8 @@ gentity_t *fire_flamer( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->s.generic1 = self->s.generic1; //weaponMode
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
-  bolt->damage = FLAMER_DMG;
-  bolt->splashDamage = FLAMER_DMG;
+  bolt->damage = FLAMER_DMG /** f*/ + FLAMER_DMG_MIN;
+  bolt->splashDamage = FLAMER_DMG * FLAMER_RADIUS_MOD /** f*/ + FLAMER_DMG_MIN;
   bolt->splashRadius = FLAMER_RADIUS;
   bolt->methodOfDeath = MOD_FLAMER;
   bolt->splashMethodOfDeath = MOD_FLAMER_SPLASH;
@@ -407,10 +413,7 @@ gentity_t *fire_blaster( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_BLASTER;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
-//  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -1.0f;
-//  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 1.0f;
-  bolt->s.pos.trType = TR_GRAVITY; //TR_LIGHTGRAVITY; //ehem... its too useful againts long distance- buildable killing, dont use linear
-//bolt->s.pos.trType = TR_GRAVITY; //LINEAR is linear, TR_BUOYANCY goes up
+  bolt->s.pos.trType = TR_GRAVITY;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
   VectorScale( dir, BLASTER_SPEED, bolt->s.pos.trDelta );
@@ -446,8 +449,8 @@ gentity_t *fire_pulseRifle( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = PRIFLE_DMG;
-  bolt->splashDamage = 10;
-  bolt->splashRadius = 16;
+  bolt->splashDamage = PRIFLE_SPLASH;
+  bolt->splashRadius = PRIFLE_RADIUS;
   bolt->methodOfDeath = MOD_PRIFLE;
   bolt->splashMethodOfDeath = MOD_PRIFLE;
   bolt->clipmask = MASK_SHOT;
@@ -485,32 +488,31 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int da
 
   if( damage == LCANNON_TOTAL_CHARGE )
 	{
-    bolt->nextthink = level.time + 1; //launches and blows self up. Only difference bwteeen default and + 1 is one milisecond life time. Don't worry about changing these other values in this section if you don't change this.
-  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -5.0f;
-  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 5.0f;
+    bolt->nextthink = level.time + 1;
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -4.0f;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 4.0f;
   VectorScale( dir, LCANNON_SPEED, bolt->s.pos.trDelta );
 	}
   else if ( damage < LCANNON_TOTAL_CHARGE )
 	{
     bolt->nextthink = level.time + 100000;
-  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -6.0f;
-  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 6.0f;
-  VectorScale( dir, ((1 - ((localDamage - LCANNON_TOTAL_CHARGE) / 200)) * LCANNON_SPEED), bolt->s.pos.trDelta ); //YEAH BITCH! MORE POWER - SLOWER BULLETS! uhh...
-//A better explaination: Minimum charge from solo - speed ~ 800 and max = 330
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -3.0f;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 3.0f;
+  VectorScale( dir, ((1 - ((localDamage - LCANNON_TOTAL_CHARGE) / 200)) * LCANNON_SPEED), bolt->s.pos.trDelta ); //Stronger = Slower
 	}
   else if ( damage == LCANNON_SECONDARY_DAMAGE ) //then it must be a secondary fire
 	{
     bolt->nextthink = level.time + 100000;
-  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -2.0f;
-  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 2.0f;
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -0.0f;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 0.0f;
   VectorScale( dir, (LCANNON_SECONDARY_SPEED), bolt->s.pos.trDelta ); //speedy ball
 	}
   else //backup: kill self
 	{
     bolt->nextthink = level.time + 1;
-  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -2.0f;
-  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 2.0f;
-  VectorScale( dir, 0, bolt->s.pos.trDelta ); //prove there's an error: make it stationary
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -0.0f;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 0.0f;
+  VectorScale( dir, 0, bolt->s.pos.trDelta );
 	}
 
   bolt->think = G_ExplodeMissile;
@@ -528,7 +530,7 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int da
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
 
-  bolt->s.pos.trType = TR_LINEAR;//TR_LINEAR
+  bolt->s.pos.trType = TR_LINEAR;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
   SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
@@ -697,8 +699,8 @@ gentity_t *fire_hive( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = HIVE_DMG;
-  bolt->splashDamage = 30; //not to high - it kills trappers
-  bolt->splashRadius = 60;
+  bolt->splashDamage = 30; //not to high
+  bolt->splashRadius = 30;
   bolt->methodOfDeath = MOD_SWARM;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = self->target_ent;
@@ -947,7 +949,7 @@ gentity_t *fire_aBlob( gentity_t *self, vec3_t start, vec3_t dir )
 
   bolt = G_Spawn( );
   bolt->classname = "ablob";
-  bolt->nextthink = level.time + 10000;
+  bolt->nextthink = level.time + LEVEL4_ABLOB_LIFETIME;
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
   bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
@@ -976,3 +978,46 @@ gentity_t *fire_aBlob( gentity_t *self, vec3_t start, vec3_t dir )
   return bolt;
 }
 
+/*
+=================
+fire_Rifle
+=================
+*/
+/*
+gentity_t *fire_Rifle( gentity_t *self, vec3_t start, vec3_t dir )
+{
+  gentity_t *bolt;
+  vec3_t    pvel;
+
+  VectorNormalize ( dir );
+
+  bolt = G_Spawn( );
+  bolt->classname = "rifle";
+  bolt->nextthink = level.time + 8000;
+  bolt->think = G_ExplodeMissile;
+  bolt->s.eType = ET_MISSILE;
+  bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
+  bolt->s.weapon = WP_MACHINEGUN;
+  bolt->s.generic1 = self->s.generic1; //weaponMode
+  bolt->r.ownerNum = self->s.number;
+  bolt->parent = self;
+  bolt->damage = RIFLE_DMG;
+  bolt->splashDamage = 0;
+  bolt->splashRadius = 0;
+  bolt->methodOfDeath = MOD_MACHINEGUN; //compatability reasons
+  bolt->splashMethodOfDeath = MOD_MACHINEGUN;
+  bolt->clipmask = MASK_SHOT;
+  bolt->target_ent = NULL;
+
+  bolt->s.pos.trType = TR_GRAVITY;
+  bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
+  VectorCopy( start, bolt->s.pos.trBase );
+ // VectorScale( dir, RIFLE_SPEED, bolt->s.pos.trDelta );
+  VectorScale( self->client->ps.velocity, MDRIVER_LAG, pvel ); //ripped from
+  VectorMA( pvel, RIFLE_SPEED, dir, bolt->s.pos.trDelta );  //flamer
+  SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
+  VectorCopy( start, bolt->r.currentOrigin );
+
+  return bolt;
+}
+*/

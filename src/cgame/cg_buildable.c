@@ -121,7 +121,7 @@ static void CG_Creep( centity_t *cent )
     else
       frac = 1.0f;
   }
-  else if( time < 0 )
+  else
   {
     msec = cg.time + time;
     if( msec >= 0 && msec < CREEP_SCALEDOWN_TIME )
@@ -1212,7 +1212,6 @@ void CG_Buildable( centity_t *cent )
   buildableTeam_t team = BG_FindTeamForBuildable( es->modelindex );
   float           scale;
   int             health;
-  float           healthScale;
 
   //must be before EF_NODRAW check
   if( team == BIT_ALIENS )
@@ -1398,9 +1397,8 @@ void CG_Buildable( centity_t *cent )
   }
 
   health = es->generic1 & B_HEALTH_MASK;
-  healthScale = (float)health / B_HEALTH_MASK;
 
-  if( healthScale < cent->lastBuildableHealthScale && ( es->generic1 & B_SPAWNED_TOGGLEBIT ) )
+  if( health < cent->lastBuildableHealth && ( es->generic1 & B_SPAWNED_TOGGLEBIT ) )
   {
     if( cent->lastBuildableDamageSoundTime + BUILDABLE_SOUND_PERIOD < cg.time )
     {
@@ -1416,7 +1414,7 @@ void CG_Buildable( centity_t *cent )
     }
   }
 
-  cent->lastBuildableHealthScale = healthScale;
+  cent->lastBuildableHealth = health;
 
   //smoke etc for damaged buildables
   CG_BuildableParticleEffects( cent );
