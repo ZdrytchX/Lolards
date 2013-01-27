@@ -587,7 +587,9 @@ static qboolean PM_CheckWallJump( void )
 
   if( pm->ps->pm_flags & PMF_TIME_WALLJUMP )
     return qfalse;
-
+//TODO: Find a way to find the already-declared var
+//  if (g_bunnyhop.integer == 0)
+//{
   // must wait for jump to be released
   if( pm->ps->pm_flags & PMF_JUMP_HELD &&
       pm->ps->grapplePoint[ 2 ] == 1.0f )
@@ -596,7 +598,7 @@ static qboolean PM_CheckWallJump( void )
     pm->cmd.upmove = 0;
     return qfalse;
   }
-
+//}
   pm->ps->pm_flags |= PMF_TIME_WALLJUMP;
   pm->ps->pm_time = LEVEL2_WALLJUMP_REPEAT;
 
@@ -683,7 +685,7 @@ static qboolean PM_CheckJump( void )
     return qfalse;
 
   if( ( pm->ps->stats[ STAT_PTEAM ] == PTE_HUMANS ) &&
-      ( pm->ps->stats[ STAT_STAMINA ] < -500 ) )
+      ( pm->ps->stats[ STAT_STAMINA ] < STAMINA_MIN_TO_JUMP ) )
     return qfalse;
 
   if( pm->ps->pm_flags & PMF_RESPAWNED )
@@ -699,7 +701,9 @@ static qboolean PM_CheckJump( void )
     pm->cmd.upmove = 0;
     return qfalse;
   }
-
+//Bunnyhop //TODO: Find a way to find the already-declared var, for now its enabled
+/*if (g_bunnyhop.integer == 0)
+//{
   // must wait for jump to be released
   if( pm->ps->pm_flags & PMF_JUMP_HELD )
   {
@@ -707,14 +711,15 @@ static qboolean PM_CheckJump( void )
     pm->cmd.upmove = 0;
     return qfalse;
   }
-
+//}
+*/
   pml.groundPlane = qfalse;   // jumping away
   pml.walking = qfalse;
   pm->ps->pm_flags |= PMF_JUMP_HELD;
 
   //TA: take some stamina off
   if( pm->ps->stats[ STAT_PTEAM ] == PTE_HUMANS )
-    pm->ps->stats[ STAT_STAMINA ] -= 100; //-300
+    pm->ps->stats[ STAT_STAMINA ] -= STAMINA_JUMP; //-300
 
   pm->ps->groundEntityNum = ENTITYNUM_NONE;
 
@@ -2608,7 +2613,8 @@ static void PM_BeginWeaponChange( int weapon )
 
   //special case to prevent storing a charged up lcannon
   if( pm->ps->weapon == WP_LUCIFER_CANNON )
-    pm->ps->stats[ STAT_MISC ] = 0;
+    return; //ZdrytchX: Prevent switching weapon at all
+//    pm->ps->stats[ STAT_MISC ] = 0;
 
 
   // force this here to prevent flamer effect from continuing, among other issues
@@ -2616,7 +2622,7 @@ static void PM_BeginWeaponChange( int weapon )
 
   PM_AddEvent( EV_CHANGE_WEAPON );
   pm->ps->weaponstate = WEAPON_DROPPING;
-  pm->ps->weaponTime += 200;
+  pm->ps->weaponTime +=  H_WEAP_SWITCH_DELAY;//g_weapswitchtime.integer; //200
   pm->ps->persistant[ PERS_NEWWEAPON ] = weapon;
 
   //reset build weapon
@@ -2645,7 +2651,7 @@ static void PM_FinishWeaponChange( void )
 
   pm->ps->weapon = weapon;
   pm->ps->weaponstate = WEAPON_RAISING;
-  pm->ps->weaponTime += 250;
+  pm->ps->weaponTime +=  H_WEAP_SWITCH_DELAY;//g_weapswitchtime.integer; //250
 
   if( !( pm->ps->persistant[ PERS_STATE ] & PS_NONSEGMODEL ) )
     PM_StartTorsoAnim( TORSO_RAISE );

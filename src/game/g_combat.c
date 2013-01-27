@@ -1499,8 +1499,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
   if ( mod == MOD_BLASTER ) {
 		damage *= BLASTER_DMG_MOD;
 	}
-  if ( mod == MOD_PRIFLE ) {
-		damage *= PRIFLE_DMG_MOD;
+  if ( mod == MOD_FLAMER_SPLASH ) {
+		damage *= FLAMER_DMG_MOD;
 	}
 
 
@@ -1759,6 +1759,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       else if( attacker != targ && OnSameTeam( targ, attacker ) )
         targ->client->tkcredits[ attacker->client->ps.clientNum ] += takeNoOverkill;
     }
+//*********************************
+           //start vamp
+//*********************************
 
 //The following is OP when killing dretches..
 //#define VAMP (( attacker->client->ps.stats[ STAT_MAX_HEALTH ] + VAMP_EXTRA) * ( take / ( targ->client->ps.stats[ STAT_MAX_HEALTH ] * 2 )) / VAMP_DIVIDE + 0.5) // supports health gain that is less than 1 value and the '+50' means proportionate to (health + 50). Its also to help dretches and small ones gain health. Now also proportionate to the enemy's health.
@@ -1791,7 +1794,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       targ->pain( targ, attacker, take );
           // Vampire mod
 		//stop buildable invincability in vampire
-	if (attacker->s.eType == ET_BUILDABLE)
+	if (attacker->s.eType == ET_BUILDABLE && g_vampirebuildables.integer > 0)
 		{
                 int maxHP = BG_FindHealthForBuildable( attacker->s.modelindex );
 			attacker->health = attacker->health + ( take / 2 ); //don't want a multiplier for max health; becomes too strong and invincable
@@ -1818,7 +1821,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
           {
                   attacker->health = attacker->client->ps.stats[ STAT_MAX_HEALTH ] * MAX_MAX_HEALTH;
           }
+//********************************
          // end Vampire
+//********************************
           //to make sure they STAY DEAD >={D) (no glitchy revives):
           if ( attacker->health < 0 )
               { attacker->health = -999; } //still possible, if he nades the same spot 999 times... but that will be unlikely because targets would've died and no more hp would be dealt.

@@ -533,9 +533,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PRIFLE_REPEAT               125
 #define PRIFLE_K_SCALE              1.0f
 #define PRIFLE_RELOAD               2000
-#define PRIFLE_DMG                  HDM(52)
-#define PRIFLE_DMG_MOD              0.25f//Same deal as blaster, this one allows wall climbing.
-#define PRIFLE_SPLASH               HDM(52)
+#define PRIFLE_DMG                  HDM(13)
+#define PRIFLE_SPLASH               HDM(6)
 #define PRIFLE_RADIUS               16
 #define PRIFLE_SPEED                2000
 
@@ -545,9 +544,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FLAMER_RELOAD               3000
 #define FLAMER_REPEAT               100
 #define FLAMER_K_SCALE              0.5f
-#define FLAMER_DMG_MIN              HDM(3)//Default = FLAMER_DMG
+#define FLAMER_DMG_MIN              HDM(3)//was going to test this out, scrapped for later
 #define FLAMER_DMG                  HDM(11 - FLAMER_DMG_MIN) //20 //2 dmg increase only because we have vampire
-#define FLAMER_RADIUS_MOD           1.0f //Radius damage mod
+#define FLAMER_DMG_MOD              0.5f//Same deal as blaster, this one allows wall climbing.
+#define FLAMER_RADIUS_MOD           2.0f //Radius damage mod //Previous variable cancels out this one
 #define FLAMER_RADIUS               80 //50
 #define FLAMER_LIFETIME             800.0f
 #define FLAMER_SPEED                400.0f //300
@@ -606,6 +606,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 /*
  * HUMAN upgrades
  */
+#define H_WEAP_SWITCH_DELAY         50//Default 250 //Allow weapon combos
 
 #define LIGHTARMOUR_PRICE           70
 #define LIGHTARMOUR_POISON_PROTECTION 2
@@ -775,12 +776,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HUMAN_BACK_MODIFIER         0.8f //to stop back pedaling
 #define HUMAN_SIDE_MODIFIER         0.9f // dodging/straifing sideways
 
-#define STAMINA_STOP_RESTORE        35 //restore stamina by stopping
-#define STAMINA_WALK_RESTORE        18 //or walking
-#define STAMINA_SPRINT_TAKE         9 //taking stamina away by sprinting //8
-#define STAMINA_LARMOUR_TAKE        12 //It replaces sprint_take when having larmour. According to g_active.c
-#define STAMINA_BSUIT_STOP_RESTORE  40
-#define STAMINA_BSUIT_WALK_RESTORE  20     
+#define STAMINA_STOP_RESTORE        7 //restore stamina by stopping //35
+#define STAMINA_WALK_RESTORE        4 //or walking //18
+#define STAMINA_SPRINT_TAKE         2 //taking stamina away by sprinting //8 //9
+#define STAMINA_LARMOUR_TAKE        3 //It replaces sprint_take when having larmour. According to g_active.c //12
+#define STAMINA_BSUIT_STOP_RESTORE  8 //40
+#define STAMINA_BSUIT_WALK_RESTORE  5 //20
+#define STAMINA_JUMP                60 //vanilla 1.1: 500 Lolards 300
+#define STAMINA_MIN_TO_JUMP         -800//0 Lolards -500
 
 #define HUMAN_SPAWN_REPEAT_TIME     8000 //spawn timing,default 8000
 #define HUMAN_REGEN                 1 //int (per ALIENREGEN_NOCREEP_MOD) per second

@@ -257,7 +257,10 @@ vmCvar_t  g_connectedStripPrcnt;
 
 //ZdrytchX
 vmCvar_t  g_vampiremode;
+vmCvar_t  g_vampirebuildables;
 vmCvar_t  g_bot_extras;
+vmCvar_t  g_bunnyhop;
+vmCvar_t  g_weapswitchtime;
 
 
 static cvarTable_t   gameCvarTable[ ] =
@@ -289,9 +292,9 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_synchronousClients, "g_synchronousClients", "0", CVAR_SYSTEMINFO, 0, qfalse  },
 
   { &g_friendlyFire, "g_friendlyFire", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue  },
-  { &g_friendlyFireAliens, "g_friendlyFireAliens", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue  },
-  { &g_friendlyFireHumans, "g_friendlyFireHumans", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue  },
-  { &g_retribution, "g_retribution", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue  },
+  { &g_friendlyFireAliens, "g_friendlyFireAliens", "0", CVAR_ARCHIVE, 0, qtrue  },
+  { &g_friendlyFireHumans, "g_friendlyFireHumans", "0", CVAR_ARCHIVE, 0, qtrue  },
+  { &g_retribution, "g_retribution", "100", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue  },
   { &g_friendlyBuildableFire, "g_friendlyBuildableFire", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue  },
   { &g_friendlyFireMovementAttacks, "g_friendlyFireMovementAttacks", "1", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue  },
   { &g_devmapNoGod, "g_devmapNoGod", "0", CVAR_ARCHIVE, 0, qtrue  },
@@ -316,7 +319,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_dedicated, "dedicated", "0", 0, 0, qfalse  },
 
   { &g_speed, "g_speed", "320", CVAR_SERVERINFO, 0, qtrue  },
-  { &g_gravity, "g_gravity", "800", CVAR_SERVERINFO, 0, qtrue  }, //I would like the default to be 700, as gravity accel is 9.8 m/s and a human is about 60 units high.
+  { &g_gravity, "g_gravity", "800", CVAR_SERVERINFO, 0, qtrue  },
   { &g_knockback, "g_knockback", "1000", CVAR_SERVERINFO, 0, qtrue  },
   { &g_quadfactor, "g_quadfactor", "3", 0, 0, qtrue  },
   { &g_weaponRespawn, "g_weaponrespawn", "5", 0, 0, qtrue  },
@@ -345,8 +348,8 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_minCommandPeriod, "g_minCommandPeriod", "500", 0, 0, qfalse},
   { &g_minNameChangePeriod, "g_minNameChangePeriod", "5", 0, 0, qfalse},
   { &g_maxNameChanges, "g_maxNameChanges", "5", 0, 0, qfalse},
-  { &g_newbieNumbering, "g_newbieNumbering", "0", CVAR_ARCHIVE, 0, qfalse},
-  { &g_newbieNamePrefix, "g_newbieNamePrefix", "Newbie#", CVAR_ARCHIVE, 0, qfalse},
+  { &g_newbieNumbering, "g_newbieNumbering", "1", CVAR_ARCHIVE, 0, qfalse},
+  { &g_newbieNamePrefix, "g_newbieNamePrefix", "^1Lolard#", CVAR_ARCHIVE, 0, qfalse},
   { &g_newbieDenyBuild, "g_newbieDenyBuild", "0", CVAR_ARCHIVE, 0, qfalse },
 
   { &g_smoothClients, "g_smoothClients", "1", 0, 0, qfalse},
@@ -458,8 +461,8 @@ static cvarTable_t   gameCvarTable[ ] =
   // misc bot cvars
   { &g_bot_attackStruct, "g_bot_attackStruct", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   { &g_bot_roam, "g_bot_roam", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
-  { &g_bot_infinite_funds, "g_bot_infinite_funds", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
-  { &g_bot_survival, "g_bot_survival", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_infinite_funds, "g_bot_infinite_funds", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+  { &g_bot_survival, "g_bot_survival", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   { &g_bot_wave_interval, "g_bot_wave_interval", "120", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
   
   // </bot stuff>
@@ -505,7 +508,11 @@ static cvarTable_t   gameCvarTable[ ] =
 
 //ZdrytchX
   { &g_vampiremode,      "g_vampiremode",       "0", CVAR_SERVERINFO | CVAR_ARCHIVE,  0, qfalse },
-  { &g_bot_extras,      "g_bot_extras",       "0", CVAR_ARCHIVE,  0, qfalse },
+  { &g_vampiremode,      "g_vampirebuildables", "0", CVAR_ARCHIVE,  0, qfalse },
+  { &g_bot_extras,       "g_bot_extras",        "0", CVAR_ARCHIVE,  0, qfalse },
+  { &g_bunnyhop,         "g_bunnyhop",          "0", /*CVAR_SERVERINFO |*/ CVAR_ARCHIVE,  0, qfalse },
+  { &g_weapswitchtime,   "g_weapswitchtime",    "250", /*CVAR_SERVERINFO |*/ CVAR_ARCHIVE,  0, qfalse },
+
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );
