@@ -1324,7 +1324,11 @@ static void G_CreateNewZap( gentity_t *creator, gentity_t *target )
         zap->targets[ j ] = G_FindNewZapTarget( zap->targets[ j - 1 ] );
 
         if( zap->targets[ j ] )
+	{
           zap->numTargets++;
+	//Gather more damage "to be used" if more victims within chain exist
+	zap->damageUsed -= LEVEL2_AREAZAP_DMG/2;
+	}
       }
 
       zap->effectChannel = G_Spawn( );

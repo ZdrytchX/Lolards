@@ -546,8 +546,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FLAMER_K_SCALE              0.5f
 #define FLAMER_DMG_MIN              HDM(3)//was going to test this out, scrapped for later
 #define FLAMER_DMG                  HDM(11 - FLAMER_DMG_MIN) //20 //2 dmg increase only because we have vampire
-#define FLAMER_DMG_MOD              0.5f//Same deal as blaster, this one allows wall climbing.
-#define FLAMER_RADIUS_MOD           2.0f //Radius damage mod //Previous variable cancels out this one
+#define FLAMER_DMG_MOD              0.6f//Same deal as blaster, this one allows wall climbing.
+#define FLAMER_RADIUS_MOD           1.8f //Radius damage mod //Previous variable cancels out this one
 #define FLAMER_RADIUS               80 //50
 #define FLAMER_LIFETIME             800.0f
 #define FLAMER_SPEED                400.0f //300
